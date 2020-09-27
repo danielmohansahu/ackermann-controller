@@ -1,4 +1,5 @@
 # VS Code files
+.vscode/
 *.VC.db*
 
 # OS X files
