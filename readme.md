@@ -1,6 +1,6 @@
 # C++ Boilerplate
-[![Build Status](https://travis-ci.org/dpiet/cpp-boilerplate.svg?branch=master)](https://travis-ci.org/dpiet/cpp-boilerplate)
-[![Coverage Status](https://coveralls.io/repos/github/dpiet/cpp-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/dpiet/cpp-boilerplate?branch=master)
+[![Build Status](https://travis-ci.org/danielmohansahu/mobile-pid-controller.svg?branch=master)](https://travis-ci.org/github/danielmohansahu/ackermann-controller)
+[![Coverage Status](https://coveralls.io/repos/github/danielmohansahu/ackermann-controller/badge.svg?branch=master)](https://coveralls.io/github/danielmohansahu/ackermann-controller)
 ---
 
 ## Overview
