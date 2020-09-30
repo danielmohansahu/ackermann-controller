@@ -6,6 +6,9 @@
 using namespace VehicleControl;
 using namespace ControlAlgo;
 
+// define global variable dt for timestamp, seconds
+const double global_dt = 0.1;
+
 int main()
 {
     //

@@ -8,11 +8,10 @@
 
  #include <PIDController.hpp>
 
- ControlAlgo::PIDController::PIDController(double k_p, double k_i, double k_d, double dt) {
+ ControlAlgo::PIDController::PIDController(double k_p, double k_i, double k_d) {
    k_p_ = k_p;
    k_i_ = k_i;
    k_d_ = k_d;
-   dt_ = dt;
    prev_error_ = 0;
    integral_error_ = 0;
  }
@@ -29,9 +28,9 @@ double ControlAlgo::PIDController::Compute(double current, double desired) {
   // calculate current error
   double current_error = desired - current;
   // Integral controller portion
-  double integral = integral_error_ + (current_error * dt_);
+  double integral = integral_error_ + (current_error * global_dt);
   // Derivative
-  double derivative = (current_error - prev_error_) / dt_;
+  double derivative = (current_error - prev_error_) / global_dt;
   // calculate output
   double output = (k_p_*current_error) + (k_i_*integral) + (k_d_*derivative);
   // save error as previous prev_error_
