@@ -1,0 +1,53 @@
+@startuml
+
+package AckermannController {
+
+  class State {
+   - left_speed
+   - right_speed
+  }
+  
+  class Model {
+   + State getState(velocity, heading)
+   - wheel_separation
+   - wheel_base
+  }
+  
+  class Controller {
+   + update(velocity_des, heading_des, velocity_cur, heading_cur)
+   - update(State desired, State current)
+   - Limits limit
+   - Model model
+   - kp
+   - ki
+   - kd
+   - dt
+  }
+  
+  class Limits {
+   + limit(State current, State desired)
+   - acceleration_limit;
+   - velocity_limit;
+   - steering_limit; 
+  }
+  
+  
+  Controller *-- Limits
+  Controller *-- Model
+  Controller --> State
+  Model --> State
+  Limits --> State
+}
+
+package Testing {
+
+  class MockPlant {
+   + State getState(State)
+   - noise
+  }
+  
+  MockPlant --> State
+
+}
+
+@enduml
