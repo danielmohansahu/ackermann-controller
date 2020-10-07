@@ -7,8 +7,9 @@
 
 A basic implementation of an [Ackermann Steering Geometry](https://en.wikipedia.org/wiki/Ackermann_steering_geometry) controller.
 
-- cmake
-- googletest
+## Engineering Processes and Documentation
+
+Details on the status of our Agile Iterative Process (AIP) [can be found here](https://docs.google.com/spreadsheets/d/1nx85sowA3IRX-usU_M1hhwHplOLXMWdkvec2w3Roi5Q/edit?usp=sharing).
 
 ## Standard install via command-line
 ```
