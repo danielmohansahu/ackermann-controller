@@ -3,7 +3,15 @@ set(GTEST_SHUFFLE 1)
 add_executable(
     cpp-test
     main.cpp
-    test.cpp
+    # Unit level tests
+    unit/AckermannVehicle.cpp
+    unit/Controller.cpp
+    unit/Limits.cpp
+    unit/PID.cpp
+    unit/State.cpp
+    unit/Vehicle.cpp
+    # System level tests
+    system.cpp
 )
 
 target_include_directories(cpp-test PUBLIC ../vendor/googletest/googletest/include 
