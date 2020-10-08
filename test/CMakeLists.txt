@@ -9,7 +9,6 @@ add_executable(
     unit/Limits.cpp
     unit/PID.cpp
     unit/State.cpp
-    unit/Vehicle.cpp
     # System level tests
     system.cpp
 )
