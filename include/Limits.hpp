@@ -21,7 +21,7 @@ class Limits
 
   /* @brief Apply known limits to the given controller command.
   */
-  limit(State& current, State& desired);
+  void limit(State& current, State& desired);
 
  private:
   velocity_;
