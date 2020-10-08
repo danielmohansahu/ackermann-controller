@@ -33,12 +33,12 @@ void Vehicle::set_wheel_separation(double wheel_separation)
   return;
 }
 
-double Vehicle::get_wheel_base()
+double Vehicle::get_wheel_base() const
 {
   return 0.0;
 }
 
-double Vehicle::get_wheel_separation()
+double Vehicle::get_wheel_separation() const
 {
   return 0.0;
 }

@@ -8,7 +8,7 @@
  * @copyright [2020]
  */
 
-#include <PIDController.hpp>
+#include <PID.hpp>
 
 namespace ackermann
 {
@@ -30,21 +30,22 @@ double PID::get_k_p() const {return this->k_p_;}
 double PID::get_k_i() const {return this->k_i_;}
 double PID::get_k_d() const {return this->k_d_;}
 
-double PID::Compute(double current, double desired)
+double PID::compute(double current, double desired)
 {
-  // calculate current error
-  double current_error = desired - current;
-  // Integral controller portion
-  double integral = integral_error_ + (current_error * global_dt);
-  // Derivative
-  double derivative = (current_error - prev_error_) / global_dt;
-  // calculate output
-  double output = (k_p_*current_error) + (k_i_*integral) + (k_d_*derivative);
-  // save error as previous prev_error_
-  prev_error_ = current_error;
-  // save integral as integral error;
-  integral_error_ = integral;
-  return output;
+  // // calculate current error
+  // double current_error = desired - current;
+  // // Integral controller portion
+  // double integral = integral_error_ + (current_error * global_dt);
+  // // Derivative
+  // double derivative = (current_error - prev_error_) / global_dt;
+  // // calculate output
+  // double output = (k_p_*current_error) + (k_i_*integral) + (k_d_*derivative);
+  // // save error as previous prev_error_
+  // prev_error_ = current_error;
+  // // save integral as integral error;
+  // integral_error_ = integral;
+  // return output;
+  return 0.0;
 }
 
 } // namespace ackermann 

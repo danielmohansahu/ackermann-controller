@@ -10,13 +10,13 @@ namespace ackermann
  */
 class Limits
 {
-  using max_value = std::numeric_limits<double>::max;
+  using max_val = std::numeric_limits<double>;
 
  public:
   /* @brief Constructor
    */
   Limits()
-   : velocity_(max_value), acceleration_(max_value))
+   : velocity_(max_val::max()), acceleration_(max_val::max())
   {}
 
   /* @brief Apply known limits to the given controller command.
@@ -24,8 +24,8 @@ class Limits
   void limit(State& current, State& desired);
 
  private:
-  velocity_;
-  acceleration_;
+  double velocity_;
+  double acceleration_;
 };
 
 } // namespace ackermann

@@ -15,50 +15,50 @@ class PID
 {
  public:
   /* @brief constructor
-  /* @parameter kP Proportional Gain
-  /* @parameter kI Integral Gain
-  /* @parameter kD Derivative Gain
-  */
+   * @parameter kP Proportional Gain
+   * @parameter kI Integral Gain
+   * @parameter kD Derivative Gain
+   */
   PID(double k_p, double k_i, double k_d);
 
   /* @brief Set the kP Proportional Gain
-    * @parameter Gain
-    */
+   * @parameter Gain
+   */
   void set_k_p(double kp);
 
   /* @brief Set the kI Integral Gain
-    * @parameter Gain
-    */
+   * @parameter Gain
+   */
   void set_k_i(double ki);
 
   /* @brief Set the kD Derivative Gain
-    * @parameter Gain
-    */
+   * @parameter Gain
+   */
   void set_k_d(double kd);
 
   /* @brief Get the kP Proportional Gain
-    * @parameter None
-    * @return Proportional Gain
-    */
+   * @parameter None
+   * @return Proportional Gain
+   */
   double get_k_p() const;
 
   /* @brief Get the kI Integral Gain
-    * @parameter None
-    * @return Proportional Gain
-    */
+   * @parameter None
+   * @return Proportional Gain
+   */
   double get_k_i() const;
 
   /* @brief Get the kD Derivative Gain
-    * @parameter None
-    * @return Derivative Gain
-    */
+   * @parameter None
+   * @return Derivative Gain
+   */
   double get_k_d() const;
 
   /* @brief Perform PID Calculation
-    * @parameter current Current value (Feedback)
-    * @parameter desired Desired value (Setpoint)
-    * @return Output
-    */
+   * @parameter current Current value (Feedback)
+   * @parameter desired Desired value (Setpoint)
+   * @return Output
+   */
   double compute(double current, double desired);
 
  private:

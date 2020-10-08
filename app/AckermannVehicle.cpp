@@ -19,7 +19,8 @@ namespace ackermann
 {
 
 AckermannVehicle::AckermannVehicle(double maxSteeringAngle)
- : max_steering_angle_(maxSteeringAngled)
+ : Vehicle(0.0, 0.0),
+   max_steering_angle_(maxSteeringAngle)
 {
 }
 
@@ -28,7 +29,7 @@ void AckermannVehicle::set_max_steering_angle(double maxAngle)
   return;
 }
 
-double AckermannVehicle::get_max_steering_angle()
+double AckermannVehicle::get_max_steering_angle() const
 {
   return 0.0;
 }

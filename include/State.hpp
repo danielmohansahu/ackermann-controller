@@ -12,6 +12,11 @@ struct State
 {
   double left {0.0};
   double right {0.0};
+
+  // empty constructor
+  State() {};
+
+  // @brief constructor with values
   State(double left_, double right_)
    : left(left_), right(right_){}
 };

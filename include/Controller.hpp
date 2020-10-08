@@ -9,6 +9,8 @@
  * @copyright [2020]
  */
 
+#include <memory>
+
 #include "State.hpp"
 #include "AckermannVehicle.hpp"
 #include "PID.hpp"
