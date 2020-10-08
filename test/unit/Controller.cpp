@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <Controller.hpp>
 
+using ackermann::Controller;
+
 /* @brief Test Controller with default params */
 TEST(Controller_Update1, should_pass) {
   EXPECT_EQ(1, 1);
