@@ -9,6 +9,8 @@ add_executable(
     ../app/Limits.cpp
     ../app/PID.cpp
     ../app/Vehicle.cpp
+    # test specific files
+    fake/plant.cpp
     # Unit level tests
     unit/AckermannVehicle.cpp
     unit/Controller.cpp
