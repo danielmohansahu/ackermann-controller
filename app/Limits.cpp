@@ -14,9 +14,9 @@
 namespace ackermann
 {
 
-void Limits::limit(State& current, State& desired)
+State Limits::limit(const State& current, const State& desired, double dt)
 {
-  return;
+  return State();
 }
 
 } // namespace ackermann

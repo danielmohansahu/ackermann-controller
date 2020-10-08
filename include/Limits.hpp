@@ -21,7 +21,7 @@ class Limits
 
   /* @brief Apply known limits to the given controller command.
   */
-  void limit(State& current, State& desired);
+  State limit(const State& current, const State& desired, double dt);
 
  private:
   double velocity_;
