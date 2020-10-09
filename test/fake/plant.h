@@ -4,9 +4,36 @@
 #include <iostream>
 #include <cmath>
 #include <random>
+#include <limits>
 
 namespace fake
 {
+
+/* @brief Configurable parameters for the Plant class.
+ */
+struct PlantOptions
+{
+  // ackermann parameters
+  double wheel_base;
+  double wheel_separation;
+  double wheel_radius;
+  double max_steering_angle {std::numeric_limits<double>::max()};
+
+  // noise model parameters
+  double noise_mean {0.0};
+  double noise_stddev {0.0};
+
+  /* Delete default constructor */
+  PlantOptions() = delete;
+
+  /* Constructor for required components */
+  PlantOptions(double wheel_base_, double wheel_separation_, double wheel_radius_)
+   : wheel_base(wheel_base_),
+     wheel_separation(wheel_separation_),
+     wheel_radius(wheel_radius_)
+  {
+  }
+};
 
 /* @brief A Fake Plant for use in testing our Controller.
  * 
@@ -16,15 +43,9 @@ namespace fake
 class Plant
 {
  public:
-  Plant(double wheel_base, double wheel_separation, double wheel_radius,
-        double max_steering_angle, double noise_mean = 0.0, double noise_stddev = 0.0)
-  : wheel_base_(wheel_base), 
-    wheel_separation_(wheel_separation),
-    wheel_radius_(wheel_radius),
-    max_steering_angle_(max_steering_angle),
-    noise_mean_(noise_mean),
-    noise_stddev_(noise_stddev),
-    dist_(noise_mean, noise_stddev)
+  Plant(const PlantOptions& opts)
+  : opts_(opts),
+    dist_(opts.noise_mean, opts.noise_stddev)
   {
   }
 
@@ -38,19 +59,12 @@ class Plant
   void applyCommand(double w_left, double w_right, double dt);
 
  private:
-  // ackermann parameters
-  double wheel_base_ {0.0};
-  double wheel_separation_ {0.0};
-  double wheel_radius_ {0.0};
-  double max_steering_angle_ {0.0};
-
-  // noise variables
-  double noise_mean_ {0.0};
-  double noise_stddev_ {0.0};
-
   // state variables
   double heading_;
   double speed_;
+
+  // struct of our system options
+  PlantOptions opts_;
 
   // random noise generation
   std::default_random_engine generator_;
