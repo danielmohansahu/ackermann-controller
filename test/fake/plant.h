@@ -1,6 +1,8 @@
 /* @brief A Fake implementation of a physical Ackermann platform.
  */
 
+#include <iostream>
+#include <cmath>
 #include <random>
 
 namespace fake
@@ -14,10 +16,11 @@ namespace fake
 class Plant
 {
  public:
-  Plant(double wheel_base, double wheel_separation, double max_steering_angle,
-        double noise_mean = 0.0, double noise_stddev = 0.0)
+  Plant(double wheel_base, double wheel_separation, double wheel_radius,
+        double max_steering_angle, double noise_mean = 0.0, double noise_stddev = 0.0)
   : wheel_base_(wheel_base), 
-    wheel_separation_(wheel_separation), 
+    wheel_separation_(wheel_separation),
+    wheel_radius_(wheel_radius),
     max_steering_angle_(max_steering_angle),
     noise_mean_(noise_mean),
     noise_stddev_(noise_stddev),
@@ -32,12 +35,13 @@ class Plant
   void getState(double& speed, double& heading);
 
   /* @brief Simulate a command */
-  void applyCommand(double speed, double heading, double dt);
+  void applyCommand(double w_left, double w_right, double dt);
 
  private:
   // ackermann parameters
   double wheel_base_ {0.0};
   double wheel_separation_ {0.0};
+  double wheel_radius_ {0.0};
   double max_steering_angle_ {0.0};
 
   // noise variables

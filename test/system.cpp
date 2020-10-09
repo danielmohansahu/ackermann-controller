@@ -1,10 +1,9 @@
 #include <gtest/gtest.h>
+
 #include <Controller.hpp>
+#include "fake/plant.h"
 
-// @TODO Daniel Sahu create Mock system state class
-// #include "mock/plant.h"
-
-// construct Mock class
+// construct fake plant
 
 // construct Controller and set appropriate parameters
 
