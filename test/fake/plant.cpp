@@ -22,8 +22,8 @@ void Plant::applyCommand(double w_left, double w_right, double dt)
 {
   // @TODO add noise
 
-  // check for no motion
-  if (w_left == 0.0 && w_right == 0)
+  // check for no motion (which resets speed)
+  if (w_left == 0.0 && w_right == 0.0)
     return;
 
   // simulate the application of the given commanded wheel velocities
