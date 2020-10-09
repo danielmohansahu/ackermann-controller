@@ -3,7 +3,15 @@
 #include <Controller.hpp>
 #include "fake/plant.h"
 
+using fake::Plant;
+using fake::PlantOptions;
+using ackermann::Controller;
+
 // construct fake plant
+PlantOptions opts = PlantOptions(1.0, 0.25, 0.2);
+Plant plant(opts);
+
+Controller controller();
 
 // construct Controller and set appropriate parameters
 

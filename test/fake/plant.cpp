@@ -57,7 +57,7 @@ void Plant::applyCommand(double w_left, double w_right, double dt)
   }
 
   // calculate speed
-  speed_ = 3.14159 * opts_.wheel_radius * (w_o + w_i);
+  speed_ = M_PI * opts_.wheel_radius * (w_o + w_i);
   
   // calculate resulting heading by integrating across dt
   heading_ += dt * speed_ / r;
