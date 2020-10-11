@@ -1,98 +1,53 @@
 #pragma once
-
 /* @file Vehicle.hpp
- * @brief Class declaration for a generic vehicle
+ * @brief Class declaration for a generic vehicle.
+ * 
+ * This class encapsulates a generic vehicle that provides a method for translating
+ * heading and velocity into wheel speeds.
  *
  * @author Spencer Elyard
  * @author Daniel M. Sahu
+ * @author Santosh Kesani
  * @copyright [2020]
  */
 
-#include <iostream>
-  // @brief global_dt Global timestep variable - keep consistent
-  extern const double global_dt;
-
-namespace VehicleControl {
+#include "State.hpp"
 
 class Vehicle
 {
-  public:
-    // @brief constructor
-    Vehicle(double wheelbase = 1., double track = 1., double vehicle_speed = 0.,
-       double vehicle_heading = 0., double vehicle_x = 0.,
-        double vehicle_y = 0.);
+ public:
+  /* @brief constructor
+   */
+  Vehicle(double wheel_base, double wheel_separation);
 
-        /* @brief Set the vehicle wheelbase (axle distance front/back)
-         * @parameter wheelbase Distance (ft)
-         */
-    void set_wheelbase(double wheelbase);
-    /* @brief Set the vehicle track (wheel distance left/right)
-     * @parameter track Distance (ft)
-     */
-    void set_track(double track);
-    /* @brief Set the vehicle speed
-     * @parameter vehicle_speed (ft/s)
-     */
-    void set_vehicle_speed(double vehicle_speed);
-    /* @brief Set the vehicle heading (global frame)
-     * @parameter vehicle_heading (degrees)
-     */
-    void set_vehicle_heading(double vehicle_heading);
-    /* @brief Set the vehicle X position (global frame)
-     * @parameter new_x new X position (ft)
-     */
-    void set_vehicle_x(double new_x);
-    /* @brief Set the vehicle Y position (global frame)
-     * @parameter new_Y new Y position (ft)
-     */
-    void set_vehicle_y(double new_y);
+  /* @brief Core API that converts heading/speed into wheel velocities.
+   */
+  virtual ackermann::State getState(double speed, double heading) = 0;
 
-    /* @brief Get vehicle wheelbase
-     * @parameter None
-     * @return Wheelbase (ft)
-     */
-    double get_wheelbase() const;
-        /* @brief Get vehicle track
-         * @parameter None
-         * @return Track (ft)
-         */
-    double get_track() const;
+  /* @brief Set the vehicle wheelbase (axle distance front/back)
+   * @parameter wheelbase Distance
+   */
+  void set_wheel_base(double wheel_base);
 
-        /* @brief Get vehicle speed
-         * @parameter None
-         * @return Speed (ft/s)
-         */
-    double get_vehicle_speed() const;
+  /* @brief Set the vehicle track (wheel distance left/right)
+   * @parameter track Distance
+   */
+  void set_wheel_separation(double wheel_separation);
 
-        /* @brief Get vehicle heading (global frame)
-         * @parameter None
-         * @return Heading (degrees)
-         */
-    double get_vehicle_heading() const;
+  /* @brief Get vehicle wheelbase
+   * @return Wheelbase
+   */
+  double get_wheel_base() const;
 
-        /* @brief Get vehicle X position (global frame)
-         * @parameter None
-         * @return X Position (ft)
-         */
-    double get_vehicle_x() const;
-    /* @brief Get vehicle Y position (global frame)
-     * @parameter None
-     * @return Y Position (ft)
-     */
-    double get_vehicle_y() const;
+  /* @brief Get vehicle wheel separation
+   * @return wheel separation
+   */
+  double get_wheel_separation() const;
 
-  private:
-    // @brief Vehicle wheelbase (ft)
-    double wheelbase_;
-    // @brief Vehicle track (ft)
-    double track_;
-    // @brief Vehicle speed (ft/s)
-    double vehicle_speed_;
-    // @brief Vehicle heading (degrees)
-    double vehicle_heading_;
-    // @brief Vehicle X position (ft)
-    double vehicle_x_;
-    // @brief Vehicle Y position (ft)
-    double vehicle_y_;
+ private:
+  // @brief Vehicle wheelbase
+  double wheel_base_;
+
+  // @brief Vehicle track
+  double wheel_separation_;
 };
-}
