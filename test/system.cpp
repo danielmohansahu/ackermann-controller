@@ -81,7 +81,6 @@ TEST_F(AckermannControllerTest, System_FakeSetup) {
   // try setting and getting the same state
   double speed_in = 1.3;
   double heading_in = 54.0;
-
   plant_->setState(speed_in, heading_in);
 
   double speed_out, heading_out;
@@ -95,6 +94,13 @@ TEST_F(AckermannControllerTest, System_FakeSetup) {
   plant_->getState(speed_out, heading_out);
   EXPECT_EQ(speed_out, 0.0);
   EXPECT_EQ(heading_out, 0.0);
+
+  // make sure a dummy command returns an appropriate state
+  plant_->setState(0.0, 0.0);
+  plant_->applyCommand(0.5, 0.45, 0.1);
+  plant_->getState(speed_out, heading_out);
+  EXPECT_DOUBLE_EQ(speed_out, 0.59690260418206065);
+  EXPECT_DOUBLE_EQ(heading_out, 0.032705133176410772);
 }
 
 /* @brief Test that the system converges to a desired setpoint w/ a zero noise Mock Plant. */
