@@ -34,18 +34,30 @@ TEST(PID_SettersAndGetters, should_pass) {
 TEST(PID_Control1, should_pass) {
   PID pid(0.0, 0.0, 0.0);
 
-  EXPECT_EQ(pid.compute(0.0, 0.0), 0.0);
-  EXPECT_EQ(pid.compute(1.0, 0.0), 0.0);
-  EXPECT_EQ(pid.compute(0.0, 1.0), 0.0);
-  EXPECT_EQ(pid.compute(1.0, 1.0), 0.0);
+  EXPECT_EQ(pid.compute(0.0, 0.0, 0.1), 0.0);
+  EXPECT_EQ(pid.compute(1.0, 0.0, 0.1), 0.0);
+  EXPECT_EQ(pid.compute(0.0, 1.0, 0.1), 0.0);
+  EXPECT_EQ(pid.compute(1.0, 1.0, 0.1), 0.0);
 }
 
 /* @brief Test compute command with known values. */
 TEST(PID_Control2, should_pass) {
-  EXPECT_EQ(1, 1);
+  // set gains
+  PID pid(0.5, 0.01, 0.125);
+
+  // call a few commands to get expected value
+  EXPECT_DOUBLE_EQ(pid.compute(0.0, 1.0, 0.1), 1.751);
+  EXPECT_DOUBLE_EQ(pid.compute(0.1, 1.0, 0.1), 0.3269);
+  EXPECT_DOUBLE_EQ(pid.compute(0.2, 1.0, 0.1), 0.2777);
 }
 
 /* @brief Test compute command with known values #2. */
 TEST(PID_Control3, should_pass) {
-  EXPECT_EQ(1, 1);
+  // set gains
+  PID pid(0.1, 0.0, 0.1);
+
+  // call a few commands to get expected value
+  EXPECT_DOUBLE_EQ(pid.compute(-1, 10.0, 1.0), 2.2);
+  EXPECT_DOUBLE_EQ(pid.compute(-2.5, 10.0, 1.0), 1.4);
+  EXPECT_DOUBLE_EQ(pid.compute(0.0, 10.0, 1.0), 0.75);
 }
