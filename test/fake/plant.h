@@ -33,6 +33,18 @@ struct PlantOptions
      wheel_radius(wheel_radius_)
   {
   }
+
+  /* @brief Print out the current set of state variables */
+  void print()
+  {
+    std::cout << "PlantOptions: " << std::endl;
+    std::cout << "\twheel_base: " << wheel_base << std::endl;
+    std::cout << "\twheel_separation: " << wheel_separation << std::endl;
+    std::cout << "\twheel_radius: " << wheel_radius << std::endl;
+    std::cout << "\tmax_steering_angle: " << max_steering_angle << std::endl;
+    std::cout << "\tnoise_mean: " << noise_mean << std::endl;
+    std::cout << "\tnoise_stddev: " << noise_stddev << std::endl;
+  }
 };
 
 /* @brief A Fake Plant for use in testing our Controller.
@@ -44,7 +56,9 @@ class Plant
 {
  public:
   Plant(const PlantOptions& opts)
-  : opts_(opts),
+  : speed_(0.0),
+    heading_(0.0),
+    opts_(opts),
     dist_(opts.noise_mean, opts.noise_stddev)
   {
   }
@@ -60,9 +74,9 @@ class Plant
 
  private:
   // state variables
-  double heading_;
   double speed_;
-
+  double heading_;
+  
   // struct of our system options
   PlantOptions opts_;
 
