@@ -8,11 +8,9 @@
  * @copyright [2020]
  */
 
-namespace ackermann
-{
+namespace ackermann {
 
-class PID
-{
+class PID {
  public:
   /* @brief constructor
    * @parameter kP Proportional Gain

@@ -1,3 +1,7 @@
+/* @file Limits.cpp
+ * @copyright [2020]
+ */
+
 #include <gtest/gtest.h>
 #include <Limits.hpp>
 #include <State.hpp>
@@ -92,5 +96,4 @@ TEST(Limits_Acceleration, should_pass) {
     EXPECT_EQ(desired.left, -accel_limit * dt);
     EXPECT_EQ(desired.right, -accel_limit * dt);
   }
-
 }

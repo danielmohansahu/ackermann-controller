@@ -1,19 +1,18 @@
+#pragma once
 /* @brief A Fake implementation of a physical Ackermann platform.
+ * copyright [2020]
  */
 
 #include <iostream>
 #include <limits>
 #include <cmath>
 #include <random>
-#include <limits>
 
-namespace fake
-{
+namespace fake {
 
 /* @brief Configurable parameters for the Plant class.
  */
-struct PlantOptions
-{
+struct PlantOptions {
   // ackermann parameters
   double wheel_base;
   double wheel_separation;
@@ -28,16 +27,16 @@ struct PlantOptions
   PlantOptions() = delete;
 
   /* Constructor for required components */
-  PlantOptions(double wheel_base_, double wheel_separation_, double wheel_radius_)
-   : wheel_base(wheel_base_),
+  PlantOptions(double wheel_base_,
+               double wheel_separation_,
+               double wheel_radius_)
+    : wheel_base(wheel_base_),
      wheel_separation(wheel_separation_),
-     wheel_radius(wheel_radius_)
-  {
+     wheel_radius(wheel_radius_) {
   }
 
   /* @brief Print out the current set of state variables */
-  void print()
-  {
+  void print() {
     std::cout << "PlantOptions: " << std::endl;
     std::cout << "\twheel_base: " << wheel_base << std::endl;
     std::cout << "\twheel_separation: " << wheel_separation << std::endl;
@@ -53,15 +52,13 @@ struct PlantOptions
  * This class just maintains some simple state information and
  * applies a small amount of noise (if desired).
  */
-class Plant
-{
+class Plant {
  public:
   explicit Plant(const PlantOptions& opts)
   : speed_(0.0),
     heading_(0.0),
     opts_(opts),
-    dist_(opts.noise_mean, opts.noise_stddev)
-  {
+    dist_(opts.noise_mean, opts.noise_stddev) {
   }
 
   /* @brief Set the current system state */
@@ -77,7 +74,7 @@ class Plant
   // state variables
   double speed_;
   double heading_;
-  
+
   // struct of our system options
   PlantOptions opts_;
 

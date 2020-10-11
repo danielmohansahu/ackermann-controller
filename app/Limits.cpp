@@ -11,11 +11,9 @@
 
 #include <Limits.hpp>
 
-namespace ackermann
-{
+namespace ackermann {
 
-State Limits::limit(const State& current, const State& desired, double dt)
-{
+State Limits::limit(const State& current, const State& desired, double dt) {
   return State();
 }
 

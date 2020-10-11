@@ -11,16 +11,18 @@
 
 #include <Controller.hpp>
 
-namespace ackermann
-{
+namespace ackermann {
 
 // @brief constructor
-Controller::Controller()
-{
+Controller::Controller() {
 }
 
-void Controller::update(double current_speed, double current_heading, double desired_speed, double desired_heading, double& left, double& right)
-{
+void Controller::update(double current_speed,
+                        double current_heading,
+                        double desired_speed,
+                        double desired_heading,
+                        double& left,
+                        double& right) {
   return;
 }
 
