@@ -14,12 +14,21 @@ using ackermann::Controller;
 /* @brief Test Fixture for repeated calls to a control loop. */
 class AckermannControllerTest : public ::testing::Test
 {
+ public:
+  void setNoise(double mean, double stddev)
+  {
+    noise_mean_ = mean;
+    noise_stddev_ = stddev;
+  }
+
  protected:
   void SetUp() override
   {
     // construct our base classes;
     opts_ = std::make_unique<PlantOptions>(1.0, 0.25, 0.2);
-
+    opts_->noise_mean = noise_mean_;
+    opts_->noise_stddev = noise_stddev_;
+    
     // construct our plant
     plant_ = std::make_unique<Plant>(*opts_);
 
@@ -27,12 +36,14 @@ class AckermannControllerTest : public ::testing::Test
     controller_ = std::make_unique<Controller>();
   }
 
-  // void TearDown() override {}
-
   // our base class members (we use pointers to avoid default construction)
   std::unique_ptr<PlantOptions> opts_;
   std::unique_ptr<Plant> plant_;
   std::unique_ptr<Controller> controller_;
+
+  // some other (default initialized) noise parameters we can modify externally
+  double noise_mean_ {0.0};
+  double noise_stddev_ {0.0};
 };
 
 
@@ -107,10 +118,16 @@ TEST_F(AckermannControllerTest, System_Convergence1) {
 
 /* @brief Test that the system converges to a desired setpoint w/ a low noise Mock Plant. */
 TEST_F(AckermannControllerTest, System_Convergence2) {
+  // set noise and reset test fixture
+  setNoise(0.0, 0.05);
+  SetUp();
   EXPECT_TRUE(control_loop(plant_, controller_, 1.01, -45.0));
 }
 
 /* @brief Test that the system fails to converge to a "broken" Mock Plant. */
 TEST_F(AckermannControllerTest, System_NoConvergence) {
-  EXPECT_TRUE(control_loop(plant_, controller_, 100.0, 135.0));
+  // set noise and reset test fixture
+  setNoise(100.0, 0.05);
+  SetUp();
+  EXPECT_FALSE(control_loop(plant_, controller_, 100.0, 135.0));
 }

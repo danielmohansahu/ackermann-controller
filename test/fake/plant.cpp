@@ -20,8 +20,6 @@ void Plant::getState(double& speed, double& heading)
 
 void Plant::applyCommand(double w_left, double w_right, double dt)
 {
-  // @TODO add noise
-
   // check for no motion (which resets speed)
   double eps = std::numeric_limits<double>::epsilon();
   if (std::abs(w_left) < eps && std::abs(w_right) < eps)
@@ -54,14 +52,14 @@ void Plant::applyCommand(double w_left, double w_right, double dt)
   //  note that we only need to check the inner wheel steering angle
   double steering_angle_i = std::atan(opts_.wheel_base / (r - 0.5 * opts_.wheel_separation));
   if (std::abs(steering_angle_i) > opts_.max_steering_angle * M_PI/180.)
-    // @TODO actually do something here to limit the results
+    // @TODO Daniel Sahu actually do something here to limit the results
     std::cerr << "Violated max steering angle: " << steering_angle_i << " vs " << opts_.max_steering_angle * M_PI / 180. << std::endl;
 
-  // calculate speed (instantaneously achieved)
-  speed_ = M_PI * opts_.wheel_radius * (w_o + w_i);
-  
-  // calculate resulting heading by integrating across dt
-  heading_ += dt * speed_ / r;
+  // calculate speed (instantaneously achieved) with some noise added in
+  speed_ = M_PI * opts_.wheel_radius * (w_o + w_i) + dist_(generator_);
+ 
+  // calculate resulting heading by integrating across dt (and add noise)
+  heading_ += dt * speed_ / r + dist_(generator_);
 }
 
 } // namespace fake
