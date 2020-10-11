@@ -6,8 +6,8 @@
 
 using fake::Plant;
 using fake::PlantOptions;
+using ackermann::State;
 using ackermann::Controller;
-
 
 // @TODO Daniel M. Sahu integrate noise throughout
 // @TODO use proper (and consistent) common construction (build up)
@@ -41,12 +41,13 @@ class AckermannControllerTest : public ::testing::Test
 
 
 /* @brief A convenience method for executing the given controller's command against the given Plant */
-void control_loop(std::unique_ptr<Plant>& p,
+bool control_loop(std::unique_ptr<Plant>& p,
                   std::unique_ptr<Controller>& c,
                   double desired_speed,
                   double desired_heading,
-                  double dt,
-                  int max_iterations)
+                  double tolerance = 0.1,
+                  double dt = 0.1,
+                  int max_iterations = 10)
 {
   int i = 0;
   while (i != max_iterations)
@@ -64,6 +65,15 @@ void control_loop(std::unique_ptr<Plant>& p,
     // update time
     ++i;
   }
+
+  // get final state
+  double final_speed, final_heading;
+  p->getState(final_speed, final_heading);
+
+  if (abs(final_speed - desired_speed) > tolerance
+      || abs(final_heading - desired_heading) > tolerance)
+    return false;
+  return true;
 }
 
 /* @brief Test that we've set up the Mock class properly. */
@@ -89,51 +99,15 @@ TEST_F(AckermannControllerTest, System_FakeSetup) {
 
 /* @brief Test that the system converges to a desired setpoint w/ a zero noise Mock Plant. */
 TEST_F(AckermannControllerTest, System_Convergence1) {
-  double desired_heading = 45.0;
-  double desired_speed = 3.0;
-
-  // perform control loop
-  control_loop(plant_, controller_, desired_speed, desired_heading, 0.1, 0.2);
-
-  // get final state
-  double final_speed, final_heading;
-  plant_->getState(final_speed, final_heading);
-
-  // check that we achieved our desired state
-  EXPECT_EQ(final_speed, desired_speed);
-  EXPECT_EQ(final_heading, desired_heading);
+  EXPECT_TRUE(control_loop(plant_, controller_, 3.0, 45.0));
 }
 
 /* @brief Test that the system converges to a desired setpoint w/ a low noise Mock Plant. */
 TEST_F(AckermannControllerTest, System_Convergence2) {
-  double desired_heading = -45.0;
-  double desired_speed = 1.01;
-
-  // perform control loop
-  control_loop(plant_, controller_, desired_speed, desired_heading, 0.1, 0.2);
-
-  // get final state
-  double final_speed, final_heading;
-  plant_->getState(final_speed, final_heading);
-
-  // check that we achieved our desired state
-  EXPECT_EQ(final_speed, desired_speed);
-  EXPECT_EQ(final_heading, desired_heading);
+  EXPECT_TRUE(control_loop(plant_, controller_, 1.01, -45.0));
 }
 
 /* @brief Test that the system fails to converge to a "broken" Mock Plant. */
 TEST_F(AckermannControllerTest, System_NoConvergence) {
-  double desired_heading = 135.0;
-  double desired_speed = 100.0;
-
-  // perform control loop
-  control_loop(plant_, controller_, desired_speed, desired_heading, 0.1, 0.2);
-
-  // get final state
-  double final_speed, final_heading;
-  plant_->getState(final_speed, final_heading);
-
-  // check that we achieved our desired state
-  EXPECT_EQ(final_speed, desired_speed);
-  EXPECT_EQ(final_heading, desired_heading);
+  EXPECT_TRUE(control_loop(plant_, controller_, 100.0, 135.0));
 }
