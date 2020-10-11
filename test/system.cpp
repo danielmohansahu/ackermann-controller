@@ -10,10 +10,6 @@ using ackermann::State;
 using ackermann::Controller;
 
 // @TODO Daniel M. Sahu integrate noise throughout
-// @TODO use proper (and consistent) common construction (build up)
-// @TODO make targets random (with small range)
-// @TODO control until success is achieved (or timeout)
-
 
 /* @brief Test Fixture for repeated calls to a control loop. */
 class AckermannControllerTest : public ::testing::Test
@@ -62,18 +58,19 @@ bool control_loop(std::unique_ptr<Plant>& p,
     // actually apply the command
     p->applyCommand(w_l, w_r, dt);
 
-    // update time
+    // get new state
+    p->getState(current_speed, current_heading);
+
+    // check whether or not we're within desired tolerance (and can report success)
+    if (abs(current_speed - desired_speed) < tolerance
+        || abs(current_heading - desired_heading) < tolerance)
+      return true;
+
+    // update iteration count
     ++i;
   }
-
-  // get final state
-  double final_speed, final_heading;
-  p->getState(final_speed, final_heading);
-
-  if (abs(final_speed - desired_speed) > tolerance
-      || abs(final_heading - desired_heading) > tolerance)
-    return false;
-  return true;
+  // if we've gotten this far, we've failed
+  return false;
 }
 
 /* @brief Test that we've set up the Mock class properly. */
