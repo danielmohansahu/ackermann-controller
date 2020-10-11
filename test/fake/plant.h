@@ -56,7 +56,7 @@ struct PlantOptions
 class Plant
 {
  public:
-  Plant(const PlantOptions& opts)
+  explicit Plant(const PlantOptions& opts)
   : speed_(0.0),
     heading_(0.0),
     opts_(opts),

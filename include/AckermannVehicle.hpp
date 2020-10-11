@@ -22,7 +22,7 @@ class AckermannVehicle : public Vehicle
 {
 public:
   // @brief constructor
-  AckermannVehicle(double maxSteeringAngle = 45.0);
+  explicit AckermannVehicle(double maxSteeringAngle = 45.0);
 
   /* @brief Set the maximum steering angle (degrees)
    * @parameter maxAngle Maximum steering angle (degrees)
