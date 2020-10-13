@@ -59,7 +59,7 @@ class PID
    * @parameter desired Desired value (Setpoint)
    * @return Output
    */
-  double compute(double current, double desired);
+  double compute(double current, double desired, double dt);
 
  private:
   // @brief Proportional Gain

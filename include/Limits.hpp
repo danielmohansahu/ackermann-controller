@@ -15,13 +15,13 @@ class Limits
  public:
   /* @brief Constructor
    */
-  Limits()
-   : velocity_(max_val::max()), acceleration_(max_val::max())
+  Limits(double velocity = max_val::max(), double acceleration = max_val::max())
+   : velocity_(velocity), acceleration_(acceleration)
   {}
 
   /* @brief Apply known limits to the given controller command.
   */
-  void limit(State& current, State& desired);
+  State limit(const State& current, const State& desired, double dt);
 
  private:
   double velocity_;

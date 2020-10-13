@@ -3,6 +3,14 @@ set(GTEST_SHUFFLE 1)
 add_executable(
     cpp-test
     main.cpp
+    # Class implementation files
+    ../app/AckermannVehicle.cpp
+    ../app/Controller.cpp
+    ../app/Limits.cpp
+    ../app/PID.cpp
+    ../app/Vehicle.cpp
+    # test specific files
+    fake/plant.cpp
     # Unit level tests
     unit/AckermannVehicle.cpp
     unit/Controller.cpp
