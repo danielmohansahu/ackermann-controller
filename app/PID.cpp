@@ -10,16 +10,14 @@
 
 #include <PID.hpp>
 
-namespace ackermann
-{
+namespace ackermann {
 
 PID::PID(double k_p, double k_i, double k_d)
- : k_p_(k_p),
-   k_i_(k_i),
-   k_d_(k_d),
-   prev_error_(0.0),
-   integral_error_(0.0)
-{
+  : k_p_(k_p),
+    k_i_(k_i),
+    k_d_(k_d),
+    prev_error_(0.0),
+    integral_error_(0.0) {
 }
 
 void PID::set_k_p(double kp) {this->k_p_ = kp;}
@@ -30,8 +28,7 @@ double PID::get_k_p() const {return this->k_p_;}
 double PID::get_k_i() const {return this->k_i_;}
 double PID::get_k_d() const {return this->k_d_;}
 
-double PID::compute(double current, double desired, double dt)
-{
+double PID::compute(double current, double desired, double dt) {
   // // calculate current error
   // double current_error = desired - current;
   // // Integral controller portion
@@ -48,4 +45,4 @@ double PID::compute(double current, double desired, double dt)
   return 0.0;
 }
 
-} // namespace ackermann 
+} // namespace ackermann

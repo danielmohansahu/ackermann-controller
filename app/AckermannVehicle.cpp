@@ -15,27 +15,22 @@
 
 // @TODO Currently STUB implementation; needs to be filled
 
-namespace ackermann
-{
+namespace ackermann {
 
 AckermannVehicle::AckermannVehicle(double maxSteeringAngle)
- : Vehicle(0.0, 0.0),
-   max_steering_angle_(maxSteeringAngle)
-{
+  : Vehicle(0.0, 0.0),
+   max_steering_angle_(maxSteeringAngle) {
 }
 
-void AckermannVehicle::set_max_steering_angle(double maxAngle)
-{
+void AckermannVehicle::set_max_steering_angle(double maxAngle) {
   return;
 }
 
-double AckermannVehicle::get_max_steering_angle() const
-{
+double AckermannVehicle::get_max_steering_angle() const {
   return 0.0;
 }
 
-State AckermannVehicle::getState(double speed, double heading)
-{
+State AckermannVehicle::getState(double speed, double heading) {
   return State();
 }
 

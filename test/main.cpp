@@ -1,3 +1,7 @@
+/* @file main.cpp
+ * @copyright [2020]
+ */
+
 #include <gtest/gtest.h>
 
 int main(int argc, char** argv) {

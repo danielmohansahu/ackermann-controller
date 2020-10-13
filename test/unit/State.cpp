@@ -1,3 +1,7 @@
+/* @file State.cpp
+ * @copyright [2020]
+ */
+
 #include <gtest/gtest.h>
 #include <State.hpp>
 

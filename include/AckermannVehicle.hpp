@@ -11,18 +11,16 @@
 #include "Vehicle.hpp"
 #include "State.hpp"
 
-namespace ackermann
-{
+namespace ackermann {
 
 /* @brief This class is used to further define a vehicle with Ackermann steering
  *
  * This class implements a vehicle with Ackermann steering.
  */
-class AckermannVehicle : public Vehicle
-{
-public:
+class AckermannVehicle : public Vehicle {
+ public:
   // @brief constructor
-  AckermannVehicle(double maxSteeringAngle = 45.0);
+  explicit AckermannVehicle(double maxSteeringAngle = 45.0);
 
   /* @brief Set the maximum steering angle (degrees)
    * @parameter maxAngle Maximum steering angle (degrees)

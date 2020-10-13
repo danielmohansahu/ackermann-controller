@@ -1,5 +1,9 @@
-#include <iostream>
+/* @file system.cpp
+ * @copyright [2020]
+ */
+
 #include <gtest/gtest.h>
+#include <iostream>
 
 #include <Controller.hpp>
 #include "fake/plant.h"
@@ -12,23 +16,20 @@ using ackermann::Controller;
 // @TODO Daniel M. Sahu integrate noise throughout
 
 /* @brief Test Fixture for repeated calls to a control loop. */
-class AckermannControllerTest : public ::testing::Test
-{
+class AckermannControllerTest : public ::testing::Test {
  public:
-  void setNoise(double mean, double stddev)
-  {
+  void setNoise(double mean, double stddev) {
     noise_mean_ = mean;
     noise_stddev_ = stddev;
   }
 
  protected:
-  void SetUp() override
-  {
+  void SetUp() override {
     // construct our base classes;
     opts_ = std::make_unique<PlantOptions>(1.0, 0.25, 0.2);
     opts_->noise_mean = noise_mean_;
     opts_->noise_stddev = noise_stddev_;
-    
+
     // construct our plant
     plant_ = std::make_unique<Plant>(*opts_);
 
@@ -47,24 +48,29 @@ class AckermannControllerTest : public ::testing::Test
 };
 
 
-/* @brief A convenience method for executing the given controller's command against the given Plant */
+/* @brief A convenience method for executing the given controller's
+ * command against the given Plant
+ */
 bool control_loop(std::unique_ptr<Plant>& p,
                   std::unique_ptr<Controller>& c,
                   double desired_speed,
                   double desired_heading,
                   double tolerance = 0.1,
                   double dt = 0.1,
-                  int max_iterations = 10)
-{
+                  int max_iterations = 10) {
   int i = 0;
-  while (i != max_iterations)
-  {
+  while (i != max_iterations) {
     double current_speed, current_heading;
     p->getState(current_speed, current_heading);
 
     // calculate required command signal
     double w_l, w_r;
-    c->update(current_speed, current_heading, desired_speed, desired_heading, w_l, w_r);
+    c->update(current_speed,
+              current_heading,
+              desired_speed,
+              desired_heading,
+              w_l,
+              w_r);
 
     // actually apply the command
     p->applyCommand(w_l, w_r, dt);
@@ -72,7 +78,8 @@ bool control_loop(std::unique_ptr<Plant>& p,
     // get new state
     p->getState(current_speed, current_heading);
 
-    // check whether or not we're within desired tolerance (and can report success)
+    // check whether or not we're within desired tolerance
+    // (and can report success)
     if (abs(current_speed - desired_speed) < tolerance
         || abs(current_heading - desired_heading) < tolerance)
       return true;
@@ -111,12 +118,16 @@ TEST_F(AckermannControllerTest, System_FakeSetup) {
   EXPECT_DOUBLE_EQ(heading_out, 0.032705133176410772);
 }
 
-/* @brief Test that the system converges to a desired setpoint w/ a zero noise Mock Plant. */
+/* @brief Test that the system converges to a desired setpoint
+ * w/ a zero noise Mock Plant.
+ */
 TEST_F(AckermannControllerTest, System_Convergence1) {
   EXPECT_TRUE(control_loop(plant_, controller_, 3.0, 45.0));
 }
 
-/* @brief Test that the system converges to a desired setpoint w/ a low noise Mock Plant. */
+/* @brief Test that the system converges to a desired setpoint
+ * w/ a low noise Mock Plant.
+ */
 TEST_F(AckermannControllerTest, System_Convergence2) {
   // set noise and reset test fixture
   setNoise(0.0, 0.05);

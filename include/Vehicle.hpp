@@ -1,6 +1,7 @@
 #pragma once
 /* @file Vehicle.hpp
  * @brief Class declaration for a generic vehicle.
+ * @copyright [2020]
  * 
  * This class encapsulates a generic vehicle that provides a method for translating
  * heading and velocity into wheel speeds.
@@ -8,13 +9,11 @@
  * @author Spencer Elyard
  * @author Daniel M. Sahu
  * @author Santosh Kesani
- * @copyright [2020]
  */
 
 #include "State.hpp"
 
-class Vehicle
-{
+class Vehicle {
  public:
   /* @brief constructor
    */
