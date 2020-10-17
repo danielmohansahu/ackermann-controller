@@ -4,7 +4,7 @@
  * @copyright [2020]
  * 
  * This class encapsulates a generic vehicle that provides a method for translating
- * heading and velocity into wheel speeds.
+ * heading and speed into wheel speeds.
  *
  * @author Spencer Elyard
  * @author Daniel M. Sahu

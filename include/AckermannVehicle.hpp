@@ -35,7 +35,7 @@ class AckermannVehicle : public Vehicle {
 
   /* @brief Calculate Ackermann vehicle dynamics for vehicle
    * @parameter headingChange Relative heading change for vehicle
-   * @parameter velocity Velocity of vehicle
+   * @parameter speed speed of vehicle
    * @return None
    */
   State getState(double speed, double heading) override;

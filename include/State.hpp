@@ -7,7 +7,7 @@ namespace ackermann {
 
 /* @brief Struct containing Ackermann State information.
  * 
- * Currently only contains left and right wheel velocity information,
+ * Currently only contains left and right wheel speed information,
  * but is intended to be extensible.
  */
 struct State {
