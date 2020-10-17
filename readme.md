@@ -22,3 +22,15 @@ make
 Run tests: ./test/cpp-test
 Run program: ./app/shell-app
 ```
+
+## Class Diagram
+
+An overview of the classes used and their dependencies is shown in the following UML diagram:
+
+![Class-Diagram](docs/uml/class_diagram.png)
+
+## Activity Diagram
+
+An example usage activity diagram is shown in the following UML diagram:
+
+![Activity-Diagram](docs/uml/activity_diagram.png)
