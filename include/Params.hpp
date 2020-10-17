@@ -16,7 +16,7 @@ struct Params {
   // default value parameters
   double control_frequency {100.0};
   double velocity_max {std::numeric_limits<double>::max()};
-  double velocity_min {0.0};
+  double velocity_min {std::numeric_limits<double>::min()};
   double acceleration_max {std::numeric_limits<double>::max()};
   double acceleration_min {std::numeric_limits<double>::min()};
   double angular_velocity_max {std::numeric_limits<double>::max()};
