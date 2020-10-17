@@ -13,7 +13,7 @@
 #include <thread>
 
 #include "Params.hpp"
-#include "Controller.hpp"
+#include "Model.hpp"
 #include "PID.hpp"
 #include "Limits.hpp"
 
@@ -91,7 +91,7 @@ class Controller {
   /* @brief Ackermann model (used in translating 
    * speed/heading into wheel speeds)
    */
-  std::unique_ptr<AckermannVehicle> model_;
+  std::unique_ptr<Model> model_;
 
   /* @brief Object used to apply kinematic constraints to 
    * a calculated command (to prevent saturation)

@@ -8,6 +8,8 @@
  * @copyright [2020]
  */
 
+#include <atomic>
+
 namespace ackermann {
 
 /* @brief This class is used to further define a vehicle with Ackermann steering
