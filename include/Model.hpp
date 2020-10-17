@@ -76,12 +76,12 @@ class Model {
   double max_steering_angle_;
 
   // system state variables
-  double desired_speed_ {0.0};
-  double desired_heading_ {0.0};
-  double current_speed_ {0.0};
-  double current_heading_ {0.0};
-  double current_throttle_ {0.0};
-  double current_steering_ {0.0};
+  std::atomic<double> desired_speed_ {0.0};
+  std::atomic<double> desired_heading_ {0.0};
+  std::atomic<double> current_speed_ {0.0};
+  std::atomic<double> current_heading_ {0.0};
+  std::atomic<double> current_throttle_ {0.0};
+  std::atomic<double> current_steering_ {0.0};
 };
 
 } // namespace ackermann
