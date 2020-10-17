@@ -13,8 +13,16 @@
 
 namespace ackermann {
 
-State Limits::limit(const State& current, const State& desired, double dt) {
-  return State();
+Limits::Limits(const Params& params) {
+
+}
+
+void Limits::limit(const double current_throttle,
+                   const double current_steering,
+                   double& desired_throttle,
+                   double& desired_steering,
+                   double dt) const {
+
 }
 
 } // namespace ackermann
