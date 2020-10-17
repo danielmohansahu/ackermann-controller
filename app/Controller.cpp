@@ -25,6 +25,9 @@ void Controller::stop() {
 void Controller::reset() {
 }
 
+bool Controller::isRunning() const {
+}
+
 void Controller::setState(const double heading, const double speed) {
 }
 

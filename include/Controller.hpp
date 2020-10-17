@@ -9,6 +9,7 @@
  * @copyright [2020]
  */
 
+#include <atomic>
 #include <memory>
 #include <thread>
 
@@ -35,6 +36,14 @@ class Controller {
 
   /* @brief Clear system state variables. */
   void reset();
+
+  /* @brief Return true if the core execution thread is running. 
+   *
+   * This is a useful utility for testing.
+   * 
+   * @returns: Whether or not the core control loop is executing.
+   */
+  bool isRunning() const;
 
   /* @brief Set the current state (speed, heading) of the system. 
    * 
@@ -106,6 +115,8 @@ class Controller {
 
   /* @brief Thread handle for the currently executing control loop. */
   std::thread control_loop_handle_;
+  std::atomic<bool> running_ {false};
+
 };
 
 } // namespace ackermann
