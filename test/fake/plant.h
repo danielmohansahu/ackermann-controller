@@ -19,7 +19,7 @@ namespace fake {
 struct PlantOptions {
   // ackermann parameters
   double wheel_base;
-  double max_steering_angle {std::numeric_limits<double>::max()};
+  double max_steering_angle;
 
   // noise model parameters
   double noise_mean {0.0};
@@ -29,8 +29,9 @@ struct PlantOptions {
   PlantOptions() = delete;
 
   /* Constructor for required components */
-  PlantOptions(double wheel_base_)
-    : wheel_base(wheel_base_) {
+  PlantOptions(double wheel_base_, double max_steering_angle_)
+    : wheel_base(wheel_base_),
+      max_steering_angle(max_steering_angle_) {
   }
 
   /* @brief Print out the current set of state variables */
