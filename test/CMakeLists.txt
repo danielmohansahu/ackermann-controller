@@ -8,15 +8,15 @@ add_executable(
     ../app/Controller.cpp
     ../app/Limits.cpp
     ../app/PID.cpp
-#     # test specific files
-#     fake/plant.cpp
+    # test specific files
+    fake/plant.cpp
     # Unit level tests
     unit/Controller.cpp
     unit/Limits.cpp
     unit/Model.cpp
     unit/PID.cpp
-#     # System level tests
-#     system.cpp
+    # System level tests
+    system.cpp
 )
 
 target_include_directories(cpp-test PUBLIC ../vendor/googletest/googletest/include 
