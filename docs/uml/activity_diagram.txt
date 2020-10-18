@@ -46,6 +46,8 @@ Controller -> Test: throttle, steering
 Test -> MockPlant: command(throttle, steering)
 Test -> MockPlant: getState()
 MockPlant -> Test: speed, heading
+MockPlant -> Test: getWheelRPM()
+deactivate MockPlant
 
 Test -> Controller: stop()
 deactivate Controller
