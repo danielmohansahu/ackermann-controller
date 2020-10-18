@@ -5,6 +5,8 @@ package AckermannController {
   class Params {
     + control_frequency
     + wheel_base
+    + wheel_track
+    + wheel_radius
     + max_steering_angle
     + kp_speed
     + ki_speed
@@ -16,6 +18,8 @@ package AckermannController {
     + velocity_min
     + acceleration_max
     + acceleration_min
+    + motor_max_RPM
+    + motor_min_RPM    
     + anglular_velocity_max
     + anglular_velocity_min
     + angular_acceleration_max
@@ -32,6 +36,7 @@ package AckermannController {
    + setGoal(speed, heading)
    + getGoal(speed&, heading&)
    + getCommand(throttle&, steering&)
+   + getWheelRPM(speed&, steering&)     
    - Limits limits_
    - Model model_
    - PID pid_speed_
@@ -46,20 +51,25 @@ package AckermannController {
    + getGoal(speed&, heading&)
    + getCommand(throttle&, steering&)
    + getError(speed&, heading&)
+   + getWheelRPM(speed&, steering&)   
    - wheel_base_
+   - wheel_track_
+   - wheel_radius_   
    - max_steering_angle_
   }
     
   class Limits {
    + limit(dt, throttle, steering, throttle_des&, steering_des&)
-   - velocity_max;
-   - velocity_min;
-   - acceleration_max
-   - acceleration_min
-   - anglular_velocity_max
-   - anglular_velocity_min
-   - angular_acceleration_max
-   - angular_acceleration_min
+   - velocity_max_
+   - velocity_min_
+   - acceleration_max_
+   - acceleration_min_
+   - motor_max_RPM_
+   - motor_min_RPM_  
+   - anglular_velocity_max_
+   - anglular_velocity_min_
+   - angular_acceleration_max_
+   - angular_acceleration_min_
   }
 
   class PID {
