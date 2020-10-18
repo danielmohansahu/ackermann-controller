@@ -1,8 +1,12 @@
 #pragma once
-/* @brief A Fake implementation of a physical Ackermann platform.
- * copyright [2020]
+/* @brief A Fake implementation of a physical Ackermann platform (bicycle geometry).
+ * 
+ * @author Daniel M.
+ * 
+ * @copyright [2020]
  */
 
+#include <assert.h>
 #include <iostream>
 #include <limits>
 #include <cmath>
@@ -15,8 +19,6 @@ namespace fake {
 struct PlantOptions {
   // ackermann parameters
   double wheel_base;
-  double wheel_separation;
-  double wheel_radius;
   double max_steering_angle {std::numeric_limits<double>::max()};
 
   // noise model parameters
@@ -27,20 +29,14 @@ struct PlantOptions {
   PlantOptions() = delete;
 
   /* Constructor for required components */
-  PlantOptions(double wheel_base_,
-               double wheel_separation_,
-               double wheel_radius_)
-    : wheel_base(wheel_base_),
-     wheel_separation(wheel_separation_),
-     wheel_radius(wheel_radius_) {
+  PlantOptions(double wheel_base_)
+    : wheel_base(wheel_base_) {
   }
 
   /* @brief Print out the current set of state variables */
   void print() {
     std::cout << "PlantOptions: " << std::endl;
     std::cout << "\twheel_base: " << wheel_base << std::endl;
-    std::cout << "\twheel_separation: " << wheel_separation << std::endl;
-    std::cout << "\twheel_radius: " << wheel_radius << std::endl;
     std::cout << "\tmax_steering_angle: " << max_steering_angle << std::endl;
     std::cout << "\tnoise_mean: " << noise_mean << std::endl;
     std::cout << "\tnoise_stddev: " << noise_stddev << std::endl;
@@ -61,14 +57,35 @@ class Plant {
     dist_(opts.noise_mean, opts.noise_stddev) {
   }
 
-  /* @brief Set the current system state */
-  void setState(double speed, double heading);
+  /* @brief Reset all state variables to their defaults. */
+  void reset();
 
-  /* @brief Get the current system state */
-  void getState(double& speed, double& heading);
+  /* @brief Set the current system state.
+   *
+   * @param speed: The new system speed.
+   * @param heading: The new system heading.
+   */
+  void setState(const double speed, const double heading);
 
-  /* @brief Simulate a command */
-  void applyCommand(double w_left, double w_right, double dt);
+  /* @brief Get the current system state.
+   * 
+   * @param speed: The current system speed.
+   * @param heading: The current system heading.
+   */
+  void getState(double& speed, double& heading) const;
+
+  /* @brief Simulate an actual command to the vehicle.
+   * 
+   * This is a very simple approximation of the plant; the throttle
+   * command is assumed to translate instantly into the new speed,
+   * and the new heading is calculated by integrating the effect of
+   * the new steering angle over the timestep.
+   * 
+   * @param throttle: The throttle command to apply.
+   * @param steering: The steering command to apply.
+   * @param dt: The time duration of the command.
+   */
+  void command(const double throttle, const double steering, const double dt);
 
  private:
   // state variables

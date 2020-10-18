@@ -6,59 +6,46 @@
 
 namespace fake {
 
-void Plant::setState(double speed, double heading) {
+void Plant::reset() {
+  speed_ = 0.0;
+  heading_ = 0.0;
+}
+
+void Plant::setState(const double speed, const double heading) {
   speed_ = speed;
   heading_ = heading;
 }
 
-void Plant::getState(double& speed, double& heading) {
+void Plant::getState(double& speed, double& heading) const {
   speed = speed_;
   heading = heading_;
 }
 
-void Plant::applyCommand(double w_left, double w_right, double dt) {
-  // check for no motion (which resets speed)
-  double eps = std::numeric_limits<double>::epsilon();
-  if (std::abs(w_left) < eps && std::abs(w_right) < eps) {
-    speed_ = 0.0;
-    return;
+void Plant::command(const double throttle, const double steering, const double dt) {
+
+  // sanity check inputs
+  double steering_capped = steering;
+  if (std::abs(steering) > opts_.max_steering_angle) {
+    std::cout << "Given a commanded steering angle beyond our limit ("
+              << steering << " vs. " << opts_.max_steering_angle << ")"
+              << std::endl;
+    // if we're debugging, this is a failure
+    assert(false);
+    steering_capped = ((steering > 0) - (steering < 0)) * opts_.max_steering_angle;
   }
 
-  // simulate the application of the given commanded wheel velocities
-  double w_o, w_i;
-  if (std::abs(w_left) >= std::abs(w_right)) {
-    w_o = w_left;
-    w_i = w_right;
-  } else {
-    w_i = w_left;
-    w_o = w_right;
-  }
+  // convert to radians
+  steering_capped *= M_PI / 180.0;
 
-  // limit based on max_steering_angle; model this as wheel
-  // slip on faster (outer) wheel
-  // @TODO check for unreal results and if roots are both valid (??)
-  double alpha = (w_i * w_i + w_o * w_o) / (w_o * w_o - w_i * w_i);
-  double r_1 = 0.5 * opts_.wheel_separation * alpha;
-  double r_2 = 0.5 * std::sqrt(std::pow(opts_.wheel_separation, 2.0)
-                                        * (alpha * alpha - 1)
-                                        - 4 * std::pow(opts_.wheel_base, 2.0));
-  double r = r_1 + r_2;
+  // throttle translates directly to speed, since we have no other system knowledge
+  speed_ = throttle;
 
-  // check if we've violated the maximum steering angle
-  //  note that we only need to check the inner wheel steering angle
-  double steering_angle_i = std::atan(opts_.wheel_base
-                            / (r - 0.5 * opts_.wheel_separation));
-  if (std::abs(steering_angle_i) > opts_.max_steering_angle * M_PI/180.)
-    // @TODO Daniel Sahu actually do something here to limit the results
-    std::cerr << "Violated max steering angle: "
-              << steering_angle_i << " vs "
-              << opts_.max_steering_angle * M_PI / 180. << std::endl;
+  // the global heading is affected by our speed, steering angle, and wheel base
+  heading_ += dt * (speed_ / opts_.wheel_base) * std::tan(steering_capped);
 
-  // calculate speed (instantaneously achieved) with some noise added in
-  speed_ = M_PI * opts_.wheel_radius * (w_o + w_i) + dist_(generator_);
-
-  // calculate resulting heading by integrating across dt (and add noise)
-  heading_ += dt * speed_ / r + dist_(generator_);
+  // add in some noise for good measure
+  speed_ += dist_(generator_);
+  heading_ += dist_(generator_);
 }
 
 } // namespace fake
