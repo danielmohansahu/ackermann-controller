@@ -23,7 +23,7 @@ To visualize and simulate the performance of the Ackermann controller, **TODO: I
 ## Personnel
 * Spencer Elyard, *TODO: Complete personnel blurb.*
 * Santosh Kesani, *TODO: Complete personnel blurb.*
-* Daneil Sahu, *TODO: Complete personnel blurb.*
+* Daniel Sahu, *TODO: Complete personnel blurb.*
 
 ## Licensing
 This project uses the MIT License as described in [the license file](LICENSE).
