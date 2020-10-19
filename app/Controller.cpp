@@ -13,17 +13,37 @@
 
 namespace ackermann {
 
-// @brief constructor
-Controller::Controller() {
+Controller::Controller(const Params& params) {
 }
 
-void Controller::update(double current_speed,
-                        double current_heading,
-                        double desired_speed,
-                        double desired_heading,
-                        double& left,
-                        double& right) {
-  return;
+void Controller::start() {
+}
+
+void Controller::stop() {
+}
+
+void Controller::reset() {
+}
+
+bool Controller::isRunning() const {
+}
+
+void Controller::setState(const double heading, const double speed) {
+}
+
+void Controller::getState(double& heading, double& speed) const {
+}
+
+void Controller::setGoal(const double heading, const double speed) {
+}
+
+void Controller::getGoal(double& heading, double& speed) const {
+}
+
+void Controller::getCommand(double& throttle, double& steering) const {
+}
+
+void Controller::controlLoop() {
 }
 
 } // namespace ackermann

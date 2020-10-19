@@ -1,8 +1,0 @@
-@startuml
-
-class AckermannController {
- + compute(double velocity, double heading)
- # double steering_constraint
-}
-
-@enduml
