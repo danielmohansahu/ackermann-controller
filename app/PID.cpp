@@ -29,20 +29,20 @@ double PID::get_k_i() const {return this->k_i_;}
 double PID::get_k_d() const {return this->k_d_;}
 
 double PID::getCommand(double current, double desired, double dt) {
-  // // calculate current error
-  // double current_error = desired - current;
-  // // Integral controller portion
-  // double integral = integral_error_ + (current_error * dt);
-  // // Derivative
-  // double derivative = (current_error - prev_error_) / dt;
-  // // calculate output
-  // double output = (k_p_*current_error) + (k_i_*integral) + (k_d_*derivative);
-  // // save error as previous prev_error_
-  // prev_error_ = current_error;
-  // // save integral as integral error;
-  // integral_error_ = integral;
-  // return output;
-  return 0.0;
+  // calculate current error
+  double current_error = desired - current;
+  // Integral controller portion
+  double integral = integral_error_ + (current_error * dt);
+  // Derivative
+  double derivative = (current_error - prev_error_) / dt;
+  // calculate output
+  double output = (k_p_*current_error) + (k_i_*integral) + (k_d_*derivative);
+  // save error as previous prev_error_
+  prev_error_ = current_error;
+  // save integral as integral error;
+  integral_error_ = integral;
+  return output;
+  // return 0.0;
 }
 
 } // namespace ackermann

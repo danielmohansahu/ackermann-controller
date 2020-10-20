@@ -14,7 +14,6 @@
 namespace ackermann {
 
 Limits::Limits(const Params& params) {
-
 }
 
 void Limits::limit(const double current_throttle,
@@ -22,6 +21,7 @@ void Limits::limit(const double current_throttle,
                    double& desired_throttle,
                    double& desired_steering,
                    double dt) const {
+   //TODO: calculate limits from given throttle and steering
 
 }
 
