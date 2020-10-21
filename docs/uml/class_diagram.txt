@@ -2,52 +2,101 @@
 
 package AckermannController {
 
-  class State {
-   - left_speed
-   - right_speed
+  class Params {
+    + control_frequency
+    + wheel_base
+    + wheel_track
+    + wheel_radius
+    + max_steering_angle
+    + kp_speed
+    + ki_speed
+    + kd_speed
+    + kp_steering
+    + ki_steering
+    + kd_steering
+    + velocity_max
+    + velocity_min
+    + acceleration_max
+    + acceleration_min
+    + motor_max_RPM
+    + motor_min_RPM    
+    + anglular_velocity_max
+    + anglular_velocity_min
+    + angular_acceleration_max
+    + angular_acceleration_min
   }
-  
-  class Model {
-   + State getState(velocity, heading)
-   - wheel_separation
-   - wheel_base
-  }
-  
+
   class Controller {
-   + update(velocity_des, heading_des, velocity_cur, heading_cur)
-   - update(State desired, State current)
-   - Limits limit
-   - Model model
-   - kp
-   - ki
-   - kd
-   - dt
+   + Controller(Params p)
+   + start()
+   + stop()
+   + reset()
+   + setState(speed, heading)
+   + getState(speed&, heading&)
+   + setGoal(speed, heading)
+   + getGoal(speed&, heading&)
+   + getCommand(throttle&, steering&)
+   + getWheelRPM(speed&, steering&)     
+   - Limits limits_
+   - Model model_
+   - PID pid_speed_
+   - PID pid_heading_
   }
-  
+
+  class Model {
+   + reset()
+   + setState(speed, heading)
+   + getState(speed&, heading&)
+   + setGoal(speed, heading)
+   + getGoal(speed&, heading&)
+   + getCommand(throttle&, steering&)
+   + getError(speed&, heading&)
+   + getWheelRPM(speed&, steering&)   
+   - wheel_base_
+   - wheel_track_
+   - wheel_radius_   
+   - max_steering_angle_
+  }
+    
   class Limits {
-   + limit(State current, State desired)
-   - acceleration_limit;
-   - velocity_limit;
-   - steering_limit; 
+   + limit(dt, throttle, steering, throttle_des&, steering_des&)
+   - velocity_max_
+   - velocity_min_
+   - acceleration_max_
+   - acceleration_min_
+   - motor_max_RPM_
+   - motor_min_RPM_  
+   - anglular_velocity_max_
+   - anglular_velocity_min_
+   - angular_acceleration_max_
+   - angular_acceleration_min_
   }
-  
-  
+
+  class PID {
+    + PID(kp, ki, kd)
+    + reset()
+    + getCommand(error)
+    + setGains(kp, ki, kd)
+    + getGains(kp&, ki&, kd&)
+    - kp_
+    - ki_
+    - kd_
+  }
+
   Controller *-- Limits
   Controller *-- Model
-  Controller --> State
-  Model --> State
-  Limits --> State
+  Controller *-- PID
+  Controller <-- Params
 }
 
 package Testing {
 
   class MockPlant {
-   + State getState(State)
-   - noise
+   + command(throttle, steering)
+   + getState(speed&, heading&)
+   - noise_mean
+   - noise_stddev
   }
-  
-  MockPlant --> State
-
 }
 
 @enduml

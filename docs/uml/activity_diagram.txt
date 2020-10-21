@@ -2,35 +2,61 @@
 
 participant Test
 
-Test -> MockPlant: getState
+Test -> MockPlant: getState(s, h)
 activate MockPlant
 
-MockPlant -> Test: vel_cur, head_cur
-deactivate MockPlant
+Test -> Controller: setState(s, h)
+Controller -> Model: setState(s, h)
 
-Test -> Controller: update(vel_cur, head_cur, vel_des, head_des)
+Test -> Controller: setGoal(s, h)
+Controller -> Model: setGoal(s, h)
+
+Test -> Controller: start()
 activate Controller
-
-Controller -> Model: toState(vel_des, head_des)
+Controller -> Controller: While Loop
+activate Controller
 activate Model
-
-Model -> Controller: state_des
-
-Controller -> Model: toState(vel_cur, head_cur)
-Model -> Controller: state_cur
-deactivate Model
-
-Controller -> Controller: calcError(state_cur, state_des)
-Controller -> Controller: calcCommand(error)
-
-Controller -> Limits: limit(command)
+activate PID_s
+activate PID_h
 activate Limits
 
-Limits -> Controller: command
+Controller -> Model: getError()
+Model -> Controller: error_s, error_h
+
+Controller -> PID_s: getCommand(error_s)
+PID_s -> Controller: throttle_des
+
+Controller -> PID_h: getCommand(error_h)
+PID_h -> Controller: steering_des
+
+Controller -> Limits: limit(throttle_des, steering_des)
+Limits -> Controller: throttle, steering
+
+Controller -> Model: command(throttle, steering)
+Controller -> Controller: sleep()
+
+deactivate Controller
+deactivate Model
+deactivate PID_s
+deactivate PID_h
 deactivate Limits
 
-Controller -> Test: command
+Test -> Controller: getCommand()
+Controller -> Test: throttle, steering
+Test -> MockPlant: command(throttle, steering)
+Test -> MockPlant: getState()
+MockPlant -> Test: speed, heading
+
+deactivate MockPlant
+
+Test -> Controller: getWheelRPM()
+Controller -> Test: w_left, w_right
+
+Test -> Controller: stop()
 deactivate Controller
 
-
 @enduml
+
+
+
+

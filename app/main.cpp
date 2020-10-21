@@ -1,20 +1,12 @@
+/* @file main.cpp
+ * @copyright [2020]
+ */
+
 #include <iostream>
-#include <Vehicle.hpp>
-#include <AckermannVehicle.hpp>
-#include <PIDController.hpp>
+#include <Controller.hpp>
+#include <Params.hpp>
 
-using namespace VehicleControl;
-using namespace ControlAlgo;
-
-// define global variable dt for timestamp, seconds
-const double global_dt = 0.1;
-
-int main()
-{
-    //
-    AckermannVehicle Rover;
-    Rover.set_wheelbase(1.);
-    double tempbase = Rover.get_wheelbase();
-    std::cout << tempbase << std::endl;
-    return 0;
+int main() {
+  ackermann::Params p(0.1, 45.0, 0.25, 1.0);
+  ackermann::Controller Rover(p);
 }

@@ -1,4 +1,4 @@
-add_executable(shell-app main.cpp Vehicle.cpp PIDController.cpp AckermannVehicle.cpp)
+add_executable(shell-app main.cpp Controller.cpp Limits.cpp PID.cpp Model.cpp)
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/include
 )
