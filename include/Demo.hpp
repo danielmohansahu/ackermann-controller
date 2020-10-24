@@ -3,3 +3,4 @@
  */
 
 #include <QApplication>
+#include <qcustomplot.h>

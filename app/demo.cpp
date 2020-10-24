@@ -3,16 +3,18 @@
  */
 
 #include <iostream>
-// #include <Controller.hpp>
-// #include <Params.hpp>
-
 #include <Demo.hpp>
 
+#include <QPushButton>
+
 int main(int argc, char ** argv) {
-  // ackermann::Params p(0.1, 45.0, 0.25, 1.0);
-  // ackermann::Controller Rover(p);
 
+  // start core qt application
   QApplication app(argc, argv);
-  return app.exec();
 
+
+  QPushButton button("Hello World !");
+  button.show();
+
+  return app.exec();
 }
