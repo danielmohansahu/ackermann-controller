@@ -38,7 +38,14 @@ Sprint planning notes and reviews [can be found here](https://docs.google.com/do
 **TODO: Generate these steps.**
 
 ## Dependencies
-**TODO: Get list of dependencies (visualization/simulation tool).**
+
+This project requires a C++11 enabled compiler and `cmake`. In addition, we use QT5 for visualization of our demo.
+
+QT5 (and QCustomPlot) can be installed via the following command on Ubuntu 18.04:
+
+```bash
+sudo apt-get install qt5-default libqcustomplot-dev
+```
 
 ## Known Bugs and Issues
 **TODO: Annote bugs and issues when uncovered.**
