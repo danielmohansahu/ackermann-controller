@@ -13,7 +13,7 @@ endif()
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(demo demo.cpp Controller.cpp Limits.cpp PID.cpp Model.cpp)
-target_link_libraries(demo Threads::Threads)
+target_link_libraries(demo Threads::Threads Qt5::Widgets)
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
 )
