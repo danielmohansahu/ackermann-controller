@@ -10,16 +10,16 @@ QT_END_NAMESPACE
 
 class Window : public QWidget
 {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    Window(QWidget *parent = nullptr);
+ public:
+  Window(QWidget *parent = nullptr);
 
-private:
-    QGroupBox *createFirstExclusiveGroup();
-    QGroupBox *createSecondExclusiveGroup();
-    QGroupBox *createNonExclusiveGroup();
-    QGroupBox *createPushButtonGroup();
+ private:
+  QGroupBox *createParametersGroup();
+  QGroupBox *createControllerOperationsGroup();
+  QGroupBox *createSpeedPlotGroup();
+  QGroupBox *createHeadingPlotGroup();
 };
 
 #endif

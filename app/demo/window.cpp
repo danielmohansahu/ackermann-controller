@@ -1,108 +1,113 @@
 
 #include "window.h"
 
+#include <Params.hpp>
+
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QMenu>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QDoubleSpinBox>
 
 Window::Window(QWidget *parent)
     : QWidget(parent)
 {
-    QGridLayout *grid = new QGridLayout;
-    grid->addWidget(createFirstExclusiveGroup(), 0, 0);
-    grid->addWidget(createSecondExclusiveGroup(), 1, 0);
-    grid->addWidget(createNonExclusiveGroup(), 0, 1);
-    grid->addWidget(createPushButtonGroup(), 1, 1);
-    setLayout(grid);
+  QGridLayout *grid = new QGridLayout;
+  grid->addWidget(createParametersGroup(), 0, 0);
+  grid->addWidget(createControllerOperationsGroup(), 1, 0);
+  grid->addWidget(createSpeedPlotGroup(), 0, 1);
+  grid->addWidget(createHeadingPlotGroup(), 1, 1);
+  setLayout(grid);
 
-    setWindowTitle(tr("Group Boxes"));
-    resize(480, 320);
+  setWindowTitle(tr("Group Boxes"));
+  resize(480, 320);
 }
 
-QGroupBox *Window::createFirstExclusiveGroup()
+QGroupBox *Window::createParametersGroup()
 {
-    QGroupBox *groupBox = new QGroupBox(tr("Exclusive Radio Buttons"));
+  // @TODO create a signal to have ANY changes in this group restart the system
+  //  some can be asynchronous though...
+  ackermann::Params params(0.45, 45.0, 1.0, 1.0);
 
-    QRadioButton *radio1 = new QRadioButton(tr("&Radio button 1"));
-    QRadioButton *radio2 = new QRadioButton(tr("R&adio button 2"));
-    QRadioButton *radio3 = new QRadioButton(tr("Ra&dio button 3"));
+  QGroupBox *groupBox = new QGroupBox(tr("Contoller Parameters"));
 
-    radio1->setChecked(true);
+  // variables that require a system reset / restart
+  QDoubleSpinBox *controlFrequency = new QDoubleSpinBox();
+  controlFrequency->setValue(params.control_frequency);
+  QDoubleSpinBox *wheelBase = new QDoubleSpinBox();
+  wheelBase->setValue(params.wheel_base);
+  QDoubleSpinBox *maxSteeringAngle = new QDoubleSpinBox();
+  maxSteeringAngle->setValue(params.max_steering_angle);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(radio1);
-    vbox->addWidget(radio2);
-    vbox->addWidget(radio3);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
+  // variables that can / should be set on the fly
+  QDoubleSpinBox *kpHeading = new QDoubleSpinBox();
+  kpHeading->setValue(params.kp_heading);
+  QDoubleSpinBox *kiHeading = new QDoubleSpinBox();
+  kiHeading->setValue(params.ki_heading);
+  QDoubleSpinBox *kdHeading = new QDoubleSpinBox();
+  kdHeading->setValue(params.kd_heading);
+  QDoubleSpinBox *kpSpeed = new QDoubleSpinBox();
+  kpSpeed->setValue(params.kp_speed);
+  QDoubleSpinBox *kiSpeed = new QDoubleSpinBox();
+  kiSpeed->setValue(params.ki_speed);
+  QDoubleSpinBox *kdSpeed = new QDoubleSpinBox();
+  kdSpeed->setValue(params.kd_speed);
 
-    return groupBox;
+  QVBoxLayout *vbox = new QVBoxLayout;
+  vbox->addWidget(controlFrequency);
+  vbox->addWidget(wheelBase);
+  vbox->addWidget(maxSteeringAngle);
+  vbox->addWidget(kpHeading);
+  vbox->addWidget(kiHeading);
+  vbox->addWidget(kdHeading);
+  vbox->addWidget(kpSpeed);
+  vbox->addWidget(kiSpeed);
+  vbox->addWidget(kdSpeed);
+
+  vbox->addStretch(1);
+  groupBox->setLayout(vbox);
+
+  return groupBox;
 }
 
-QGroupBox *Window::createSecondExclusiveGroup()
+QGroupBox *Window::createControllerOperationsGroup()
 {
-    QGroupBox *groupBox = new QGroupBox(tr("E&xclusive Radio Buttons"));
-    groupBox->setCheckable(true);
-    groupBox->setChecked(false);
+  QGroupBox *groupBox = new QGroupBox(tr("&Controller Operations"));
 
-    QRadioButton *radio1 = new QRadioButton(tr("Rad&io button 1"));
-    QRadioButton *radio2 = new QRadioButton(tr("Radi&o button 2"));
-    QRadioButton *radio3 = new QRadioButton(tr("Radio &button 3"));
-    radio1->setChecked(true);
-    QCheckBox *checkBox = new QCheckBox(tr("Ind&ependent checkbox"));
-    checkBox->setChecked(true);
+  QPushButton *startButton = new QPushButton(tr("&start"));
+  QPushButton *stopButton = new QPushButton(tr("&stop"));
+  QPushButton *resetButton = new QPushButton(tr("&reset"));
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(radio1);
-    vbox->addWidget(radio2);
-    vbox->addWidget(radio3);
-    vbox->addWidget(checkBox);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
+  QVBoxLayout *vbox = new QVBoxLayout;
+  vbox->addWidget(startButton);
+  vbox->addWidget(stopButton);
+  vbox->addWidget(resetButton);
+  vbox->addStretch(1);
+  groupBox->setLayout(vbox);
 
-    return groupBox;
+  return groupBox;
 }
 
-QGroupBox *Window::createNonExclusiveGroup()
+QGroupBox *Window::createSpeedPlotGroup()
 {
-    QGroupBox *groupBox = new QGroupBox(tr("Non-Exclusive Checkboxes"));
-    groupBox->setFlat(true);
+  QGroupBox *groupBox = new QGroupBox(tr("Speed Plots"));
 
-    QCheckBox *checkBox1 = new QCheckBox(tr("&Checkbox 1"));
-    QCheckBox *checkBox2 = new QCheckBox(tr("C&heckbox 2"));
-    checkBox2->setChecked(true);
-    QCheckBox *tristateBox = new QCheckBox(tr("Tri-&state button"));
-    tristateBox->setTristate(true);
+  QVBoxLayout *vbox = new QVBoxLayout;
+  vbox->addStretch(1);
+  groupBox->setLayout(vbox);
 
-    tristateBox->setCheckState(Qt::PartiallyChecked);
-
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(checkBox1);
-    vbox->addWidget(checkBox2);
-    vbox->addWidget(tristateBox);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
-
-    return groupBox;
+  return groupBox;
 }
 
-QGroupBox *Window::createPushButtonGroup()
+QGroupBox *Window::createHeadingPlotGroup()
 {
-    QGroupBox *groupBox = new QGroupBox(tr("&Controller Operations"));
+  QGroupBox *groupBox = new QGroupBox(tr("Heading Plots"));
 
-    QPushButton *startButton = new QPushButton(tr("&start"));
-    QPushButton *stopButton = new QPushButton(tr("&stop"));
-    QPushButton *resetButton = new QPushButton(tr("&reset"));
+  QVBoxLayout *vbox = new QVBoxLayout;
+  vbox->addStretch(1);
+  groupBox->setLayout(vbox);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(startButton);
-    vbox->addWidget(stopButton);
-    vbox->addWidget(resetButton);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
-
-    return groupBox;
+  return groupBox;
 }
