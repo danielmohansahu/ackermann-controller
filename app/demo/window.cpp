@@ -91,37 +91,16 @@ QGroupBox *Window::createNonExclusiveGroup()
 
 QGroupBox *Window::createPushButtonGroup()
 {
-    QGroupBox *groupBox = new QGroupBox(tr("&Push Buttons"));
-    groupBox->setCheckable(true);
-    groupBox->setChecked(true);
+    QGroupBox *groupBox = new QGroupBox(tr("&Controller Operations"));
 
-    QPushButton *pushButton = new QPushButton(tr("&Normal Button"));
-    QPushButton *toggleButton = new QPushButton(tr("&Toggle Button"));
-    toggleButton->setCheckable(true);
-    toggleButton->setChecked(true);
-    QPushButton *flatButton = new QPushButton(tr("&Flat Button"));
-    flatButton->setFlat(true);
-
-    QPushButton *popupButton = new QPushButton(tr("Pop&up Button"));
-    QMenu *menu = new QMenu(this);
-    menu->addAction(tr("&First Item"));
-    menu->addAction(tr("&Second Item"));
-    menu->addAction(tr("&Third Item"));
-    menu->addAction(tr("F&ourth Item"));
-    popupButton->setMenu(menu);
-
-    QAction *newAction = menu->addAction(tr("Submenu"));
-    QMenu *subMenu = new QMenu(tr("Popup Submenu"));
-    subMenu->addAction(tr("Item 1"));
-    subMenu->addAction(tr("Item 2"));
-    subMenu->addAction(tr("Item 3"));
-    newAction->setMenu(subMenu);
+    QPushButton *startButton = new QPushButton(tr("&start"));
+    QPushButton *stopButton = new QPushButton(tr("&stop"));
+    QPushButton *resetButton = new QPushButton(tr("&reset"));
 
     QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(pushButton);
-    vbox->addWidget(toggleButton);
-    vbox->addWidget(flatButton);
-    vbox->addWidget(popupButton);
+    vbox->addWidget(startButton);
+    vbox->addWidget(stopButton);
+    vbox->addWidget(resetButton);
     vbox->addStretch(1);
     groupBox->setLayout(vbox);
 
