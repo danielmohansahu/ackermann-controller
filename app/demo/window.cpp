@@ -95,7 +95,22 @@ QGroupBox *Window::createSpeedPlotGroup()
 {
   QGroupBox *groupBox = new QGroupBox(tr("Speed Plots"));
 
+  QLineSeries* series = new QLineSeries();
+  series->append(0, 6);
+  series->append(2, 4);
+
+  // add chart instance
+  QChart *chart = new QChart();
+  chart->legend()->hide();
+  chart->addSeries(series);
+  chart->createDefaultAxes();
+  chart->setTitle("Simple line chart example");
+
+  QChartView *chartView = new QChartView(chart);
+  chartView->setRenderHint(QPainter::Antialiasing);
+
   QVBoxLayout *vbox = new QVBoxLayout;
+  vbox->addWidget(chartView);
   vbox->addStretch(1);
   groupBox->setLayout(vbox);
 
