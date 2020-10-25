@@ -10,9 +10,10 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QDoubleSpinBox>
+#include <QtCharts>
 
 Window::Window(QWidget *parent)
-    : QWidget(parent)
+  : QWidget(parent)
 {
   QGridLayout *grid = new QGridLayout;
   grid->addWidget(createParametersGroup(), 0, 0);

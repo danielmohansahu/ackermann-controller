@@ -41,10 +41,10 @@ Sprint planning notes and reviews [can be found here](https://docs.google.com/do
 
 This project requires a C++11 enabled compiler and `cmake`. In addition, we use QT5 for visualization of our demo.
 
-QT5 (and QCustomPlot) can be installed via the following command on Ubuntu 18.04:
+QT5 (and QtCharts) can be installed via the following command on Ubuntu 18.04:
 
 ```bash
-sudo apt-get install qt5-default libqcustomplot-dev
+sudo apt-get install qt5-default libqt5charts5-dev
 ```
 
 ## Known Bugs and Issues
