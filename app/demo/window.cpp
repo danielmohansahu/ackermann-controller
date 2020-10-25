@@ -1,8 +1,6 @@
 
 #include "window.h"
 
-#include <Params.hpp>
-
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
@@ -12,8 +10,20 @@
 #include <QDoubleSpinBox>
 #include <QtCharts>
 
+Window::Window(const std::shared_ptr<ackermann::Params> params)
+  : QWidget(nullptr),
+    params_(params)
+{
+  this->init();
+}
+
 Window::Window(QWidget *parent)
   : QWidget(parent)
+{
+  this->init();
+}
+
+void Window::init()
 {
   QGridLayout *grid = new QGridLayout;
   grid->addWidget(createParametersGroup(), 0, 0);

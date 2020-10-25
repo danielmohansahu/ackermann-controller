@@ -17,7 +17,7 @@ using namespace std::chrono_literals;
 using std::chrono::steady_clock;
 using std::chrono::duration;
 
-Controller::Controller(const Params& params)
+Controller::Controller(const std::shared_ptr<Params>& params)
   : params_(params) {
 }
 
@@ -67,7 +67,7 @@ void Controller::controlLoop() {
   cancel_ = false;
 
   // initialize timing variables
-  std::chrono::milliseconds duration(static_cast<int>(1000/params_.control_frequency));
+  std::chrono::milliseconds duration(static_cast<int>(1000/params_->control_frequency));
   auto next_loop_time = steady_clock::now();
 
   // execute loop at the desired frequency
