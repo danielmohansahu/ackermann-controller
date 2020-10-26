@@ -30,7 +30,7 @@ class AckermannControllerTest : public ::testing::Test {
       opts_ = std::make_unique<fake::PlantOptions>(WHEEL_BASE,
                                                    MAX_WHEEL_SEPARATION);
     if (!params_) {
-      params_ = std::make_unique<ackermann::Params>(WHEEL_BASE,
+      params_ = std::make_shared<ackermann::Params>(WHEEL_BASE,
                                                     MAX_WHEEL_SEPARATION,
                                                     1.0,
                                                     1.0);
@@ -44,7 +44,7 @@ class AckermannControllerTest : public ::testing::Test {
     plant_ = std::make_unique<fake::Plant>(*opts_);
 
     // construct the controller
-    controller_ = std::make_unique<ackermann::Controller>(*params_);
+    controller_ = std::make_unique<ackermann::Controller>(params_);
   }
 
   // our base class members (we use pointers to avoid default construction)
@@ -52,7 +52,7 @@ class AckermannControllerTest : public ::testing::Test {
   std::unique_ptr<ackermann::Controller> controller_;
 
   // default initialize our params and options, so we can re-call SetUp
-  std::unique_ptr<ackermann::Params> params_;
+  std::shared_ptr<ackermann::Params> params_;
   std::unique_ptr<fake::PlantOptions> opts_;
 };
 
