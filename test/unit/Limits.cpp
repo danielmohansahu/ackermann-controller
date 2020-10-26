@@ -12,7 +12,7 @@ using ackermann::Params;
 /* @brief Test limiting without any limits (should be default behavior).*/
 TEST(Limits_NoLimit, should_pass) {
   double dt = 0.01;
-  Params p(0.0, 0.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
   Limits lim(p);
 
   {
@@ -53,9 +53,9 @@ TEST(Limits_NoLimit, should_pass) {
 TEST(Limits_Velocity, should_pass) {
   // instantiate a limits class with only velocity limits
   double dt = 0.01;
-  Params p(0.0, 0.0, 0.0, 0.0);
-  p.velocity_max = 1.0;
-  p.velocity_min = 0.0;
+  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  p->velocity_max = 1.0;
+  p->velocity_min = 0.0;
   Limits lim(p);
 
   {
@@ -65,7 +65,7 @@ TEST(Limits_Velocity, should_pass) {
     double desired_throttle = original_throttle;
     double desired_steering = original_steering;
     lim.limit(0.0, 0.0, desired_throttle, desired_steering, dt);
-    EXPECT_EQ(desired_throttle, p.velocity_max);
+    EXPECT_EQ(desired_throttle, p->velocity_max);
     EXPECT_EQ(original_steering, desired_steering);    
   }
 
@@ -76,7 +76,7 @@ TEST(Limits_Velocity, should_pass) {
     double desired_throttle = original_throttle;
     double desired_steering = original_steering;
     lim.limit(0.0, 0.0, desired_throttle, desired_steering, dt);
-    EXPECT_EQ(desired_throttle, p.velocity_min);
+    EXPECT_EQ(desired_throttle, p->velocity_min);
     EXPECT_EQ(original_steering, desired_steering);    
   }
 }
@@ -85,9 +85,9 @@ TEST(Limits_Velocity, should_pass) {
 TEST(Limits_Acceleration, should_pass) {
   // instantiate a limits class with only acceleration limits
   double dt = 0.01;
-  Params p(0.0, 0.0, 0.0, 0.0);
-  p.acceleration_min = -1.0;
-  p.acceleration_max = 1.0;
+  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  p->acceleration_min = -1.0;
+  p->acceleration_max = 1.0;
   Limits lim(p);
 
   {
@@ -96,7 +96,7 @@ TEST(Limits_Acceleration, should_pass) {
     double desired_throttle = original_throttle;
     double desired_steering = original_steering;
     lim.limit(0.0, 0.0, desired_throttle, desired_steering, dt);
-    EXPECT_EQ(desired_throttle, p.acceleration_max * dt);
+    EXPECT_EQ(desired_throttle, p->acceleration_max * dt);
     EXPECT_EQ(original_steering, desired_steering);
   }
 
@@ -107,7 +107,7 @@ TEST(Limits_Acceleration, should_pass) {
     double desired_throttle = original_throttle;
     double desired_steering = original_steering;
     lim.limit(0.0, 0.0, desired_throttle, desired_steering, dt);
-    EXPECT_EQ(desired_throttle, p.acceleration_min * dt);
+    EXPECT_EQ(desired_throttle, p->acceleration_min * dt);
     EXPECT_EQ(original_steering, desired_steering);
   }
 }

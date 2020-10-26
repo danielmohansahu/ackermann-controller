@@ -10,13 +10,13 @@ class AckemannModelTest : public ::testing::Test {
  protected:
   void SetUp() override {
     // construct our base classes;
-    model_ = std::make_unique<ackermann::Model>(wheel_base, max_steering_angle);
+    params_ = std::make_shared<ackermann::Params>(1.0, 45.0, 0.0, 0.0);
+    model_ = std::make_unique<ackermann::Model>(params_);
   }
 
   // our base class members (we use pointers to avoid default construction)
   std::unique_ptr<ackermann::Model> model_;
-  double wheel_base {1.0};
-  double max_steering_angle {45.0};
+  std::shared_ptr<ackermann::Params> params_;
 };
 
 /* @brief Test all setters and Getters. */
