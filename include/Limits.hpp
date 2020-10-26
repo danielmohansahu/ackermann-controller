@@ -3,6 +3,7 @@
  * @copyright [2020]
  */
 
+#include <memory>
 #include <limits>
 
 #include "Params.hpp"
@@ -14,7 +15,7 @@ namespace ackermann {
 class Limits {
  public:
   /* @brief Constructor */
-  explicit Limits(const Params& params);
+  explicit Limits(const std::shared_ptr<const Params>& params);
 
   /* @brief Apply known limits to the given controller command.
    * 
@@ -35,14 +36,8 @@ class Limits {
              double dt) const;
 
  private:
-  double velocity_max_;
-  double velocity_min_;
-  double acceleration_max_;
-  double acceleration_min_;
-  double angular_velocity_max_;
-  double angular_velocity_min_;
-  double angular_acceleration_max_;
-  double angular_acceleration_min_;
+  // access to our parameters object (contains limits)
+  const std::shared_ptr<const Params> params_;
 };
 
 } // namespace ackermann

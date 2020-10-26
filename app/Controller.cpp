@@ -17,7 +17,7 @@ using namespace std::chrono_literals;
 using std::chrono::steady_clock;
 using std::chrono::duration;
 
-Controller::Controller(const std::shared_ptr<Params>& params)
+Controller::Controller(const std::shared_ptr<const Params>& params)
   : params_(params) {
 }
 

@@ -15,7 +15,8 @@
 
 namespace ackermann {
 
-Model::Model(const double wheel_base, const double max_steering_angle) {
+Model::Model(const std::shared_ptr<const Params>& params)
+  : params_(params) {
 
 }
 
