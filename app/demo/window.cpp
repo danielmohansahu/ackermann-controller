@@ -10,7 +10,7 @@
 #include <QDoubleSpinBox>
 #include <QtCharts>
 
-Window::Window(const std::shared_ptr<ackermann::Params> params)
+Window::Window(const std::shared_ptr<ackermann::Params>& params)
   : QWidget(nullptr),
     params_(params)
 {

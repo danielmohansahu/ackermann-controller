@@ -18,7 +18,7 @@ class Window : public QWidget
 
  public:
   Window(QWidget *parent = nullptr);
-  Window(const std::shared_ptr<ackermann::Params> params);
+  Window(const std::shared_ptr<ackermann::Params>& params);
 
  private:
   void init();
