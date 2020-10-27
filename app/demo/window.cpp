@@ -10,9 +10,13 @@
 #include <QDoubleSpinBox>
 #include <QtCharts>
 
-Window::Window(const std::shared_ptr<ackermann::Params>& params)
+Window::Window(const std::shared_ptr<ackermann::Params>& params,
+               const std::shared_ptr<ackermann::Controller>& controller,
+               const std::shared_ptr<fake::Plant>& plant)
   : QWidget(nullptr),
-    params_(params)
+    params_(params),
+    controller_(controller),
+    plant_(plant)
 {
   this->init();
 }

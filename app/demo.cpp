@@ -6,6 +6,8 @@
 
 #include <Controller.hpp>
 #include <Params.hpp>
+#include <fake/plant.h>
+
 #include "demo/window.h"
 
 int main(int argc, char *argv[])
@@ -13,19 +15,18 @@ int main(int argc, char *argv[])
   // instantiate shared controller parameters instance
   auto params = std::make_shared<ackermann::Params>(0.45, 0.785, 1.0, 1.0);
 
-  // construct Controller instance
-
-  // @TODO Daniel M. Sahu construct dummy plant class and instantiate here
-  // plant DummyPlant;
-
   // construct controller class
-  ackermann::Controller controller(params);
+  auto controller = std::make_shared<ackermann::Controller>(params);
+
+  // Construct dummy plant class
+  fake::PlantOptions opts(0.45, 0.785);
+  auto plant = std::make_shared<fake::Plant>(opts);
 
   // begin QT application instance
   QApplication app(argc, argv);
 
   // instantiate QT demo window widget
-  Window window(params);
+  Window window(params, controller, plant);
 
   // show and handle user input
   window.show();
