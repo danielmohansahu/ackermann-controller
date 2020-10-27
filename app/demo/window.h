@@ -6,6 +6,7 @@
 #include <chrono>
 
 #include <QWidget>
+#include <QtCharts>
 
 #include <Params.hpp>
 #include <Controller.hpp>
@@ -41,6 +42,10 @@ class Window : public QWidget
   QGroupBox *createControllerOperationsGroup();
   QGroupBox *createSpeedPlotGroup();
   QGroupBox *createHeadingPlotGroup();
+
+  // data series (used in visualization)
+  QLineSeries* setpointSeries;
+  QLineSeries* achievedSeries;
 
   // synchronization objects
   std::atomic<bool> stop_ {true};

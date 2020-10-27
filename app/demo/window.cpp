@@ -1,5 +1,7 @@
 #include "window.h"
 
+#include <math.h>
+
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
@@ -7,7 +9,6 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QDoubleSpinBox>
-#include <QtCharts>
 
 Window::Window(const std::shared_ptr<ackermann::Params>& params,
                const std::shared_ptr<ackermann::Controller>& controller,
@@ -81,9 +82,18 @@ void Window::reset()
 void Window::execute()
 {
   // start the controller and continually evaluate its commands and send them to the plant
+  double x = 0.0;
+  double y1 = 0.0;
+  double y2 = 0.0;
   while (!stop_)
   {
     std::cout << "Continually executing..." << std::endl;
+    x += 0.1;
+    y1 = std::sin(x);
+    y2 = std::sin(x);
+    setpointSeries->append(x, y1);
+    setpointSeries->append(x, y2);
+
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
 }
@@ -190,13 +200,9 @@ QGroupBox *Window::createSpeedPlotGroup()
 
   // add desired setpoint series
   QLineSeries* setpointSeries = new QLineSeries();
-  setpointSeries->append(0, 6);
-  setpointSeries->append(2, 4);
 
   // add achieved values series
   QLineSeries* achievedSeries = new QLineSeries();
-  achievedSeries->append(0, 5);
-  achievedSeries->append(2, 3);
 
   // add chart instance
   QChart *chart = new QChart();
@@ -222,21 +228,15 @@ QGroupBox *Window::createHeadingPlotGroup()
 {
   QGroupBox *groupBox = new QGroupBox(tr("Heading Plots"));
 
-  // add desired setpoint series
-  QLineSeries* setpointSeries = new QLineSeries();
-  setpointSeries->append(0, 16);
-  setpointSeries->append(2, 4);
-
-  // add achieved values series
-  QLineSeries* achievedSeries = new QLineSeries();
-  achievedSeries->append(0, 15);
-  achievedSeries->append(2, 3);
+  // add dummy series (for now)
+  QLineSeries* dummy1 = new QLineSeries();
+  QLineSeries* dummy2 = new QLineSeries();
 
   // add chart instance
   QChart *chart = new QChart();
   // chart->legend()->hide();
-  chart->addSeries(setpointSeries);
-  chart->addSeries(achievedSeries);
+  chart->addSeries(dummy1);
+  chart->addSeries(dummy2);
   chart->createDefaultAxes();
   chart->setTitle("Vehicle Heading");
 
