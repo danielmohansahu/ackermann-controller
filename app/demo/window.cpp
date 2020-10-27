@@ -1,4 +1,3 @@
-
 #include "window.h"
 
 #include <QCheckBox>
@@ -38,6 +37,55 @@ void Window::init()
 
   setWindowTitle(tr("Group Boxes"));
   resize(480, 320);
+}
+
+
+void Window::start()
+{
+  // only process this request if we're not already running
+  if (!thread_handle_.joinable())
+  {
+    // spin off thread to continually execute
+    stop_ = false;
+    thread_handle_ = std::thread([this](){this->execute();});
+  }
+}
+
+void Window::stop()
+{
+  // stop thread and rejoin
+  stop_ = true;
+  if (thread_handle_.joinable())
+  {
+    thread_handle_.join();
+    std::cout << "Execution stopped." << std::endl;
+  }
+}
+
+void Window::reset()
+{
+  // do nothing if we're currently running (?)
+  if (thread_handle_.joinable())
+  {
+    std::cout << "Not resetting during a live run." << std::endl;
+  }
+  else
+  {
+    // reset our objects to base states
+    std::cout << "Resetting Controller and Plant." << std::endl;
+    controller_->reset();
+    plant_->reset();
+  }  
+}
+
+void Window::execute()
+{
+  // start the controller and continually evaluate its commands and send them to the plant
+  while (!stop_)
+  {
+    std::cout << "Continually executing..." << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+  }
 }
 
 QGroupBox *Window::createParametersGroup()
@@ -120,6 +168,11 @@ QGroupBox *Window::createControllerOperationsGroup()
   QPushButton *startButton = new QPushButton(tr("start"));
   QPushButton *stopButton = new QPushButton(tr("stop"));
   QPushButton *resetButton = new QPushButton(tr("reset"));
+
+  // connect signals and slots to these buttons
+  connect(startButton, SIGNAL(clicked()), this, SLOT(start()));
+  connect(stopButton, SIGNAL(clicked()), this, SLOT(stop()));
+  connect(resetButton, SIGNAL(clicked()), this, SLOT(reset()));
 
   QVBoxLayout *vbox = new QVBoxLayout;
   vbox->addWidget(startButton);
