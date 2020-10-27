@@ -90,10 +90,12 @@ void Window::execute()
     std::cout << "Continually executing..." << std::endl;
     x += 0.1;
     y1 = std::sin(x);
-    y2 = std::sin(x);
-    setpointSeries->append(x, y1);
-    setpointSeries->append(x, y2);
-
+    y2 = std::cos(x);
+    speedSetpointSeries->append(x, y1);
+    speedAchievedSeries->append(x, y2);
+    speedChart->axisX()->setRange(0,x);
+    speedChart->axisY()->setRange(-1,1);
+    
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
 }
@@ -199,21 +201,21 @@ QGroupBox *Window::createSpeedPlotGroup()
   QGroupBox *groupBox = new QGroupBox(tr("Speed Plots"));
 
   // add desired setpoint series
-  QLineSeries* setpointSeries = new QLineSeries();
+  speedSetpointSeries = new QLineSeries();
 
   // add achieved values series
-  QLineSeries* achievedSeries = new QLineSeries();
+  speedAchievedSeries = new QLineSeries();
 
   // add chart instance
-  QChart *chart = new QChart();
+  speedChart = new QChart();
   // chart->legend()->hide();
-  chart->addSeries(setpointSeries);
-  chart->addSeries(achievedSeries);
-  chart->createDefaultAxes();
-  chart->setTitle("Vehicle Speed");
+  speedChart->addSeries(speedSetpointSeries);
+  speedChart->addSeries(speedAchievedSeries);
+  speedChart->createDefaultAxes();
+  speedChart->setTitle("Vehicle Speed");
 
   // add ChartView instance (to actually display the chart)
-  QChartView *chartView = new QChartView(chart);
+  QChartView *chartView = new QChartView(speedChart);
   chartView->setRenderHint(QPainter::Antialiasing);
 
   // add chart to visual box

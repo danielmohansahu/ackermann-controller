@@ -44,8 +44,9 @@ class Window : public QWidget
   QGroupBox *createHeadingPlotGroup();
 
   // data series (used in visualization)
-  QLineSeries* setpointSeries;
-  QLineSeries* achievedSeries;
+  QLineSeries* speedSetpointSeries;
+  QLineSeries* speedAchievedSeries;
+  QChart* speedChart;
 
   // synchronization objects
   std::atomic<bool> stop_ {true};
