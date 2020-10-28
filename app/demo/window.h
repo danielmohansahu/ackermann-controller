@@ -39,6 +39,7 @@ class Window : public QWidget
 
   // create group boxes
   QGroupBox *createParametersGroup();
+  QGroupBox *createSetpointsGroup();
   QGroupBox *createControllerOperationsGroup();
   QGroupBox *createSpeedPlotGroup();
   QGroupBox *createHeadingPlotGroup();

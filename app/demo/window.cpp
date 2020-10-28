@@ -31,7 +31,8 @@ void Window::init()
 {
   QGridLayout *grid = new QGridLayout;
   grid->addWidget(createParametersGroup(), 0, 0);
-  grid->addWidget(createControllerOperationsGroup(), 1, 0);
+  grid->addWidget(createSetpointsGroup(), 1, 0);
+  grid->addWidget(createControllerOperationsGroup(), 2, 0);
   grid->addWidget(createSpeedPlotGroup(), 0, 1);
   grid->addWidget(createHeadingPlotGroup(), 1, 1);
   setLayout(grid);
@@ -139,52 +140,48 @@ void Window::execute()
 
 QGroupBox *Window::createParametersGroup()
 {
-  // @TODO create a signal to have ANY changes in this group restart the system
-  //  some can be asynchronous though...
-  ackermann::Params params(0.45, 45.0, 1.0, 1.0);
-
   QGroupBox *groupBox = new QGroupBox(tr("Contoller Parameters"));
 
   // controller frequency
   QLabel *controlFrequencyLabel = new QLabel(tr("Desired controller loop rate:"));
   QDoubleSpinBox *controlFrequency = new QDoubleSpinBox();
-  controlFrequency->setValue(params.control_frequency);
+  controlFrequency->setValue(params_->control_frequency);
   controlFrequency->setSuffix(tr(" (hz)"));
 
   // wheel base
   QLabel *wheelBaseLabel = new QLabel(tr("Vehicle wheel base:"));
   QDoubleSpinBox *wheelBase = new QDoubleSpinBox();
-  wheelBase->setValue(params.wheel_base);
+  wheelBase->setValue(params_->wheel_base);
   wheelBase->setSuffix(tr(" (m)"));
 
   // max steering angle
   QLabel *maxSteeringAngleLabel = new QLabel(tr("Vehicle maximum steering angle:"));
   QDoubleSpinBox *maxSteeringAngle = new QDoubleSpinBox();
-  maxSteeringAngle->setValue(params.max_steering_angle);
+  maxSteeringAngle->setValue(params_->max_steering_angle);
   maxSteeringAngle->setSuffix(tr(" (rad)"));
 
   // heading PID params (KP, KI, KD)
   QLabel *headingPIDLabel = new QLabel(tr("Heading PID Parameters:"));
   QDoubleSpinBox *kpHeading = new QDoubleSpinBox();
-  kpHeading->setValue(params.kp_heading);
+  kpHeading->setValue(params_->kp_heading);
   kpHeading->setPrefix(tr("kp: "));
   QDoubleSpinBox *kiHeading = new QDoubleSpinBox();
-  kiHeading->setValue(params.ki_heading);
+  kiHeading->setValue(params_->ki_heading);
   kiHeading->setPrefix(tr("ki: "));
   QDoubleSpinBox *kdHeading = new QDoubleSpinBox();
-  kdHeading->setValue(params.kd_heading);
+  kdHeading->setValue(params_->kd_heading);
   kdHeading->setPrefix(tr("kd: "));
 
   // speed PID params (KP, KI, KD)
   QLabel *speedPIDLabel = new QLabel(tr("Speed PID Parameters:"));
   QDoubleSpinBox *kpSpeed = new QDoubleSpinBox();
-  kpSpeed->setValue(params.kp_speed);
+  kpSpeed->setValue(params_->kp_speed);
   kpSpeed->setPrefix(tr("kp: "));
   QDoubleSpinBox *kiSpeed = new QDoubleSpinBox();
-  kiSpeed->setValue(params.ki_speed);
+  kiSpeed->setValue(params_->ki_speed);
   kiSpeed->setPrefix(tr("ki: "));
   QDoubleSpinBox *kdSpeed = new QDoubleSpinBox();
-  kdSpeed->setValue(params.kd_speed);
+  kdSpeed->setValue(params_->kd_speed);
   kdSpeed->setPrefix(tr("kd: "));
 
   // add all parameters to box
@@ -203,6 +200,54 @@ QGroupBox *Window::createParametersGroup()
   vbox->addWidget(kpSpeed);
   vbox->addWidget(kiSpeed);
   vbox->addWidget(kdSpeed);
+
+  vbox->addStretch(1);
+  groupBox->setLayout(vbox);
+
+  return groupBox;
+}
+
+QGroupBox *Window::createSetpointsGroup()
+{
+  QGroupBox *groupBox = new QGroupBox(tr("Contoller Goals and Initial Conditions"));
+
+  // speed setpoint
+  QLabel *speedSetpointLabel = new QLabel(tr("Desired Plant speed:"));
+  QDoubleSpinBox *speedSetpoint = new QDoubleSpinBox();
+  speedSetpoint->setValue(speed_setpoint_);
+  speedSetpoint->setSuffix(tr(" (m/s)"));
+
+  // heading setpoint
+  QLabel *headingSetpointLabel = new QLabel(tr("Desired Plant heading:"));
+  QDoubleSpinBox *headingSetpoint = new QDoubleSpinBox();
+  headingSetpoint->setValue(heading_setpoint_);
+  headingSetpoint->setSuffix(tr(" (rad)"));
+
+  // plant initial speed
+  QLabel *initialSpeedLabel = new QLabel(tr("Initial Plant speed:"));
+  QDoubleSpinBox *initialSpeed = new QDoubleSpinBox();
+  initialSpeed->setValue(initial_speed_);
+  initialSpeed->setSuffix(tr(" (m/s)"));
+
+  // speed setpoint
+  QLabel *initialHeadingLabel = new QLabel(tr("Desired Plant heading:"));
+  QDoubleSpinBox *initialHeading = new QDoubleSpinBox();
+  initialHeading->setValue(heading_setpoint_);
+  initialHeading->setSuffix(tr(" (rad)"));
+
+  // connect signals to slots
+
+
+  // add all parameters to box
+  QVBoxLayout *vbox = new QVBoxLayout;
+  vbox->addWidget(speedSetpointLabel);
+  vbox->addWidget(speedSetpoint);
+  vbox->addWidget(headingSetpointLabel);
+  vbox->addWidget(headingSetpoint);
+  vbox->addWidget(initialSpeedLabel);
+  vbox->addWidget(initialSpeed);
+  vbox->addWidget(initialHeadingLabel);
+  vbox->addWidget(initialHeading);
 
   vbox->addStretch(1);
   groupBox->setLayout(vbox);
