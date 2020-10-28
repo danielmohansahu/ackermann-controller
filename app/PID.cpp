@@ -31,7 +31,7 @@ double PID::getCommand(double current, double desired, double dt) {
   // Derivative
   double derivative = (current_error - prev_error_) / dt;
   // calculate output
-  double output = (k_p_*current_error) + (k_i_*integral_error_) + (k_d_*derivative);
+  double output = (params_->kp*current_error) + (params_->ki*integral_error_) + (params_->kd*derivative);
   // save error as previous prev_error_
   prev_error_ = current_error;
   // return output;
