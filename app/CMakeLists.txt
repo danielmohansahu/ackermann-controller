@@ -8,7 +8,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # find QT5 and QCustomPlot
 find_package(Qt5 COMPONENTS Core Widgets Charts REQUIRED)
-find_package(QCustomPlot REQUIRED)
 
 set(CPP_SOURCES
   demo.cpp
