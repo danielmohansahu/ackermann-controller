@@ -9,9 +9,11 @@
  * @copyright [2020]
  */
 
+#include <assert.h>
 #include <atomic>
 #include <memory>
 #include <thread>
+#include <chrono>
 
 #include "Params.hpp"
 #include "Model.hpp"
@@ -29,10 +31,11 @@ class Controller {
   void start();
 
   /* @brief Stop execution of a control loop and rejoin.
-   *
    * This also calls reset() to clear any state variables.
+   * 
+   * @ param block: Optionally wait for any running thread to rejoin. Default false.
    */
-  void stop();
+  void stop(bool block = false);
 
   /* @brief Clear system state variables. */
   void reset();
@@ -97,6 +100,9 @@ class Controller {
   /* @brief Control loop (executed asynchronously) */
   void controlLoop();
 
+  /* @brief A copy of our configuration parameters. */
+  Params params_;
+
   /* @brief Ackermann model (used in translating 
    * speed/heading into wheel speeds)
    */
@@ -116,7 +122,7 @@ class Controller {
   /* @brief Thread handle for the currently executing control loop. */
   std::thread control_loop_handle_;
   std::atomic<bool> running_ {false};
-
+  std::atomic<bool> cancel_ {false};
 };
 
 } // namespace ackermann
