@@ -8,10 +8,22 @@
  * @author Santosh Kesani
  * @copyright [2020]
  */
+#include <memory>
 #include <atomic>
 #include <limits>
 
 namespace ackermann {
+
+struct PIDParams {
+  std::atomic<double> kp;
+  std::atomic<double> ki;
+  std::atomic<double> kd;
+
+  // constructor
+  PIDParams(double kp_ = 0.0, double ki_ = 0.0, double kd_ = 0.0)
+    : kp(kp_), ki(ki_), kd(kd_)
+  {};
+};
 
 struct Params {
   // default value parameters
@@ -24,23 +36,21 @@ struct Params {
   std::atomic<double> angular_velocity_min {std::numeric_limits<double>::min()};
   std::atomic<double> angular_acceleration_max {std::numeric_limits<double>::max()};
   std::atomic<double> angular_acceleration_min {std::numeric_limits<double>::min()};
-  std::atomic<double> ki_speed {0.0};
-  std::atomic<double> kd_speed {0.0};
-  std::atomic<double> ki_heading {0.0};
-  std::atomic<double> kd_heading {0.0};
+
+  // PID parameters
+  const std::shared_ptr<PIDParams> pid_speed;
+  const std::shared_ptr<PIDParams> pid_heading;
 
   // required parameters
   std::atomic<double> wheel_base;
   std::atomic<double> max_steering_angle;
-  std::atomic<double> kp_speed;
-  std::atomic<double> kp_heading;
 
   /* @brief Constructor */
   Params(double wheel_base_, double max_steering_angle_, double kp_speed_, double kp_heading_)
-    : wheel_base(wheel_base_),
-      max_steering_angle(max_steering_angle_),
-      kp_speed(kp_speed_),
-      kp_heading(kp_heading_)
+    : pid_speed(std::make_shared<PIDParams>(kp_speed_)),
+      pid_heading(std::make_shared<PIDParams>(kp_heading_)),
+      wheel_base(wheel_base_),
+      max_steering_angle(max_steering_angle_)
   {}
 };
 
