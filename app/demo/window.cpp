@@ -40,12 +40,14 @@ void Window::init()
   resize(480, 320);
 }
 
-
 void Window::start()
 {
   // only process this request if we're not already running
   if (!thread_handle_.joinable())
   {
+    // a start should also clear out the plot and any associated states
+    this->reset();
+
     // spin off thread to continually execute
     stop_ = false;
     thread_handle_ = std::thread([this](){this->execute();});
@@ -76,28 +78,63 @@ void Window::reset()
     std::cout << "Resetting Controller and Plant." << std::endl;
     controller_->reset();
     plant_->reset();
+
+    // ensure that we keep the current setpoint and plant state
+    controller_->setGoal(heading_setpoint_, speed_setpoint_);
+    plant_->setState(initial_speed_, initial_heading_);
+
+    // also reset our line series and clear our chart view
+    speedSetpointSeries->clear();
+    speedAchievedSeries->clear();
+    speedChart->createDefaultAxes();
   }  
 }
 
+// @TODO add parameters / signals for:
+// goal (speed, heading)
+// initial conditions (plant)
+
 void Window::execute()
 {
-  // start the controller and continually evaluate its commands and send them to the plant
-  double x = 0.0;
-  double y1 = 0.0;
-  double y2 = 0.0;
+  // initialize time and some handy variables
+  double time = 0.0;
+  double dt = 0.1;
+
+  // start controller
+  controller_->start();
+
+  // continually evaluate the controller's commands and send them to the plant
   while (!stop_)
   {
-    std::cout << "Continually executing..." << std::endl;
-    x += 0.1;
-    y1 = std::sin(x);
-    y2 = std::cos(x);
-    speedSetpointSeries->append(x, y1);
-    speedAchievedSeries->append(x, y2);
-    speedChart->axisX()->setRange(0,x);
-    speedChart->axisY()->setRange(-1,1);
-    
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    // poll Plant for current state
+    double current_speed, current_heading;
+    plant_->getState(current_speed, current_heading);
+
+    // get the latest controller command
+    double throttle, steering;
+    controller_->getCommand(throttle, steering);
+
+    // apply the command to the plant
+    plant_->command(throttle, steering, dt);
+
+    // update the chart with our latest information
+    speedSetpointSeries->append(time, speed_setpoint_);
+    speedAchievedSeries->append(time, current_speed);
+    speedChart->axisX()->setRange(0, time);
+    // @TODO calculate this and adjust
+    speedChart->axisY()->setRange(0, 10);
+
+    // @TODO add in command chart
+    // @TODO add in heading series
+
+    // sleep and update our timestamp
+    // @TODO parameterize this
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    time += dt;
   }
+
+  // cleanup; stop controller
+  controller_->stop();
 }
 
 QGroupBox *Window::createParametersGroup()

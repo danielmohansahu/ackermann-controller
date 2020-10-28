@@ -43,10 +43,16 @@ class Window : public QWidget
   QGroupBox *createSpeedPlotGroup();
   QGroupBox *createHeadingPlotGroup();
 
-  // data series (used in visualization)
+  // QT data series and chart objects (used in visualization)
   QLineSeries* speedSetpointSeries;
   QLineSeries* speedAchievedSeries;
   QChart* speedChart;
+
+  // setpoint (e.g. goal) data
+  std::atomic<double> speed_setpoint_ {0.0};
+  std::atomic<double> heading_setpoint_ {0.0};
+  std::atomic<double> initial_speed_ {0.0};
+  std::atomic<double> initial_heading_ {0.0};
 
   // synchronization objects
   std::atomic<bool> stop_ {true};
