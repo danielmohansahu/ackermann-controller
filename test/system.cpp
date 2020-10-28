@@ -36,8 +36,8 @@ class AckermannControllerTest : public ::testing::Test {
                                                     1.0);
       // set some default control variables
       params_->control_frequency = CONTROL_FREQUENCY;
-      params_->ki_speed = 1.0;
-      params_->ki_heading = 1.0;
+      params_->pid_speed->ki = 1.0;
+      params_->pid_heading->ki = 1.0;
     }
 
     // construct our plant
