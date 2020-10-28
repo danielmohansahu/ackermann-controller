@@ -8,7 +8,10 @@
  * @copyright [2020]
  */
 
+#include <memory>
 #include <atomic>
+
+#include "Params.hpp"
 
 namespace ackermann {
 
@@ -17,7 +20,7 @@ namespace ackermann {
 class Model {
  public:
   /* @brief Constructor */
-  Model(const double wheel_base, const double max_steering_angle);
+  Model(const std::shared_ptr<const Params>& params);
 
   /* @brief Reset system state variables to defaults. */
   void reset();
@@ -73,9 +76,8 @@ class Model {
   void getError(double& speed_error, double& heading_error) const;
 
  private:
-  // fixes system kinematics
-  double wheel_base_;
-  double max_steering_angle_;
+  // shared parameter object (contains system kinematics)
+  const std::shared_ptr<const Params> params_;
 
   // system state variables
   std::atomic<double> desired_speed_ {0.0};

@@ -13,8 +13,8 @@
 
 namespace ackermann {
 
-Limits::Limits(const Params& params) {
-
+Limits::Limits(const std::shared_ptr<const Params>& params)
+  : params_(params) {
 }
 
 void Limits::limit(const double current_throttle,

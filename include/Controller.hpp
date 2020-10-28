@@ -25,7 +25,9 @@ namespace ackermann {
 class Controller {
  public:
   /* @brief Constructor; constructs and initializes parameters of all composition classes. */
-  explicit Controller(const Params& params);
+  explicit Controller(const std::shared_ptr<const Params>& params);
+
+  ~Controller();
 
   /* @brief Begin execution of a control loop. */
   void start();
@@ -101,7 +103,7 @@ class Controller {
   void controlLoop();
 
   /* @brief A copy of our configuration parameters. */
-  Params params_;
+  const std::shared_ptr<const Params> params_;
 
   /* @brief Ackermann model (used in translating 
    * speed/heading into wheel speeds)
@@ -121,7 +123,6 @@ class Controller {
 
   /* @brief Thread handle for the currently executing control loop. */
   std::thread control_loop_handle_;
-  std::atomic<bool> running_ {false};
   std::atomic<bool> cancel_ {false};
 };
 

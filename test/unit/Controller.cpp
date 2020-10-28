@@ -11,13 +11,13 @@ class AckemannControllerTest : public ::testing::Test {
  protected:
   void SetUp() override {
     // construct our base classes;
-    params_ = std::make_unique<ackermann::Params>(1.25, 45.0, 1.01, 0.15);
-    controller_ = std::make_unique<ackermann::Controller>(*params_);
+    params_ = std::make_shared<ackermann::Params>(1.25, 45.0, 1.01, 0.15);
+    controller_ = std::make_unique<ackermann::Controller>(params_);
   }
 
   // our base class members (we use pointers to avoid default construction)
   std::unique_ptr<ackermann::Controller> controller_;
-  std::unique_ptr<ackermann::Params> params_;
+  std::shared_ptr<ackermann::Params> params_;
 };
 
 /* @brief Test Controller with default params */

@@ -8,8 +8,7 @@ add_executable(
     ../app/Controller.cpp
     ../app/Limits.cpp
     ../app/PID.cpp
-    # test specific files
-    fake/plant.cpp
+    ../app/fake/plant.cpp
     # Unit level tests
     unit/Controller.cpp
     unit/Limits.cpp
