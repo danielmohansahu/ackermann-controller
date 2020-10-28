@@ -8,6 +8,9 @@
  * @copyright [2020]
  */
 
+#include <memory>
+#include <Params.hpp>
+
 namespace ackermann {
 
 class PID {
@@ -17,22 +20,7 @@ class PID {
    * @parameter kI Integral Gain
    * @parameter kD Derivative Gain
    */
-  PID(double k_p, double k_i, double k_d);
-
-  /* @brief Set the kP Proportional Gain
-   * @parameter Gain
-   */
-  void set_k_p(double kp);
-
-  /* @brief Set the kI Integral Gain
-   * @parameter Gain
-   */
-  void set_k_i(double ki);
-
-  /* @brief Set the kD Derivative Gain
-   * @parameter Gain
-   */
-  void set_k_d(double kd);
+  PID(const std::shared_ptr<const PIDParams>& params);
 
   /* @brief Get the kP Proportional Gain
    * @parameter None
@@ -60,14 +48,8 @@ class PID {
   double getCommand(double current, double desired, double dt);
 
  private:
-  // @brief Proportional Gain
-  double k_p_;
-
-  // @brief Integral Gain
-  double k_i_;
-
-  // @brief Derivative Gain
-  double k_d_;
+  // @brief PID Gains (kp, ki, kd)
+  const std::shared_ptr<const PIDParams> params_;
 
   // @brief Previous Error
   double prev_error_;

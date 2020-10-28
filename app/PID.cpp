@@ -12,21 +12,15 @@
 
 namespace ackermann {
 
-PID::PID(double k_p, double k_i, double k_d)
-  : k_p_(k_p),
-    k_i_(k_i),
-    k_d_(k_d),
+PID::PID(const std::shared_ptr<const PIDParams>& params)
+  : params_(params),
     prev_error_(0.0),
     integral_error_(0.0) {
 }
 
-void PID::set_k_p(double kp) {this->k_p_ = kp;}
-void PID::set_k_i(double ki) {this->k_i_ = ki;}
-void PID::set_k_d(double kd) {this->k_d_ = kd;}
-
-double PID::get_k_p() const {return this->k_p_;}
-double PID::get_k_i() const {return this->k_i_;}
-double PID::get_k_d() const {return this->k_d_;}
+double PID::get_k_p() const {return this->params_->kp;}
+double PID::get_k_i() const {return this->params_->ki;}
+double PID::get_k_d() const {return this->params_->kd;}
 
 double PID::getCommand(double current, double desired, double dt) {
   // // calculate current error
