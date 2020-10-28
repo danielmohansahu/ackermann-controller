@@ -44,6 +44,12 @@ class Window : public QWidget
   QGroupBox *createSpeedPlotGroup();
   QGroupBox *createHeadingPlotGroup();
 
+  // QT boxes (need to be class variables to connect to signals)
+  QDoubleSpinBox* speedSetpoint;
+  QDoubleSpinBox* headingSetpoint;
+  QDoubleSpinBox* initialSpeed;
+  QDoubleSpinBox* initialHeading;
+
   // QT data series and chart objects (used in visualization)
   QLineSeries* speedSetpointSeries;
   QLineSeries* speedAchievedSeries;

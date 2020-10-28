@@ -213,30 +213,33 @@ QGroupBox *Window::createSetpointsGroup()
 
   // speed setpoint
   QLabel *speedSetpointLabel = new QLabel(tr("Desired Plant speed:"));
-  QDoubleSpinBox *speedSetpoint = new QDoubleSpinBox();
+  speedSetpoint = new QDoubleSpinBox();
   speedSetpoint->setValue(speed_setpoint_);
   speedSetpoint->setSuffix(tr(" (m/s)"));
 
   // heading setpoint
   QLabel *headingSetpointLabel = new QLabel(tr("Desired Plant heading:"));
-  QDoubleSpinBox *headingSetpoint = new QDoubleSpinBox();
+  headingSetpoint = new QDoubleSpinBox();
   headingSetpoint->setValue(heading_setpoint_);
   headingSetpoint->setSuffix(tr(" (rad)"));
 
   // plant initial speed
   QLabel *initialSpeedLabel = new QLabel(tr("Initial Plant speed:"));
-  QDoubleSpinBox *initialSpeed = new QDoubleSpinBox();
+  initialSpeed = new QDoubleSpinBox();
   initialSpeed->setValue(initial_speed_);
   initialSpeed->setSuffix(tr(" (m/s)"));
 
   // speed setpoint
   QLabel *initialHeadingLabel = new QLabel(tr("Desired Plant heading:"));
-  QDoubleSpinBox *initialHeading = new QDoubleSpinBox();
+  initialHeading = new QDoubleSpinBox();
   initialHeading->setValue(heading_setpoint_);
   initialHeading->setSuffix(tr(" (rad)"));
 
   // connect signals to slots
-
+  connect(speedSetpoint, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){speed_setpoint_ = new_val;});
+  connect(headingSetpoint, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){heading_setpoint_ = new_val;});
+  connect(initialSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){initial_speed_ = new_val;});
+  connect(initialHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){initial_heading_ = new_val;});
 
   // add all parameters to box
   QVBoxLayout *vbox = new QVBoxLayout;
