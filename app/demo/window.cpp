@@ -175,25 +175,25 @@ QGroupBox *Window::createParametersGroup()
   // heading PID params (KP, KI, KD)
   QLabel *headingPIDLabel = new QLabel(tr("Heading PID Parameters:"));
   QDoubleSpinBox *kpHeading = new QDoubleSpinBox();
-  kpHeading->setValue(params_->kp_heading);
+  kpHeading->setValue(params_->pid_heading->kp);
   kpHeading->setPrefix(tr("kp: "));
   QDoubleSpinBox *kiHeading = new QDoubleSpinBox();
-  kiHeading->setValue(params_->ki_heading);
+  kiHeading->setValue(params_->pid_heading->ki);
   kiHeading->setPrefix(tr("ki: "));
   QDoubleSpinBox *kdHeading = new QDoubleSpinBox();
-  kdHeading->setValue(params_->kd_heading);
+  kdHeading->setValue(params_->pid_heading->kd);
   kdHeading->setPrefix(tr("kd: "));
 
   // speed PID params (KP, KI, KD)
   QLabel *speedPIDLabel = new QLabel(tr("Speed PID Parameters:"));
   QDoubleSpinBox *kpSpeed = new QDoubleSpinBox();
-  kpSpeed->setValue(params_->kp_speed);
+  kpSpeed->setValue(params_->pid_speed->kp);
   kpSpeed->setPrefix(tr("kp: "));
   QDoubleSpinBox *kiSpeed = new QDoubleSpinBox();
-  kiSpeed->setValue(params_->ki_speed);
+  kiSpeed->setValue(params_->pid_speed->ki);
   kiSpeed->setPrefix(tr("ki: "));
   QDoubleSpinBox *kdSpeed = new QDoubleSpinBox();
-  kdSpeed->setValue(params_->kd_speed);
+  kdSpeed->setValue(params_->pid_speed->kd);
   kdSpeed->setPrefix(tr("kd: "));
 
   // add all parameters to box
