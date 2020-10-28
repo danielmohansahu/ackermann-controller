@@ -43,6 +43,7 @@ class Window : public QWidget
   QGroupBox *createControllerOperationsGroup();
   QGroupBox *createSpeedPlotGroup();
   QGroupBox *createHeadingPlotGroup();
+  QGroupBox *createCommandPlotGroup();
 
   // QT boxes (need to be class variables to connect to signals)
   QDoubleSpinBox* speedSetpoint;

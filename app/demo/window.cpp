@@ -35,6 +35,7 @@ void Window::init()
   grid->addWidget(createControllerOperationsGroup(), 2, 0);
   grid->addWidget(createSpeedPlotGroup(), 0, 1);
   grid->addWidget(createHeadingPlotGroup(), 1, 1);
+  grid->addWidget(createCommandPlotGroup(), 2, 1);
   setLayout(grid);
 
   setWindowTitle(tr("Group Boxes"));
@@ -326,6 +327,34 @@ QGroupBox *Window::createHeadingPlotGroup()
   chart->addSeries(dummy2);
   chart->createDefaultAxes();
   chart->setTitle("Vehicle Heading");
+
+  // add ChartView instance (to actually display the chart)
+  QChartView *chartView = new QChartView(chart);
+  chartView->setRenderHint(QPainter::Antialiasing);
+
+  // add chart to visual box
+  QVBoxLayout *vbox = new QVBoxLayout;
+  vbox->addWidget(chartView);
+  groupBox->setLayout(vbox);
+
+  return groupBox;
+}
+
+QGroupBox *Window::createCommandPlotGroup()
+{
+  QGroupBox *groupBox = new QGroupBox(tr("Command Plots"));
+
+  // add dummy series (for now)
+  QLineSeries* dummy1 = new QLineSeries();
+  QLineSeries* dummy2 = new QLineSeries();
+
+  // add chart instance
+  QChart *chart = new QChart();
+  // chart->legend()->hide();
+  chart->addSeries(dummy1);
+  chart->addSeries(dummy2);
+  chart->createDefaultAxes();
+  chart->setTitle("Controller Commands");
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(chart);
