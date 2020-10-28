@@ -309,12 +309,13 @@ QGroupBox *Window::createSpeedPlotGroup()
 
   // add chart instance
   speedChart = new QChart();
-  // chart->legend()->hide();
   speedChart->addSeries(speedSetpointSeries);
   speedChart->addSeries(speedAchievedSeries);
   speedChart->createDefaultAxes();
   speedChart->setTitle("Vehicle Speed (m/s)");
   speedChart->legend()->setAlignment(Qt::AlignRight);
+  speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("setpoint"));
+  speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("actual"));
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(speedChart);
@@ -338,12 +339,13 @@ QGroupBox *Window::createHeadingPlotGroup()
 
   // add chart instance
   headingChart = new QChart();
-  // chart->legend()->hide();
   headingChart->addSeries(headingSetpointSeries);
   headingChart->addSeries(headingAchievedSeries);
   headingChart->createDefaultAxes();
   headingChart->setTitle("Vehicle Heading (rad)");
   headingChart->legend()->setAlignment(Qt::AlignRight);
+  headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("setpoint"));
+  headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("actual"));
   headingChart->axisY()->setRange(-M_PI, M_PI);
 
   // add ChartView instance (to actually display the chart)
@@ -368,12 +370,13 @@ QGroupBox *Window::createCommandPlotGroup()
 
   // add chart instance
   commandChart = new QChart();
-  // chart->legend()->hide();
   commandChart->addSeries(commandThrottleSeries);
   commandChart->addSeries(commandSteeringSeries);
   commandChart->createDefaultAxes();
   commandChart->setTitle("Controller Commands");
   commandChart->legend()->setAlignment(Qt::AlignRight);
+  commandChart->legend()->markers(commandThrottleSeries)[0]->setLabel(tr("throttle"));
+  commandChart->legend()->markers(commandSteeringSeries)[0]->setLabel(tr("steer"));
   commandChart->axisY()->setRange(-M_PI, M_PI);
 
   // add ChartView instance (to actually display the chart)
