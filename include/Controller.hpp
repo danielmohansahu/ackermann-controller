@@ -27,6 +27,8 @@ class Controller {
   /* @brief Constructor; constructs and initializes parameters of all composition classes. */
   explicit Controller(const std::shared_ptr<const Params>& params);
 
+  ~Controller();
+
   /* @brief Begin execution of a control loop. */
   void start();
 
@@ -121,7 +123,6 @@ class Controller {
 
   /* @brief Thread handle for the currently executing control loop. */
   std::thread control_loop_handle_;
-  std::atomic<bool> running_ {false};
   std::atomic<bool> cancel_ {false};
 };
 

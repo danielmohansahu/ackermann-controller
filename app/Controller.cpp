@@ -21,6 +21,11 @@ Controller::Controller(const std::shared_ptr<const Params>& params)
   : params_(params) {
 }
 
+Controller::~Controller()
+{
+  stop(true);
+}
+
 void Controller::start() {
   // rejoin any existing thread
   stop(true);
@@ -34,16 +39,14 @@ void Controller::stop(bool block) {
   cancel_ = true;
   if (block && control_loop_handle_.joinable())
     control_loop_handle_.join();
-
-  // reset class variables and composition classes
-  reset();
+  cancel_ = false;
 }
 
 void Controller::reset() {
 }
 
 bool Controller::isRunning() const {
-  return running_;
+  return control_loop_handle_.joinable();
 }
 
 void Controller::setState(const double heading, const double speed) {
@@ -62,10 +65,6 @@ void Controller::getCommand(double& throttle, double& steering) const {
 }
 
 void Controller::controlLoop() {
-  // core execution loop
-  running_ = true;
-  cancel_ = false;
-
   // initialize timing variables
   std::chrono::milliseconds duration(static_cast<int>(1000/params_->control_frequency));
   auto next_loop_time = steady_clock::now();
@@ -82,9 +81,6 @@ void Controller::controlLoop() {
     // sleep until next loop
     std::this_thread::sleep_until(next_loop_time);
   }
-
-  // after we exit we should reset our state variables
-  running_ = false;
 }
 
 } // namespace ackermann
