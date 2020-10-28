@@ -88,13 +88,15 @@ void Window::reset()
     // also reset our line series and clear our chart view
     speedSetpointSeries->clear();
     speedAchievedSeries->clear();
+    headingSetpointSeries->clear();
+    headingAchievedSeries->clear();
+    commandThrottleSeries->clear();
+    commandSteeringSeries->clear();
     speedChart->createDefaultAxes();
+    headingChart->createDefaultAxes();
+    commandChart->createDefaultAxes();
   }  
 }
-
-// @TODO add parameters / signals for:
-// goal (speed, heading)
-// initial conditions (plant)
 
 void Window::execute()
 {
@@ -119,15 +121,23 @@ void Window::execute()
     // apply the command to the plant
     plant_->command(throttle, steering, dt);
 
-    // update the chart with our latest information
+    // update the QT series with our latest information
     speedSetpointSeries->append(time, speed_setpoint_);
     speedAchievedSeries->append(time, current_speed);
+    headingSetpointSeries->append(time, heading_setpoint_);
+    headingAchievedSeries->append(time, current_heading);
+    commandThrottleSeries->append(time, throttle);
+    commandSteeringSeries->append(time, steering);
+
+    // update the QT charts
     speedChart->axisX()->setRange(0, time);
     // @TODO calculate this and adjust
     speedChart->axisY()->setRange(0, 10);
-
-    // @TODO add in command chart
-    // @TODO add in heading series
+    headingChart->axisX()->setRange(0, time);
+    headingChart->axisY()->setRange(-3.15, 3.15);
+    commandChart->axisX()->setRange(0, time);
+    // @TODO calculate this and adjust
+    commandChart->axisY()->setRange(0, 10);
 
     // sleep and update our timestamp
     // @TODO parameterize this
@@ -231,7 +241,7 @@ QGroupBox *Window::createSetpointsGroup()
   initialSpeed->setSuffix(tr(" (m/s)"));
 
   // speed setpoint
-  QLabel *initialHeadingLabel = new QLabel(tr("Desired Plant heading:"));
+  QLabel *initialHeadingLabel = new QLabel(tr("Initial Plant heading:"));
   initialHeading = new QDoubleSpinBox();
   initialHeading->setValue(heading_setpoint_);
   initialHeading->setSuffix(tr(" (rad)"));
@@ -314,22 +324,22 @@ QGroupBox *Window::createSpeedPlotGroup()
 
 QGroupBox *Window::createHeadingPlotGroup()
 {
-  QGroupBox *groupBox = new QGroupBox(tr("Heading Plots"));
+  QGroupBox *groupBox = new QGroupBox(tr("Heading Plots (rad)"));
 
   // add dummy series (for now)
-  QLineSeries* dummy1 = new QLineSeries();
-  QLineSeries* dummy2 = new QLineSeries();
+  headingSetpointSeries = new QLineSeries();
+  headingAchievedSeries = new QLineSeries();
 
   // add chart instance
-  QChart *chart = new QChart();
+  headingChart = new QChart();
   // chart->legend()->hide();
-  chart->addSeries(dummy1);
-  chart->addSeries(dummy2);
-  chart->createDefaultAxes();
-  chart->setTitle("Vehicle Heading");
+  headingChart->addSeries(headingSetpointSeries);
+  headingChart->addSeries(headingAchievedSeries);
+  headingChart->createDefaultAxes();
+  headingChart->setTitle("Vehicle Heading");
 
   // add ChartView instance (to actually display the chart)
-  QChartView *chartView = new QChartView(chart);
+  QChartView *chartView = new QChartView(headingChart);
   chartView->setRenderHint(QPainter::Antialiasing);
 
   // add chart to visual box
@@ -345,19 +355,19 @@ QGroupBox *Window::createCommandPlotGroup()
   QGroupBox *groupBox = new QGroupBox(tr("Command Plots"));
 
   // add dummy series (for now)
-  QLineSeries* dummy1 = new QLineSeries();
-  QLineSeries* dummy2 = new QLineSeries();
+  commandThrottleSeries = new QLineSeries();
+  commandSteeringSeries = new QLineSeries();
 
   // add chart instance
-  QChart *chart = new QChart();
+  commandChart = new QChart();
   // chart->legend()->hide();
-  chart->addSeries(dummy1);
-  chart->addSeries(dummy2);
-  chart->createDefaultAxes();
-  chart->setTitle("Controller Commands");
+  commandChart->addSeries(commandThrottleSeries);
+  commandChart->addSeries(commandSteeringSeries);
+  commandChart->createDefaultAxes();
+  commandChart->setTitle("Controller Commands");
 
   // add ChartView instance (to actually display the chart)
-  QChartView *chartView = new QChartView(chart);
+  QChartView *chartView = new QChartView(commandChart);
   chartView->setRenderHint(QPainter::Antialiasing);
 
   // add chart to visual box

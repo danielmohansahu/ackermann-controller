@@ -56,6 +56,14 @@ class Window : public QWidget
   QLineSeries* speedAchievedSeries;
   QChart* speedChart;
 
+  QLineSeries* headingSetpointSeries;
+  QLineSeries* headingAchievedSeries;
+  QChart* headingChart;
+
+  QLineSeries* commandThrottleSeries;
+  QLineSeries* commandSteeringSeries;
+  QChart* commandChart;
+
   // setpoint (e.g. goal) data
   std::atomic<double> speed_setpoint_ {0.0};
   std::atomic<double> heading_setpoint_ {0.0};
