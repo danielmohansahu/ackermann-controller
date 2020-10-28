@@ -39,7 +39,7 @@ void Window::init()
   setLayout(grid);
 
   setWindowTitle(tr("Group Boxes"));
-  resize(480, 320);
+  resize(1560, 1280);
 }
 
 void Window::start()
@@ -102,7 +102,6 @@ void Window::execute()
 {
   // initialize time and some handy variables
   double time = 0.0;
-  double dt = 0.1;
 
   // start controller
   controller_->start();
@@ -119,7 +118,7 @@ void Window::execute()
     controller_->getCommand(throttle, steering);
 
     // apply the command to the plant
-    plant_->command(throttle, steering, dt);
+    plant_->command(throttle, steering, TIMESTEP);
 
     // update the QT series with our latest information
     speedSetpointSeries->append(time, speed_setpoint_);
@@ -130,19 +129,17 @@ void Window::execute()
     commandSteeringSeries->append(time, steering);
 
     // update the QT charts
-    speedChart->axisX()->setRange(0, time);
+    double x_min = std::max(0.0, time - TIMEWINDOW);
+    speedChart->axisX()->setRange(x_min, time);
+    headingChart->axisX()->setRange(x_min, time);
+    commandChart->axisX()->setRange(x_min, time);
+
     // @TODO calculate this and adjust
     speedChart->axisY()->setRange(0, 10);
-    headingChart->axisX()->setRange(0, time);
-    headingChart->axisY()->setRange(-3.15, 3.15);
-    commandChart->axisX()->setRange(0, time);
-    // @TODO calculate this and adjust
-    commandChart->axisY()->setRange(0, 10);
 
     // sleep and update our timestamp
-    // @TODO parameterize this
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    time += dt;
+    std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000 * TIMESTEP)));
+    time += TIMESTEP;
   }
 
   // cleanup; stop controller
@@ -308,7 +305,8 @@ QGroupBox *Window::createSpeedPlotGroup()
   speedChart->addSeries(speedSetpointSeries);
   speedChart->addSeries(speedAchievedSeries);
   speedChart->createDefaultAxes();
-  speedChart->setTitle("Vehicle Speed");
+  speedChart->setTitle("Vehicle Speed (m/s)");
+  speedChart->legend()->setAlignment(Qt::AlignRight);
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(speedChart);
@@ -324,7 +322,7 @@ QGroupBox *Window::createSpeedPlotGroup()
 
 QGroupBox *Window::createHeadingPlotGroup()
 {
-  QGroupBox *groupBox = new QGroupBox(tr("Heading Plots (rad)"));
+  QGroupBox *groupBox = new QGroupBox(tr("Heading Plots"));
 
   // add dummy series (for now)
   headingSetpointSeries = new QLineSeries();
@@ -336,7 +334,9 @@ QGroupBox *Window::createHeadingPlotGroup()
   headingChart->addSeries(headingSetpointSeries);
   headingChart->addSeries(headingAchievedSeries);
   headingChart->createDefaultAxes();
-  headingChart->setTitle("Vehicle Heading");
+  headingChart->setTitle("Vehicle Heading (rad)");
+  headingChart->legend()->setAlignment(Qt::AlignRight);
+  headingChart->axisY()->setRange(-3.15, 3.15);
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(headingChart);
@@ -365,6 +365,8 @@ QGroupBox *Window::createCommandPlotGroup()
   commandChart->addSeries(commandSteeringSeries);
   commandChart->createDefaultAxes();
   commandChart->setTitle("Controller Commands");
+  commandChart->legend()->setAlignment(Qt::AlignRight);
+  commandChart->axisY()->setRange(-3.15, 3.15);
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(commandChart);

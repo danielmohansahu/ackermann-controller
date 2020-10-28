@@ -12,6 +12,10 @@
 #include <Controller.hpp>
 #include <fake/plant.h>
 
+// some handy visualization variables
+#define TIMESTEP 0.1
+#define TIMEWINDOW 10.0
+
 QT_BEGIN_NAMESPACE
 class QGroupBox;
 QT_END_NAMESPACE
