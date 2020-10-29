@@ -47,6 +47,12 @@ class PID {
    */
   double getCommand(double current, double desired, double dt);
 
+  /* @brief Reset the PID
+   * @parameter None
+   * @return None
+   */
+  void reset_PID();
+
  private:
   // @brief PID Gains (kp, ki, kd)
   const std::shared_ptr<const PIDParams> params_;

@@ -38,4 +38,9 @@ double PID::getCommand(double current, double desired, double dt) {
   return output;
 }
 
+void PID::reset_PID() {
+    prev_error_ = 0.0;
+    integral_error_ = 0.0;
+}
+
 } // namespace ackermann
