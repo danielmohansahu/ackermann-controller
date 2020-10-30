@@ -39,8 +39,8 @@ void Model::reset() {
 }
 
 void Model::setState(const double speed, const double heading) {
-  current_speed_ = speed;
-  current_heading_ = heading;
+  this->current_speed_ = speed;
+  this->current_heading_ = heading;
 }
 
 void Model::getState(double& speed, double& heading) const {
@@ -49,8 +49,8 @@ void Model::getState(double& speed, double& heading) const {
 }
 
 void Model::setGoal(const double speed, const double heading) {
-  desired_speed_ = speed;
-  desired_heading_ = heading;
+  this->desired_speed_ = speed;
+  this->desired_heading_ = heading;
 }
 
 void Model::getGoal(double& speed, double& heading) const {
@@ -64,7 +64,7 @@ void Model::getCommand(double& throttle, double& steering) const {
 }
 
 void Model::command(const double throttle, const double steering, const double dt) {
-  current_heading_ = current_heading_ + (throttle/((*params_).wheel_base)) * cos(steering) * dt;
+  this->current_heading_ = current_heading_ + (throttle/((*params_).wheel_base)) * cos(steering) * dt;
 
   if (throttle > 0) {current_speed_ = throttle * (*params_).velocity_max;}
   if (throttle < 0) {current_speed_ = throttle * (*params_).velocity_min;}
