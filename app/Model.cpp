@@ -11,6 +11,7 @@
  * https://www.xarg.org/book/kinematics/ackerman-steering/
  */
 
+#include <iostream>
 #include <Model.hpp>
 #include <math.h>
 #include <atomic>
@@ -19,16 +20,22 @@ namespace ackermann {
 
 Model::Model(const std::shared_ptr<const Params>& params)
   : params_(params) {
-
+    this->desired_speed_ = 0.0;
+    this->desired_heading_ = 0.0;
+    this->current_speed_ = 0.0;
+    this->current_heading_ = 0.0;
+    this->current_throttle_ = 0.0;
+    this->current_steering_ = 0.0;
+    std::cout << this->current_steering_ << std::endl;
 }
 
 void Model::reset() {
-  desired_speed_ = 0.0;
-  desired_heading_ = 0.0;
-  current_speed_ = 0.0;
-  current_heading_ = 0.0;
-  current_throttle_ = 0.0;
-  current_steering_ = 0.0;
+  this->desired_speed_ = 0.0;
+  this->desired_heading_ = 0.0;
+  this->current_speed_ = 0.0;
+  this->current_heading_ = 0.0;
+  this->current_throttle_ = 0.0;
+  this->current_steering_ = 0.0;
 }
 
 void Model::setState(const double speed, const double heading) {

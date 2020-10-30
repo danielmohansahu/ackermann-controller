@@ -8,7 +8,7 @@
  */
 
 // @TODO Currently STUB implementation; needs to be filled
-
+#include <iostream>
 #include <Controller.hpp>
 
 namespace ackermann {
@@ -19,8 +19,9 @@ using std::chrono::duration;
 
 Controller::Controller(const std::shared_ptr<const Params>& params)
   : params_(params) {
-    PID * pid_speed_ = new PID((*params_).pid_speed);
-    PID * pid_heading_ = new PID((*params_).pid_heading);
+    pid_speed_ = std::make_unique<PID>(params_->pid_speed);
+    pid_heading_ = std::make_unique<PID>(params_->pid_heading);;
+    model_ = std::make_unique<Model>(params_);;
 }
 
 Controller::~Controller()
@@ -45,9 +46,9 @@ void Controller::stop(bool block) {
 }
 
 void Controller::reset() {
-  (*pid_speed_).reset_PID();
-  (*pid_heading_).reset_PID();
-  (*model_).reset();
+  pid_speed_->reset_PID();
+  pid_heading_->reset_PID();
+  model_->reset();
 }
 
 bool Controller::isRunning() const {

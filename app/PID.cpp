@@ -7,15 +7,15 @@
  *
  * @copyright [2020]
  */
-
+#include <iostream>
 #include <PID.hpp>
 
 namespace ackermann {
 
 PID::PID(const std::shared_ptr<const PIDParams>& params)
-  : params_(params),
-    prev_error_(0.0),
-    integral_error_(0.0) {
+  : params_{params},
+    prev_error_{0.0},
+    integral_error_{0.0} {
 }
 
 double PID::get_k_p() const {return this->params_->kp;}
@@ -39,8 +39,8 @@ double PID::getCommand(double current, double desired, double dt) {
 }
 
 void PID::reset_PID() {
-    prev_error_ = 0.0;
-    integral_error_ = 0.0;
+    this->prev_error_ = 0.0;
+    this->integral_error_ = 0.0;
 }
 
 } // namespace ackermann
