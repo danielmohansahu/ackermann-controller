@@ -39,8 +39,7 @@ package AckermannController {
    + getWheelRPM(speed&, steering&)     
    - Limits limits_
    - Model model_
-   - PID pid_speed_
-   - PID pid_heading_
+   - Parameters param_
   }
 
   class Model {
@@ -60,16 +59,7 @@ package AckermannController {
     
   class Limits {
    + limit(dt, throttle, steering, throttle_des&, steering_des&)
-   - velocity_max_
-   - velocity_min_
-   - acceleration_max_
-   - acceleration_min_
-   - motor_max_RPM_
-   - motor_min_RPM_  
-   - anglular_velocity_max_
-   - anglular_velocity_min_
-   - angular_acceleration_max_
-   - angular_acceleration_min_
+   - Parameters param_
   }
 
   class PID {
@@ -83,20 +73,14 @@ package AckermannController {
     - kd_
   }
 
-  Controller *-- Limits
-  Controller *-- Model
-  Controller *-- PID
+
+  Model <-- Limits
+  Controller <-- Model
+  Controller <-- PID
   Controller <-- Params
-}
-
-package Testing {
-
-  class MockPlant {
-   + command(throttle, steering)
-   + getState(speed&, heading&)
-   - noise_mean
-   - noise_stddev
-  }
+  PID <-- Params
+  Limits <-- Params
+  Model <-- Params
 }
 
 @enduml
