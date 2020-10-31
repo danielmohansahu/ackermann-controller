@@ -18,11 +18,11 @@ class Limits {
   explicit Limits(const std::shared_ptr<const Params>& params);
 
   /* @brief Apply known limits to the given controller command.
-   * 
+   *
    * Apply known kinematic constraints (velocity, acceleration,
-   * angular velocity, angular acceleration) to the given 
+   * angular velocity, angular acceleration) to the given
    * potential commands, and return the limited version.
-   * 
+   *
    * @param current_thottle: Current commanded throttle.
    * @param current_steering: Current commanded steering angle.
    * @param desired_thottle: Desired throttle.
@@ -30,10 +30,12 @@ class Limits {
    * @param dt: Fixed time step between commands.
   */
   void limit(const double current_throttle,
-             const double current_steering,
-             double& desired_throttle,
-             double& desired_steering,
-             double dt) const;
+                     const double current_steering,
+                     const double current_steering_vel,
+                     double& desired_throttle,
+                     double& desired_steering,
+                     double& desired_steering_vel,
+                     double dt) const;
 
  private:
   // access to our parameters object (contains limits)
@@ -41,4 +43,3 @@ class Limits {
 };
 
 } // namespace ackermann
-
