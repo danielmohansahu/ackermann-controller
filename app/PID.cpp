@@ -22,10 +22,7 @@ double PID::get_k_p() const {return this->params_->kp;}
 double PID::get_k_i() const {return this->params_->ki;}
 double PID::get_k_d() const {return this->params_->kd;}
 
-double PID::getCommand(double current, double desired, double dt) {
-  // calculate current error
-  double current_error = desired - current;
-
+double PID::getCommand(double current_error, double dt) {
   // Integral controller portion
   integral_error_ += (current_error * dt);
   // Derivative
