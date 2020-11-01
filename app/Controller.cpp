@@ -89,8 +89,8 @@ void Controller::controlLoop() {
     double dT = 1000/params_->control_frequency;
 
     this->model_->getError(speed_error, heading_error);
-    command_throttle = this->pid_speed_->getCommand(speed_error);
-    command_steering = this->pid_heading_->getCommand(heading_error);
+    command_throttle = this->pid_speed_->getCommand(speed_error, dT);
+    command_steering = this->pid_heading_->getCommand(heading_error, dT);
   
     this->model_->command(command_throttle, command_steering, dT);
 
