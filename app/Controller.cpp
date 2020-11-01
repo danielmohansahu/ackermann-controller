@@ -56,18 +56,23 @@ bool Controller::isRunning() const {
 }
 
 void Controller::setState(const double heading, const double speed) {
+  this->model_->setState(heading, speed);
 }
 
 void Controller::getState(double& heading, double& speed) const {
+  this->model_->getState(heading, speed);
 }
 
 void Controller::setGoal(const double heading, const double speed) {
+  this->model_->setGoal(heading, speed);
 }
 
 void Controller::getGoal(double& heading, double& speed) const {
+  this->model_->getGoal(heading, speed);
 }
 
 void Controller::getCommand(double& throttle, double& steering) const {
+  this->model_->getCommand(heading, speed);
 }
 
 void Controller::controlLoop() {
