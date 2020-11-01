@@ -13,8 +13,6 @@ using ackermann::Params;
 TEST(Limits_NoLimit, should_pass) {
   double dt = 0.01;
   auto p = std::make_shared<Params>(0.0, 1e8, 0.0, 0.0);
-  p->throttle_max = {std::numeric_limits<double>::max()};
-  p->throttle_min = {-1*std::numeric_limits<double>::max()};
   Limits lim(p);
 
   {
@@ -33,8 +31,8 @@ TEST(Limits_NoLimit, should_pass) {
 
   {
     // check #2: we shouldn't limit arbitrary values
-    double original_throttle = 1000000;
-    double original_steering = 1000000;
+    double original_throttle = .5;
+    double original_steering = 1000;
     double desired_throttle = original_throttle;
     double desired_steering = original_steering;
     double current_steering_vel = 0;
@@ -47,7 +45,7 @@ TEST(Limits_NoLimit, should_pass) {
 
   {
     // check #3: make sure negatives work properly too
-    double original_throttle = -1000000;
+    double original_throttle = -.5;
     double original_steering = -1000000;
     double desired_throttle = original_throttle;
     double desired_steering = original_steering;
@@ -117,7 +115,7 @@ TEST(Limits_Acceleration, should_pass) {
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
     lim.limit(0.0, 0.0, 0.0, desired_throttle, desired_steering, desired_steering_vel, dt);
-    EXPECT_EQ((desired_throttle)/dt, lim.speedToThrottle(.5*p->acceleration_max*dt*dt));
+    EXPECT_EQ(lim.throttleToSpeed(desired_throttle), (p->acceleration_max*dt));
     EXPECT_EQ(original_steering, desired_steering);
   }
 
@@ -130,7 +128,7 @@ TEST(Limits_Acceleration, should_pass) {
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
     lim.limit(0.0, 0.0, 0.0, desired_throttle, desired_steering, desired_steering_vel, dt);
-    EXPECT_EQ((desired_throttle)/dt, lim.speedToThrottle(.5*p->acceleration_min*dt*dt));
+    EXPECT_EQ(lim.throttleToSpeed(desired_throttle), (p->acceleration_max*dt));
     EXPECT_EQ(original_steering, desired_steering);
   }
 }
@@ -169,7 +167,7 @@ TEST(Limits_Heading_Angle, should_pass) {
 TEST(Limits_Heading_AngularVelocity, should_pass) {
   // instantiate a limits class with only heading limit
   double dt = 0.01;
-  auto p = std::make_shared<Params>(0.0, 1.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0, 3.0, 0.0, 0.0);
   p->angular_velocity_max = 0.1;
   p->angular_velocity_min = -0.1;
   Limits lim(p);
@@ -182,7 +180,7 @@ TEST(Limits_Heading_AngularVelocity, should_pass) {
     double desired_throttle = 1;
     lim.limit(1, original_steering, current_steering_vel, desired_throttle, desired_steering, desired_steering_vel, dt);
     EXPECT_EQ(desired_steering_vel, p->angular_velocity_max);
-    EXPECT_EQ(desired_steering, p->angular_velocity_max*dt);
+    EXPECT_EQ(desired_steering, desired_steering_vel*dt);
   }
 
   {
@@ -194,7 +192,7 @@ TEST(Limits_Heading_AngularVelocity, should_pass) {
     double desired_throttle = 1;
     lim.limit(1, original_steering, current_steering_vel, desired_throttle, desired_steering, desired_steering_vel, dt);
     EXPECT_EQ(desired_steering_vel, p->angular_velocity_min);
-    EXPECT_EQ(desired_steering, p->angular_velocity_min*dt);
+    EXPECT_EQ(desired_steering, desired_steering_vel*dt);
   }
 }
 
@@ -215,7 +213,9 @@ TEST(Limits_Heading_AngularAcceleration, should_pass) {
     double current_throttle = 1.0;
     double desired_throttle = current_throttle;
     lim.limit(current_throttle, original_steering, current_steering_vel, desired_throttle, desired_steering, desired_steering_vel, dt);
-    EXPECT_EQ((desired_steering_vel - current_steering_vel)/dt, 0.5*p->angular_acceleration_max*dt*dt);
+    EXPECT_EQ((desired_steering_vel - current_steering_vel)/dt, p->angular_acceleration_max);
+    EXPECT_EQ(desired_steering_vel, p->angular_acceleration_max*dt);
+    EXPECT_EQ(desired_steering, desired_steering_vel*dt);
   }
 
   {
@@ -227,6 +227,8 @@ TEST(Limits_Heading_AngularAcceleration, should_pass) {
     double current_throttle = 1.0;
     double desired_throttle = current_throttle;
     lim.limit(current_throttle, original_steering, current_steering_vel, desired_throttle, desired_steering, desired_steering_vel, dt);
-    EXPECT_EQ((desired_steering_vel - current_steering_vel)/dt, 0.5*p->angular_acceleration_max*dt*dt);
+    EXPECT_EQ((desired_steering_vel - current_steering_vel)/dt, p->angular_acceleration_min);
+    EXPECT_EQ(desired_steering_vel, p->angular_acceleration_min*dt);
+    EXPECT_EQ(desired_steering, desired_steering_vel*dt);
   }
 }
