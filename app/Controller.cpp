@@ -72,7 +72,7 @@ void Controller::getGoal(double& heading, double& speed) const {
 }
 
 void Controller::getCommand(double& throttle, double& steering) const {
-  this->model_->getCommand(heading, speed);
+  this->model_->getCommand(thottle, steering);
 }
 
 void Controller::controlLoop() {
@@ -87,12 +87,13 @@ void Controller::controlLoop() {
 
     double speed_error, heading_error, command_throttle, command_steering, actual_throttle, actual_steering;
     double steeringVel = 0.0; // TODO: Understanding the current_steering_vel and update accordingly
+    double dT = 1000/params_->control_frequency;
 
     this->model_->getError(speed_error, heading_error);
     command_throttle = this->pid_speed_->getCommand(speed_error);
     command_steering = this->pid_heading_->getCommand(heading_error);
   
-    this->model_->limits_->limit(command_throttle, command_steering, steeringVel, actual_throttle, actual_steering, steeringVel, duration);
+    this->model_->limits_->limit(command_throttle, command_steering, steeringVel, actual_throttle, actual_steering, steeringVel, dT);
   
     this->model_->command(actual_throttle, actual_steering, duration);
 
