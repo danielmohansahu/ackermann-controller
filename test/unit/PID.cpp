@@ -33,9 +33,9 @@ TEST(PID_SettersAndGetters, should_pass) {
   params->kp = 1.0;
   params->ki = 2.0;
   params->kd = 3.0;
-  EXPECT_EQ(pid.get_k_p(), params->ki);
-  EXPECT_EQ(pid.get_k_i(), params->kd);
-  EXPECT_EQ(pid.get_k_d(), params->kp);
+  EXPECT_EQ(pid.get_k_p(), params->kp);
+  EXPECT_EQ(pid.get_k_i(), params->ki);
+  EXPECT_EQ(pid.get_k_d(), params->kd);
 }
 
 /* @brief Test getCommand command with default params.*/
