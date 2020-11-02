@@ -1,8 +1,8 @@
 #pragma once
 /* @brief A Fake implementation of a physical Ackermann platform (bicycle geometry).
- * 
+ *
  * @author Daniel M.
- * 
+ *
  * @copyright [2020]
  */
 
@@ -45,7 +45,7 @@ struct PlantOptions {
 };
 
 /* @brief A Fake Plant for use in testing our Controller.
- * 
+ *
  * This class just maintains some simple state information and
  * applies a small amount of noise (if desired).
  */
@@ -69,19 +69,19 @@ class Plant {
   void setState(const double speed, const double heading);
 
   /* @brief Get the current system state.
-   * 
+   *
    * @param speed: The current system speed.
    * @param heading: The current system heading.
    */
   void getState(double& speed, double& heading) const;
 
   /* @brief Simulate an actual command to the vehicle.
-   * 
+   *
    * This is a very simple approximation of the plant; the throttle
    * command is assumed to translate instantly into the new speed,
    * and the new heading is calculated by integrating the effect of
    * the new steering angle over the timestep.
-   * 
+   *
    * @param throttle: The throttle command to apply.
    * @param steering: The steering command to apply.
    * @param dt: The time duration of the command.

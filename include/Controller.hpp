@@ -18,6 +18,7 @@
 #include "Params.hpp"
 #include "Model.hpp"
 #include "PID.hpp"
+#include "Limits.hpp"
 
 namespace ackermann {
 
@@ -104,13 +105,18 @@ class Controller {
   /* @brief A copy of our configuration parameters. */
   const std::shared_ptr<const Params> params_;
 
+  /* @brief Object used to apply kinematic constraints to
+   * a calculated command (to prevent saturation)
+   */
+  std::unique_ptr<Limits> limits_;
+
   /* @brief Ackermann model (used in translating
    * speed/heading into wheel speeds)
    */
   std::unique_ptr<Model> model_;
 
-  /* @brief Internal encapsulated PID controller for system speed. */
-  std::unique_ptr<PID> pid_speed_;
+  /* @brief Internal encapsulated PID controller for system throttle. */
+  std::unique_ptr<PID> pid_throttle_;
 
   /* @brief Internal encapsulated PID controller for system heading. */
   std::unique_ptr<PID> pid_heading_;

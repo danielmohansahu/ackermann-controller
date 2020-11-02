@@ -14,6 +14,7 @@
 #include "Params.hpp"
 #include "Limits.hpp"
 
+
 namespace ackermann {
 
 /* @brief This class is used to further define a vehicle with Ackermann steering
@@ -61,6 +62,14 @@ class Model {
    */
   void getCommand(double& throttle, double& steering) const;
 
+  /* @brief Get the current commanded throttle and steering angle.
+   *
+   * @param throttle: The last commanded throttle (limited to [0,1]).
+   * @param steering: The last commanded steering angle (degrees).
+   * @param steer_vel: The current steering angle velocity.
+   */
+  void getCommand(double& throttle, double& steering, double& steer_vel) const;
+
   /* @brief Simulate execution of the given throttle and steering commands.
    *
    * @param throttle: The commanded speed.
@@ -80,10 +89,6 @@ class Model {
    /* @brief shared parameter object (contains system kinematics)
     */
   const std::shared_ptr<const Params> params_;
-
-  /* @brief Object used to apply kinematic constraints to
-   * a calculated command (to prevent saturation)
-   */
   std::unique_ptr<Limits> limits_;
 
   // system state variables

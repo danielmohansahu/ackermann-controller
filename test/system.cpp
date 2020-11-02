@@ -58,7 +58,7 @@ class AckermannControllerTest : public ::testing::Test {
 
 /* @brief A convenience method for executing the given controller's
  * command against the given Plant.
- * 
+ *
  */
 bool control_loop(std::unique_ptr<fake::Plant>& p,
                   std::unique_ptr<ackermann::Controller>& c,
@@ -140,7 +140,7 @@ TEST_F(AckermannControllerTest, System_FakeSetup) {
  * w/ a zero noise Mock Plant.
  */
 TEST_F(AckermannControllerTest, System_Convergence1) {
-  EXPECT_TRUE(control_loop(plant_, controller_, 3.0, 45.0, 5.0));
+  EXPECT_TRUE(control_loop(plant_, controller_, 3.0, 1.2, 5.0));
 }
 
 /* @brief Test that the system converges to a desired setpoint
@@ -151,7 +151,7 @@ TEST_F(AckermannControllerTest, System_Convergence2) {
   opts_->noise_mean = 0.0;
   opts_->noise_stddev = 0.05;
   SetUp();
-  EXPECT_TRUE(control_loop(plant_, controller_, 1.01, -45.0, 5.0));
+  EXPECT_TRUE(control_loop(plant_, controller_, 1.01, -1.2, 5.0));
 }
 
 /* @brief Test that the system fails to converge to a "broken" Mock Plant. */

@@ -63,19 +63,19 @@ void Model::getCommand(double& throttle, double& steering) const {
   steering = this->current_steering_;
 }
 
-void Model::command(const double desired_speed, const double steering, const double dt) {
+void Model::getCommand(double& throttle, double& steering, double& steer_vel) const {
+  throttle = this->current_throttle_;
+  steering = this->current_steering_;
+  steer_vel = this->current_steering_vel_;
+}
+
+void Model::command(const double cmd_throttle, const double steering, const double dt) {
 
   // initialize desired values
-  double desired_throttle = limits_->speedToThrottle(desired_speed);
+  double desired_throttle = cmd_throttle;
   double desired_steering = steering;
-  double desired_steering_vel = this->current_steering_vel_;
+  double desired_steering_vel = (desired_steering - current_steering_) / dt;
 
-  // apply limitations based on
-  limits_->limit(this->current_throttle_,
-                 this->current_steering_,
-                 this->current_steering_vel_,
-                 desired_throttle, desired_steering, desired_steering_vel,
-                 dt);
   // take throttle and convert to speed
   this->current_speed_ = limits_->throttleToSpeed(desired_throttle);
   // update current steering value to output from limit

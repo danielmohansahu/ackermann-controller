@@ -79,11 +79,10 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
 
     // set to arbitrary value and make sure it actually happens
     throttle = 0.25;
-    double cmd_speed = limits_->throttleToSpeed(throttle);
     steering = 0.7854;
-    model_->command(cmd_speed, steering, 0.01);
+    model_->command(throttle, steering, 0.01);
     model_->getCommand(throttle_out, steering_out);
-    EXPECT_EQ(limits_->speedToThrottle(params_->acceleration_max*0.01), throttle_out);
+    EXPECT_EQ(throttle, throttle_out);
     EXPECT_EQ(steering, steering_out);
   }
 }
