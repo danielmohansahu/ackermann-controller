@@ -3,25 +3,35 @@
  */
 
 #include <gtest/gtest.h>
-#include <Model.hpp>
+#include "Model.hpp"
+#include "Limits.hpp"
+#include "Model.hpp"
+#include "Params.hpp"
+#include <iostream>
 
 /* @brief Test Fixture for repeated independent construction of the Model. */
 class AckemannModelTest : public ::testing::Test {
  protected:
   void SetUp() override {
     // construct our base classes;
-    params_ = std::make_shared<ackermann::Params>(1.0, 45.0, 0.0, 0.0);
+    params_ = std::make_shared<ackermann::Params>(1.0, 2.0, 0.0, 0.0);
+    params_->velocity_max = 10.0;
+    params_->velocity_min = -1.0;
+    params_->acceleration_max = 100;
+    params_->acceleration_min = -100;
     model_ = std::make_unique<ackermann::Model>(params_);
+    limits_ = std::make_unique<ackermann::Limits>(params_);
   }
 
   // our base class members (we use pointers to avoid default construction)
   std::unique_ptr<ackermann::Model> model_;
+  std::unique_ptr<ackermann::Limits> limits_;
   std::shared_ptr<ackermann::Params> params_;
 };
 
 /* @brief Test all setters and Getters. */
 TEST_F(AckemannModelTest, Model_SettersAndGetters) {
-  
+
   // test setting and getting state
   {
     double speed, heading, speed_out, heading_out;
@@ -69,10 +79,11 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
 
     // set to arbitrary value and make sure it actually happens
     throttle = 0.25;
-    steering = 21.5;
-    model_->command(throttle, steering, 0.01);
-    model_->getGoal(throttle_out, steering_out);
-    EXPECT_EQ(throttle, throttle_out);
+    double cmd_speed = limits_->throttleToSpeed(throttle);
+    steering = 0.7854;
+    model_->command(cmd_speed, steering, 0.01);
+    model_->getCommand(throttle_out, steering_out);
+    EXPECT_EQ(limits_->speedToThrottle(params_->acceleration_max*0.01), throttle_out);
     EXPECT_EQ(steering, steering_out);
   }
 }
@@ -108,13 +119,25 @@ TEST_F(AckemannModelTest, Model_Error) {
   // test error #3: calculate expected error
   {
     // set state and goal
-    model_->setState(10.0, 11.0);
-    model_->setGoal(-2.0, -15.0);
+    model_->setState(10.0, 2.0);
+    model_->setGoal(2.0, 1.5);
 
     double speed_error, heading_error;
     model_->getError(speed_error, heading_error);
-    EXPECT_EQ(speed_error, -12.0);
-    EXPECT_EQ(heading_error, 26.0);
+    EXPECT_EQ(speed_error, -8.0);
+    EXPECT_EQ(heading_error,-0.5);
+  }
+
+// test error #3: calculate expected error, opposite direction
+  {
+    // set state and goal
+    model_->setState(2.0, -1.5);
+    model_->setGoal(8.0, 2);
+
+    double speed_error, heading_error;
+    model_->getError(speed_error, heading_error);
+    EXPECT_EQ(speed_error, 6.0);
+    EXPECT_EQ(heading_error, 3.5);
   }
 }
 

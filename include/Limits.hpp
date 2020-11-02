@@ -37,8 +37,8 @@ class Limits {
                      double& desired_steering_vel,
                      double dt) const;
 
-  double throttleToSpeed(const double throttle) const;
-  double speedToThrottle(const double speed) const;
+  double throttleToSpeed(double throttle) const;
+  double speedToThrottle(double speed) const;
 
  private:
   // access to our parameters object (contains limits)

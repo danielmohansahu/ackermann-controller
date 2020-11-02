@@ -17,20 +17,27 @@ Limits::Limits(const std::shared_ptr<const Params>& params)
   : params_(params) {
 }
 
-double Limits::throttleToSpeed(const double throttle) const {
+double Limits::throttleToSpeed(double throttle) const {
   double speed_calc;
-  if (throttle < 0) {
-    speed_calc = throttle * params_->velocity_min;
+  if (throttle > params_->throttle_max) {throttle = params_->throttle_max;}
+  if (throttle < params_->throttle_min) {throttle = params_->throttle_min;}
+
+  if (throttle <= 0) {
+    speed_calc = 0;
   }  else {
     speed_calc = throttle * params_->velocity_max;
   }
   return speed_calc;
 }
 
-double Limits::speedToThrottle(const double speed) const {
+double Limits::speedToThrottle(double speed) const {
   double throttle_calc;
-  if (speed < 0) {
-    throttle_calc = - (speed / params_->velocity_min);
+
+  if (speed > params_->velocity_max) {speed = params_->velocity_max;}
+  if (speed < params_->velocity_min) {speed = params_->velocity_min;}
+
+  if (speed <= 0) {
+    throttle_calc = 0;
   }  else {
     throttle_calc = speed / params_->velocity_max;
   }
@@ -77,7 +84,6 @@ void Limits::limit(const double current_throttle,
     // END THROTTLE LIMITATION SECTION
 
     // BEGIN STEERING LIMITATION SECTION
-    double heading_vel;
     double heading_accel;
     // limit heading my max angle
     if ((desired_steering - current_steering) > params_->max_steering_angle) {
