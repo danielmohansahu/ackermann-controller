@@ -122,24 +122,24 @@ TEST_F(AckemannModelTest, Model_Error) {
   {
     // set state and goal
     model_->setState(10.0, 2.0);
-    model_->setGoal(-2.0, 1.5);
+    model_->setGoal(2.0, 1.5);
 
     double speed_error, heading_error;
     model_->getError(speed_error, heading_error);
-    EXPECT_EQ(speed_error, -12.0);
+    EXPECT_EQ(speed_error, -8.0);
     EXPECT_EQ(heading_error,-0.5);
   }
 
 // test error #3: calculate expected error, opposite direction
   {
     // set state and goal
-    model_->setState(-2.0, 1.5);
+    model_->setState(2.0, -1.5);
     model_->setGoal(8.0, 2);
 
     double speed_error, heading_error;
     model_->getError(speed_error, heading_error);
-    EXPECT_EQ(speed_error, 10.0);
-    EXPECT_EQ(heading_error, 0.5);
+    EXPECT_EQ(speed_error, 6.0);
+    EXPECT_EQ(heading_error, 3.5);
   }
 }
 

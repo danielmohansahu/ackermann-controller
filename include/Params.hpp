@@ -29,15 +29,15 @@ struct Params {
   // default value parameters
   std::atomic<double> control_frequency {100.0};
   std::atomic<double> velocity_max {std::numeric_limits<double>::max()};
-  std::atomic<double> velocity_min {std::numeric_limits<double>::lowest()};
+  std::atomic<double> velocity_min {0.0};
   std::atomic<double> acceleration_max {std::numeric_limits<double>::max()};
   std::atomic<double> acceleration_min {std::numeric_limits<double>::lowest()};
   std::atomic<double> angular_velocity_max {std::numeric_limits<double>::max()};
   std::atomic<double> angular_velocity_min {std::numeric_limits<double>::lowest()};
   std::atomic<double> angular_acceleration_max {std::numeric_limits<double>::max()};
   std::atomic<double> angular_acceleration_min {std::numeric_limits<double>::lowest()};
-  std::atomic<double> throttle_max {1};
-  std::atomic<double> throttle_min {-1};
+  std::atomic<double> throttle_max {1.0};
+  std::atomic<double> throttle_min {0.0};
 
   // PID parameters
   const std::shared_ptr<PIDParams> pid_speed;
