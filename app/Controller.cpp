@@ -35,6 +35,7 @@ void Controller::start() {
   stop(true);
 
   // spin off a thread processing our control loop
+  cancel_ = false;
   control_loop_handle_ = std::thread([this](){this->controlLoop();});
 }
 
@@ -43,7 +44,6 @@ void Controller::stop(bool block) {
   cancel_ = true;
   if (block && control_loop_handle_.joinable())
     control_loop_handle_.join();
-  cancel_ = false;
 }
 
 void Controller::reset() {
