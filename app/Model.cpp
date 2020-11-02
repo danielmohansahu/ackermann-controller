@@ -83,6 +83,8 @@ void Model::command(const double desired_speed, const double steering, const dou
   current_steering_vel_ = desired_steering_vel;
   // update current heading to new heading value
   this->current_heading_ = this->current_heading_ + ((this->current_speed_/(params_->wheel_base)) * cos(desired_steering) * dt);
+  // update current throttle to new value
+  this->current_throttle_ = desired_throttle;
 }
 
 void Model::getError(double& speed_error, double& heading_error) const {

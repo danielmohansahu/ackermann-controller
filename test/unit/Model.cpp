@@ -82,10 +82,8 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
     double cmd_speed = limits_->throttleToSpeed(throttle);
     steering = 0.7854;
     model_->command(cmd_speed, steering, 0.01);
-    std::cout << cmd_speed << std::endl;
     model_->getCommand(throttle_out, steering_out);
-    std::cout << throttle_out << std::endl;
-    EXPECT_EQ(throttle, throttle_out);
+    EXPECT_EQ(limits_->speedToThrottle(params_->acceleration_max*0.01), throttle_out);
     EXPECT_EQ(steering, steering_out);
   }
 }
