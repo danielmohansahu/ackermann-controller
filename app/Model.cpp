@@ -20,13 +20,8 @@ namespace ackermann {
 
 Model::Model(const std::shared_ptr<const Params>& params)
   : params_(params) {
-    this->limits_ = std::make_unique<Limits>(params);
-    this->desired_speed_ = 0.0;
-    this->desired_heading_ = 0.0;
-    this->current_speed_ = 0.0;
-    this->current_heading_ = 0.0;
-    this->current_throttle_ = 0.0;
-    this->current_steering_ = 0.0;
+  this->limits_ = std::make_unique<Limits>(params);
+  this->reset();
 }
 
 void Model::reset() {
