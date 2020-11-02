@@ -87,36 +87,42 @@ void Controller::controlLoop() {
     next_loop_time += duration;
     double dT = 1/params_->control_frequency;
 
+    // get goal values
     double desired_speed, desired_heading;
-    double current_speed,current_heading;
-
     this->model_->getGoal(desired_speed, desired_heading);
+    std::cout << "DesSpd: " << desired_speed << std::endl;
+    // get model current state
+    double current_speed,current_heading;
     this->model_->getState(current_speed, current_heading);
 
-    std::cout << "DesSpd: " << desired_speed << std::endl;
-    std::cout << "CurrSpd: " << current_speed << std::endl;
-    double throttle_error = limits_->speedToThrottle(desired_speed)
-         - limits_->speedToThrottle(current_speed);
-
-    double speed_error, heading_error;
-    this->model_->getError(speed_error, heading_error);
-
-    double command_throttle, command_steering;
-
-    command_throttle = this->pid_throttle_->getCommand(throttle_error, dT);
-    command_steering = this->pid_heading_->getCommand(heading_error, dT);
-
+    // get current throttle, current steering, current steering velocity
     double current_throttle, current_steering, current_steering_vel;
     this->model_->getCommand(current_throttle, current_steering, current_steering_vel);
 
+    // convert speed error to throttle error
+    double throttle_error = limits_->speedToThrottle(desired_speed)
+         - limits_->speedToThrottle(current_speed);
+
+    // get speed error and heading error
+    double speed_error, heading_error;
+    this->model_->getError(speed_error, heading_error);
+
+    // PID controller
+
+    // apply limits and generate commands
+    double command_throttle = current_throttle + this->pid_throttle_->getCommand(throttle_error, dT);
+    double command_steering = current_steering + this->pid_heading_->getCommand(heading_error, dT);
     double command_steering_vel;
+
     this->limits_->limit(current_throttle, current_steering, current_steering_vel,
                    command_throttle, command_steering, command_steering_vel,
                    dT);
 
+    // apply commands
     this->model_->command(command_throttle, command_steering, dT);
+    std::cout << "CmdTh: " << command_throttle << std::endl;
+    std::cout << "ThErr: " << throttle_error << std::endl;
 
-    std::cout << "CmdTh: "<< command_throttle << std::endl << std::endl;
     // sleep until next loop
     std::this_thread::sleep_until(next_loop_time);
   }

@@ -71,20 +71,16 @@ void Model::getCommand(double& throttle, double& steering, double& steer_vel) co
 
 void Model::command(const double cmd_throttle, const double steering, const double dt) {
 
-  // initialize desired values
-  double desired_throttle = cmd_throttle;
-  double desired_steering = steering;
-  double desired_steering_vel = (desired_steering - current_steering_) / dt;
-
-  // take throttle and convert to speed
-  this->current_speed_ = limits_->throttleToSpeed(desired_throttle);
-  // update current steering value to output from limit
-  this->current_steering_ = desired_steering;
-  current_steering_vel_ = desired_steering_vel;
-  // update current heading to new heading value
-  this->current_heading_ = this->current_heading_ + ((this->current_speed_/(params_->wheel_base)) * cos(desired_steering) * dt);
   // update current throttle to new value
-  this->current_throttle_ = desired_throttle;
+  this->current_throttle_ = cmd_throttle;
+  // take throttle and convert to speed
+  this->current_speed_ = limits_->throttleToSpeed(cmd_throttle);
+  // update current steering value to output from limit
+  this->current_steering_ = steering;
+  this->current_steering_vel_ = (steering - this->current_steering_) / dt;
+  // update current heading to new heading value
+  this->current_heading_ = this->current_heading_ + ((this->current_speed_/(params_->wheel_base)) * cos(steering) * dt);
+
 }
 
 void Model::getError(double& speed_error, double& heading_error) const {
