@@ -56,20 +56,20 @@ bool Controller::isRunning() const {
   return control_loop_handle_.joinable();
 }
 
-void Controller::setState(const double heading, const double speed) {
-  this->model_->setState(heading, speed);
+void Controller::setState(const double speed, const double heading) {
+  this->model_->setState(speed, heading);
 }
 
-void Controller::getState(double& heading, double& speed) const {
-  this->model_->getState(heading, speed);
+void Controller::getState(double& speed, double& heading) const {
+  this->model_->getState(speed, heading);
 }
 
-void Controller::setGoal(const double heading, const double speed) {
-  this->model_->setGoal(heading, speed);
+void Controller::setGoal(const double speed, const double heading) {
+  this->model_->setGoal(speed, heading);
 }
 
-void Controller::getGoal(double& heading, double& speed) const {
-  this->model_->getGoal(heading, speed);
+void Controller::getGoal(double& speed, double& heading) const {
+  this->model_->getGoal(speed, heading);
 }
 
 void Controller::getCommand(double& throttle, double& steering) const {

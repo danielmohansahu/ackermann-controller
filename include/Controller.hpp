@@ -59,14 +59,14 @@ class Controller {
    * @param heading: The actual vehicle heading.
    * @param speed: The actual vehicle speed.
    */
-  void setState(const double heading, const double speed);
+  void setState(const double speed, const double heading);
 
   /* @brief Get the current state (speed, heading) of the system.
    *
    * @param heading: The estimated vehicle heading.
    * @param speed: The estimated vehicle speed.
    */
-  void getState(double& heading, double& speed) const;
+  void getState(double& speed, double& heading) const;
 
   /* @brief Set the current system setpoint (speed, heading).
    *
@@ -77,14 +77,14 @@ class Controller {
    * @param heading: The desired vehicle heading.
    * @param speed: The desired vehicle speed.
    */
-  void setGoal(const double heading, const double speed);
+  void setGoal(const double speed, const double heading);
 
   /* @brief Get the current system setpoint (speed, heading).
    *
    * @param heading: The current vehicle heading setpoint.
    * @param speed: The current vehicle speed setpoint.
    */
-  void getGoal(double& heading, double& speed) const;
+  void getGoal(double& speed, double& heading) const;
 
   /* @brief Get the current system command (speed, heading).
    *
