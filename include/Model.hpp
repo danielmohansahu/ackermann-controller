@@ -63,11 +63,11 @@ class Model {
 
   /* @brief Simulate execution of the given throttle and steering commands.
    *
-   * @param throttle: The commanded throttle.
+   * @param throttle: The commanded speed.
    * @param steering: The commanded steering angle.
    * @param dt: The amount of time to simulate over.
    */
-  void command(const double throttle, const double steering, const double dt);
+  void command(double desired_speed, double steering, const double dt);
 
   /* @brief Return the current error between desired and setpoint.
    *
@@ -87,12 +87,18 @@ class Model {
   std::unique_ptr<Limits> limits_;
 
   // system state variables
-  std::atomic<double> desired_speed_ {0.0};
-  std::atomic<double> desired_heading_ {0.0};
-  std::atomic<double> current_speed_ {0.0};
-  std::atomic<double> current_heading_ {0.0};
+  // use for current conditions for limits
   std::atomic<double> current_throttle_ {0.0};
   std::atomic<double> current_steering_ {0.0};
+  std::atomic<double> current_steering_vel_ {0.0};
+  //use for setting goal
+  std::atomic<double> desired_speed_ {0.0};
+  std::atomic<double> desired_heading_ {0.0};
+  //current states
+  std::atomic<double> current_speed_ {0.0};
+  std::atomic<double> current_heading_ {0.0};
+
+
 };
 
 } // namespace ackermann
