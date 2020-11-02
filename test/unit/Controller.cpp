@@ -67,7 +67,7 @@ TEST_F(AckemannControllerTest, ControllerThreading) {
   {
     controller_->start();
     EXPECT_TRUE(controller_->isRunning());
-    controller_->stop();
+    controller_->stop(true);
     EXPECT_FALSE(controller_->isRunning());
   }
 
@@ -79,11 +79,11 @@ TEST_F(AckemannControllerTest, ControllerThreading) {
     EXPECT_TRUE(controller_->isRunning());
     controller_->start();
     EXPECT_TRUE(controller_->isRunning());
-    controller_->stop();
+    controller_->stop(true);
     EXPECT_FALSE(controller_->isRunning());
-    controller_->stop();
+    controller_->stop(true);
     EXPECT_FALSE(controller_->isRunning());
-    controller_->stop();
+    controller_->stop(true);
     EXPECT_FALSE(controller_->isRunning());
   }
 
@@ -117,7 +117,7 @@ TEST_F(AckemannControllerTest, ControllerThreading) {
       controller_->reset();
     }      
 
-    controller_->stop();
+    controller_->stop(true);
     EXPECT_FALSE(controller_->isRunning());
   }
 }
