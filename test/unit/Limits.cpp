@@ -232,3 +232,57 @@ TEST(Limits_Heading_AngularAcceleration, should_pass) {
     EXPECT_EQ(desired_steering, desired_steering_vel*dt);
   }
 }
+
+TEST(Throttle_to_Speed_Conversion, should_pass) {
+  // instantiate a limits class with only velocity limits
+  double dt = 0.01;
+  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  p->velocity_max = 100.0;
+  Limits lim(p);
+
+  // chceck #1: make sure a value in range works correctly
+  {
+    double throttle = 0.1;
+    double calc_speed = lim.throttleToSpeed(throttle);
+    EXPECT_EQ(calc_speed,throttle*p->velocity_max);
+  }
+  // check #2: make sure to ceiling high values
+  {
+    double throttle = 1.1;
+    double calc_speed = lim.throttleToSpeed(throttle);
+    EXPECT_EQ(calc_speed,p->velocity_max);
+  }
+  // check #3: make sure to floor low values
+  {
+    double throttle = -0.5;
+    double calc_speed = lim.throttleToSpeed(throttle);
+    EXPECT_EQ(calc_speed,0.0);
+  }
+}
+
+TEST(Speed_to_Throttle_Conversion, should_pass) {
+  // instantiate a limits class with only velocity limits
+  double dt = 0.01;
+  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  p->velocity_max = 100.0;
+  Limits lim(p);
+
+  // chceck #1: make sure a value in range works correctly
+  {
+    double speed = 10.0;
+    double calc_throttle = lim.speedToThrottle(speed);
+    EXPECT_EQ(calc_throttle,speed/p->velocity_max);
+  }
+  // check #2: make sure to ceiling high values
+  {
+    double speed = 200.0;
+    double calc_throttle = lim.speedToThrottle(speed);
+    EXPECT_EQ(calc_throttle,p->throttle_max);
+  }
+  // check #3: make sure to floor low values
+  {
+    double speed = -10.0;
+    double calc_throttle = lim.speedToThrottle(speed);
+    EXPECT_EQ(calc_throttle,p->throttle_min);
+  }
+}
