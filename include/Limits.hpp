@@ -40,6 +40,9 @@ class Limits {
   double throttleToSpeed(double throttle) const;
   double speedToThrottle(double speed) const;
 
+  double shortestArcToTurn(double current_heading, double desired_heading) const;
+  double boundHeading(const double heading) const;
+
  private:
   // access to our parameters object (contains limits)
   const std::shared_ptr<const Params> params_;

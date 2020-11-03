@@ -10,6 +10,7 @@
 // @TODO Currently STUB implementation; needs to be filled
 
 #include <Limits.hpp>
+#include <cmath>
 
 namespace ackermann {
 
@@ -42,6 +43,26 @@ double Limits::speedToThrottle(double speed) const {
     throttle_calc = speed / params_->velocity_max;
   }
   return throttle_calc;
+}
+
+double Limits::shortestArcToTurn(double current_heading, double desired_heading) const {
+  double heading_command = (desired_heading - current_heading);
+  if (heading_command > M_PI) {heading_command -= 2*M_PI;}
+  if (heading_command < -M_PI) {heading_command += 2*M_PI;}
+  return heading_command;
+}
+
+double Limits::boundHeading(const double heading) const {
+  double temp_heading = heading;
+
+  if (temp_heading < 0) {
+    while (temp_heading < 0) {temp_heading += 2*M_PI;}
+  }
+  if (temp_heading > 2*M_PI) {
+    while (temp_heading > 2*M_PI) {temp_heading -= 2*M_PI;}
+  }
+  return temp_heading;
+
 }
 
 void Limits::limit(const double current_throttle,
