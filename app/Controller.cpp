@@ -90,7 +90,7 @@ void Controller::controlLoop() {
     // get goal values
     double desired_speed, desired_heading;
     this->model_->getGoal(desired_speed, desired_heading);
-    std::cout << "DesSpd: " << desired_speed << std::endl;
+
     // get model current state
     double current_speed,current_heading;
     this->model_->getState(current_speed, current_heading);
@@ -108,20 +108,17 @@ void Controller::controlLoop() {
     this->model_->getError(speed_error, heading_error);
 
     // PID controller
-
-    // apply limits and generate commands
     double command_throttle = current_throttle + this->pid_throttle_->getCommand(throttle_error, dT);
     double command_steering = current_steering + this->pid_heading_->getCommand(heading_error, dT);
     double command_steering_vel;
-
+    // apply limits and generate commands
     this->limits_->limit(current_throttle, current_steering, current_steering_vel,
                    command_throttle, command_steering, command_steering_vel,
                    dT);
 
     // apply commands
     this->model_->command(command_throttle, command_steering, dT);
-    std::cout << "CmdTh: " << command_throttle << std::endl;
-    std::cout << "ThErr: " << throttle_error << std::endl;
+
 
     // sleep until next loop
     std::this_thread::sleep_until(next_loop_time);

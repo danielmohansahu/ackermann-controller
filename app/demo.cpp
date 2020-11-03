@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
   // Construct dummy plant class
   fake::PlantOptions opts(0.45, 0.785);
-  auto plant = std::make_shared<fake::Plant>(opts);
+  auto plant = std::make_shared<fake::Plant>(opts, params);
 
   // begin QT application instance
   QApplication app(argc, argv);

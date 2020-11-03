@@ -41,7 +41,7 @@ class AckermannControllerTest : public ::testing::Test {
     }
 
     // construct our plant
-    plant_ = std::make_unique<fake::Plant>(*opts_);
+    plant_ = std::make_unique<fake::Plant>(*opts_,params_);
 
     // construct the controller
     controller_ = std::make_unique<ackermann::Controller>(params_);

@@ -28,7 +28,7 @@ struct PIDParams {
 struct Params {
   // default value parameters
   std::atomic<double> control_frequency {100.0};
-  std::atomic<double> velocity_max {std::numeric_limits<double>::max()};
+  std::atomic<double> velocity_max {10.0};
   std::atomic<double> velocity_min {0.0};
   std::atomic<double> acceleration_max {std::numeric_limits<double>::max()};
   std::atomic<double> acceleration_min {std::numeric_limits<double>::lowest()};

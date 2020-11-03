@@ -11,6 +11,12 @@
 #include <limits>
 #include <cmath>
 #include <random>
+#include <atomic>
+#include <memory>
+#include <thread>
+#include <chrono>
+#include "Params.hpp"
+#include "Limits.hpp"
 
 namespace fake {
 
@@ -51,12 +57,7 @@ struct PlantOptions {
  */
 class Plant {
  public:
-  explicit Plant(const PlantOptions& opts)
-  : speed_(0.0),
-    heading_(0.0),
-    opts_(opts),
-    dist_(opts.noise_mean, opts.noise_stddev) {
-  }
+  explicit Plant(const PlantOptions& opts, const std::shared_ptr<const ackermann::Params>& params);
 
   /* @brief Reset all state variables to their defaults. */
   void reset();
@@ -93,12 +94,20 @@ class Plant {
   double speed_;
   double heading_;
 
+  /* @brief A copy of our configuration parameters. */
+  std::shared_ptr<const ackermann::Params> params_;
+
   // struct of our system options
   PlantOptions opts_;
 
   // random noise generation
   std::default_random_engine generator_;
-  std::normal_distribution<double> dist_;
+  //std::normal_distribution<double> dist_;
+
+  /* @brief Object used to apply kinematic constraints to
+   * a calculated command (to prevent saturation)
+   */
+  std::unique_ptr<ackermann::Limits> limits_;  
 };
 
 } // namespace fake
