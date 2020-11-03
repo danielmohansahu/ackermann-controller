@@ -89,6 +89,8 @@ class Model {
    /* @brief shared parameter object (contains system kinematics)
     */
   const std::shared_ptr<const Params> params_;
+  /* @brief Limits object contains limitations imposed on model behavior
+   */
   std::unique_ptr<Limits> limits_;
 
   // system state variables

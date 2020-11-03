@@ -126,16 +126,18 @@ void Limits::limit(const double current_speed,
     }
 
     // limit heading by max angle rate of change rate of change (angular accel)
-    double heading_accel = (desired_steering_vel - current_steering_vel) / dt;
-    if (heading_accel > params_->angular_acceleration_max) {
-      heading_accel = params_->angular_acceleration_max;
-      desired_steering_vel = current_steering_vel + heading_accel*dt;
-      desired_steering = current_steering + desired_steering_vel*dt;
+    double steering_accel = (desired_steering_vel - current_steering_vel) / dt;
+    if (steering_accel > params_->angular_acceleration_max) {
+      steering_accel = params_->angular_acceleration_max;
+      desired_steering_vel = current_steering_vel + steering_accel*dt;
+      desired_steering = current_steering + (current_steering_vel*dt)
+        + .5*steering_accel*dt*dt;
     }
-    if (heading_accel < params_->angular_acceleration_min) {
-      heading_accel = params_->angular_acceleration_min;
-      desired_steering_vel = current_steering_vel + heading_accel*dt;
-      desired_steering = current_steering + desired_steering_vel*dt;
+    if (steering_accel < params_->angular_acceleration_min) {
+      steering_accel = params_->angular_acceleration_min;
+      desired_steering_vel = current_steering_vel + steering_accel*dt;
+      desired_steering = current_steering + (current_steering_vel*dt)
+        + .5*steering_accel*dt*dt;
     }
 }
 

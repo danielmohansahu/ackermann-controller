@@ -80,7 +80,6 @@ void Model::getError(double& speed_error, double& heading_error) const {
   speed_error = desired_speed_ - current_speed_;
   // minimize heading error
   heading_error = limits_->shortestArcToTurn(current_heading_, desired_heading_);
-
 }
 
 } // namespace ackermann

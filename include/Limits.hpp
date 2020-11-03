@@ -1,7 +1,12 @@
 #pragma once
 /* @file Limits.hpp
- * @copyright [2020]
- */
+* @brief Class declaration for an Ackermann vehicle model.
+*
+* @author Spencer Elyard
+* @author Daniel M. Sahu
+* @author Santosh Kesani
+* @copyright [2020]
+*/
 
 #include <memory>
 #include <limits>
@@ -62,7 +67,7 @@ class Limits {
   double boundHeading(const double heading) const;
 
  private:
-  // access to our parameters object (contains limits)
+  /* @brief A copy of our configuration parameters. */
   const std::shared_ptr<const Params> params_;
 };
 
