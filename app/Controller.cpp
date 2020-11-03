@@ -98,6 +98,8 @@ void Controller::controlLoop() {
     // get current throttle, current steering, current steering velocity
     double current_throttle, current_steering, current_steering_vel;
     this->model_->getCommand(current_throttle, current_steering, current_steering_vel);
+    //std::cout << "CS: " << current_steering << std::endl;
+    //std::cout << "CSV: " << current_steering_vel << std::endl;
 
     // convert speed error to throttle error
     double throttle_error = limits_->speedToThrottle(desired_speed)
@@ -116,6 +118,7 @@ void Controller::controlLoop() {
                    command_throttle, command_steering, command_steering_vel,
                    dT);
 
+    //std::cout << "S_CMD: " << command_steering << std::endl << std::endl;
     // apply commands
     this->model_->command(command_throttle, command_steering, dT);
 
