@@ -25,7 +25,7 @@ void Plant::reset() {
 
 void Plant::setState(const double speed, const double heading) {
   speed_ = speed;
-  heading_ = heading;
+  heading_ = limits_->boundHeading(heading);
 }
 
 void Plant::getState(double& speed, double& heading) const {
@@ -39,9 +39,10 @@ void Plant::command(const double throttle, const double steering, const double d
   double steering_capped = steering;
   std::cout << opts_.max_steering_angle << std::endl;
   if (std::abs(steering) > opts_.max_steering_angle) {
+    /*
     std::cout << "Given a commanded steering angle beyond our limit ("
               << steering << " vs. " << opts_.max_steering_angle << ")"
-              << std::endl;
+              << std::endl; */
     // if we're debugging, this is a failure
     //assert(false);
     steering_capped = ((steering > 0) - (steering < 0)) * opts_.max_steering_angle;
@@ -52,8 +53,7 @@ void Plant::command(const double throttle, const double steering, const double d
 
   // the global heading is affected by our speed, steering angle, and wheel base
   //heading_ += dt * (speed_ / opts_.wheel_base) * std::tan(steering_capped);
-  this->heading_ += ((this->speed_/(params_->wheel_base)) * cos(steering_capped) * dt);
-
+  this->heading_ = limits_->boundHeading(this->heading_ + ((this->speed_/params_->wheel_base) * tan(steering_capped) * dt));
   // add in some noise for good measure
   //speed_ += dist_(generator_);
   //heading_ += dist_(generator_);

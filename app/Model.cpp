@@ -35,7 +35,7 @@ void Model::reset() {
 
 void Model::setState(const double speed, const double heading) {
   this->current_speed_ = speed;
-  this->current_heading_ = heading;
+  this->current_heading_ = limits_->boundHeading(heading);
 }
 
 void Model::getState(double& speed, double& heading) const {
@@ -45,7 +45,7 @@ void Model::getState(double& speed, double& heading) const {
 
 void Model::setGoal(const double speed, const double heading) {
   this->desired_speed_ = speed;
-  this->desired_heading_ = heading;
+  this->desired_heading_ = limits_->boundHeading(heading);
 }
 
 void Model::getGoal(double& speed, double& heading) const {
@@ -65,7 +65,6 @@ void Model::getCommand(double& throttle, double& steering, double& steer_vel) co
 }
 
 void Model::command(const double cmd_throttle, const double steering, const double dt) {
-
   // update current throttle to new value
   this->current_throttle_ = cmd_throttle;
   // take throttle and convert to speed
@@ -74,13 +73,14 @@ void Model::command(const double cmd_throttle, const double steering, const doub
   this->current_steering_ = steering;
   this->current_steering_vel_ = (steering - this->current_steering_) / dt;
   // update current heading to new heading value
-  this->current_heading_ = this->current_heading_ + ((this->current_speed_/(params_->wheel_base)) * cos(steering) * dt);
-
+  this->current_heading_ = limits_->boundHeading(this->current_heading_ + ((this->current_speed_/params_->wheel_base) * tan(steering) * dt));
 }
 
 void Model::getError(double& speed_error, double& heading_error) const {
   speed_error = desired_speed_ - current_speed_;
-  heading_error = desired_heading_ - current_heading_;
+  // minimize heading error
+  heading_error = limits_->shortestArcToTurn(current_heading_, desired_heading_);
+
 }
 
 } // namespace ackermann
