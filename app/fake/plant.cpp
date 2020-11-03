@@ -37,7 +37,6 @@ void Plant::command(const double throttle, const double steering, const double d
 
   // sanity check inputs
   double steering_capped = steering;
-  std::cout << opts_.max_steering_angle << std::endl;
   if (std::abs(steering) > opts_.max_steering_angle) {
     /*
     std::cout << "Given a commanded steering angle beyond our limit ("

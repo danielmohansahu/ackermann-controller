@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <chrono>
 #include <iostream>
-
+#include <limits>
 #include <Controller.hpp>
 #include <Params.hpp>
 #include "fake/plant.h"
@@ -50,6 +50,7 @@ class AckermannControllerTest : public ::testing::Test {
   // our base class members (we use pointers to avoid default construction)
   std::unique_ptr<fake::Plant> plant_;
   std::unique_ptr<ackermann::Controller> controller_;
+  std::unique_ptr<ackermann::Limits> limits_;
 
   // default initialize our params and options, so we can re-call SetUp
   std::shared_ptr<ackermann::Params> params_;
@@ -112,27 +113,27 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
 TEST_F(AckermannControllerTest, System_FakeSetup) {
   // try setting and getting the same state
   double speed_in = 1.3;
-  double heading_in = 54.0;
+  double heading_in = 0.95;
   plant_->setState(speed_in, heading_in);
 
   double speed_out, heading_out;
   plant_->getState(speed_out, heading_out);
-  EXPECT_EQ(speed_out, speed_in);
-  EXPECT_EQ(heading_out, heading_in);
+  EXPECT_DOUBLE_EQ(speed_out, speed_in);
+  EXPECT_DOUBLE_EQ(heading_out, heading_in);
 
   // reset Plant and try setting a zero command (should result in zero state)
   plant_->setState(0.0, 0.0);
   plant_->command(0.0, 0.0, 0.0);
   plant_->getState(speed_out, heading_out);
-  EXPECT_EQ(speed_out, 0.0);
-  EXPECT_EQ(heading_out, 0.0);
+  EXPECT_DOUBLE_EQ(speed_out, 0.0);
+  EXPECT_DOUBLE_EQ(heading_out, 0.0);
 
   // make sure a dummy command returns an appropriate state
   // @TODO Daniel M. Sahu get the right values for this test.
   plant_->setState(0.0, 0.0);
   plant_->command(0.5, 0.45, 0.1);
   plant_->getState(speed_out, heading_out);
-  EXPECT_DOUBLE_EQ(speed_out, 0.5);
+  EXPECT_DOUBLE_EQ(limits_->speedToThrottle(speed_out), 0.5);
   EXPECT_NEAR(heading_out, 0.0, 0.001);
 }
 
