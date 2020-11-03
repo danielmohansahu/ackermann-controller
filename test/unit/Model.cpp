@@ -52,7 +52,7 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
 
   // test reset
   {
-    double speed, heading, speed_out, heading_out;
+    double speed, heading;
     model_->getState(speed,heading);
     EXPECT_NE(speed,0);
     EXPECT_NE(heading,0);

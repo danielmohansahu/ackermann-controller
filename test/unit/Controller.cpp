@@ -42,7 +42,7 @@ TEST_F(AckemannControllerTest, ControllerSettingAndGetting) {
   }
   // test reset
   {
-    double speed, heading, speed_out, heading_out;
+    double speed, heading;
     controller_->getState(speed,heading);
     EXPECT_NE(speed,0);
     EXPECT_NE(heading,0);
