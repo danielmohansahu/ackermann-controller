@@ -70,8 +70,8 @@ void Model::command(const double cmd_throttle, const double steering, const doub
   // take throttle and convert to speed
   this->current_speed_ = limits_->throttleToSpeed(cmd_throttle);
   // update current steering value to output from limit
-  this->current_steering_ = steering;
   this->current_steering_vel_ = (steering - this->current_steering_) / dt;
+  this->current_steering_ = steering;
   // update current heading to new heading value
   this->current_heading_ = limits_->boundHeading(this->current_heading_ + ((this->current_speed_/params_->wheel_base) * tan(steering) * dt));
 }

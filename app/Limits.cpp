@@ -58,14 +58,14 @@ double Limits::boundHeading(const double heading) const {
   if (temp_heading < 0) {
     while (temp_heading < 0) {temp_heading += 2*M_PI;}
   }
-  if (temp_heading > 2*M_PI) {
+  if (temp_heading >= 2*M_PI) {
     while (temp_heading > 2*M_PI) {temp_heading -= 2*M_PI;}
   }
   return temp_heading;
 
 }
 
-void Limits::limit(const double current_throttle,
+void Limits::limit(const double current_speed,
                    const double current_steering,
                    const double current_steering_vel,
                    double& desired_throttle,
@@ -89,28 +89,28 @@ void Limits::limit(const double current_throttle,
     }
 
     // scale previous throttle to velocity & calculate commanded acceleration
-    double current_velocity = throttleToSpeed(current_throttle);
-    double desired_acceleration = (new_velocity - current_velocity) / dt;
+    double desired_acceleration = (new_velocity - current_speed) / dt;
     // limit acceleration
     if (desired_acceleration > params_->acceleration_max) {
       desired_acceleration = params_->acceleration_max;
-      new_velocity = desired_acceleration * dt;
+      new_velocity = current_speed + desired_acceleration * dt;
       desired_throttle = speedToThrottle(new_velocity);
     }
     if (desired_acceleration < params_->acceleration_min) {
       desired_acceleration = params_->acceleration_min;
-      new_velocity = desired_acceleration * dt;
+      new_velocity = current_speed + desired_acceleration * dt;
       desired_throttle = speedToThrottle(new_velocity);
       }
     // END THROTTLE LIMITATION SECTION
 
     // BEGIN STEERING LIMITATION SECTION
-    double heading_accel;
+
     // limit heading my max angle
-    if ((desired_steering - current_steering) > params_->max_steering_angle) {
+    double steering_err = desired_steering - current_steering;
+    if (steering_err > params_->max_steering_angle) {
       desired_steering = params_->max_steering_angle;
     }
-    if ((desired_steering - current_steering) < -params_->max_steering_angle) {
+    if (steering_err < -params_->max_steering_angle) {
       desired_steering = -params_->max_steering_angle;
     }
 
@@ -126,7 +126,7 @@ void Limits::limit(const double current_throttle,
     }
 
     // limit heading by max angle rate of change rate of change (angular accel)
-    heading_accel = (desired_steering_vel - current_steering_vel) / dt;
+    double heading_accel = (desired_steering_vel - current_steering_vel) / dt;
     if (heading_accel > params_->angular_acceleration_max) {
       heading_accel = params_->angular_acceleration_max;
       desired_steering_vel = current_steering_vel + heading_accel*dt;

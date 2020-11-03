@@ -113,12 +113,12 @@ void Controller::controlLoop() {
     double command_throttle = current_throttle + this->pid_throttle_->getCommand(throttle_error, dT);
     double command_steering = current_steering + this->pid_heading_->getCommand(heading_error, dT);
     double command_steering_vel;
+
     // apply limits and generate commands
-    this->limits_->limit(current_throttle, current_steering, current_steering_vel,
+    this->limits_->limit(current_speed, current_steering, current_steering_vel,
                    command_throttle, command_steering, command_steering_vel,
                    dT);
 
-    //std::cout << "S_CMD: " << command_steering << std::endl << std::endl;
     // apply commands
     this->model_->command(command_throttle, command_steering, dT);
 
