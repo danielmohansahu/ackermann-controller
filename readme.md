@@ -28,8 +28,8 @@ To build the package on Ubuntu 18.04, run the following from a terminal.
 ```bash
 git clone https://github.com/danielmohansahu/ackermann-controller
 cd ackermann-controller
-mkdir build && cd build
-cmake .. && make
+chmod +x buildme.sh runme.sh testme.sh
+./buildme.sh
 ```
 
 ### Demonstration Instructions
@@ -37,8 +37,8 @@ cmake .. && make
 Assuming the build succeeded, you can then run the demo code.
 
 ```bash
-# from your build directory (e.g. ackermann-controller/build/)
-./app/demo
+# from your install directory (e.g. ackermann-controller/)
+./runme.sh
 ```
 
 You should see something similar to the following, which allows you to evaluate the system and play with parameters against a mock Plant.
@@ -52,8 +52,8 @@ Empty | Running
 Unit and System tests are run during Continuous integration, but you can run them manually from the command line as well:
 
 ```bash
-# from your build directory (e.g. ackermann-controller/build/)
-./test/cpp-test
+# from your install directory (e.g. ackermann-controller/)
+./testme.sh
 ```
 
 ### Results and Performance Examples
@@ -81,25 +81,33 @@ Sprint planning notes and reviews [can be found here](https://docs.google.com/do
 **TODO: Annote bugs and issues when uncovered.**
 
 ### Documentation Generation instructions
-**TODO: Stub section - complete with instructions for Doxygen documentation generation.**
+To generate Doxygen documentation:
+
+```bash
+# from your install directory (e.g. ackermann-controller/)
+doxygen Doxyfile
+```
+
+To access Doxygen documentation, navigate to:
+```
+doxygen/html/index.html
+```
 
 ### Parameters and Limitations
-**TODO: Add default values once established.**
+**TODO: Continue to add default values once established.**
 #### Rover Model
 The controller enforces the various limitations of the rover:
 
 * Physical Parameters
-  * Robot wheel base (length between front and rear wheels)
-  * Robot wheel track (width between center of left and right wheels)
-  * Robot maximum and minimum motor RPM
-  * Maximum allowable steering angle (absolute value)
+  * Robot wheel base (length between front and rear wheels). (0.45 meters for demo)
+  * Maximum allowable steering angle (absolute value) (0.785 radians for demo)
 * Dynamic Limitations
-  * Maximum (forward) and minimum (reverse) speed limitations
-  * Maximum (forward) and minimum (reverse) acceleration limitations
-  * Maximum (right) and minimum (left) angular velocity limitations
-  * Maximum (right) and minimum (left) angular acecleration limitations
+  * Maximum (forward) and minimum (reverse) speed limitations (10 m/s and 0 m/s for demo).
+  * Maximum (forward) and minimum (reverse) acceleration limitations (+/- 5 m/s^2 for demo).
+  * Maximum (right) and minimum (left) angular velocity limitations (TBD)
+  * Maximum (right) and minimum (left) angular acecleration limitations (TBD)
 * Controller Parameters
-  * Frequency
+  * Frequency (100hz for demo)
   * PID controller parameters for speed control
   * PID controller parameters for heading control
   
@@ -107,23 +115,28 @@ The controller enforces the various limitations of the rover:
 The controller will accept the following inputs:
 
 * Desired heading (global coordinate frame) and speed
-* Update to current speed and heading from rover model
+* Updates to current speed and heading from rover model
 
 The controller will provide the following outputs:
 
 * Throttle and Steering Commands, limited as appropriate by the established limitations from the rover model
 * Current calculated speed and heading
 * Current desired heading (global coordinate frame) and speed
-* Current drive wheel velocities
 
 ## Class Diagram
 
 An overview of the classes used and their dependencies is shown in the following UML diagram:
 
-![Class-Diagram](docs/uml/class_diagram.png)
+![Class-Diagram](docs/uml/Revised 2020-11-06/class_diagram.png)
 
-## Activity Diagram
+## Sequence Diagram
 
-An example usage activity diagram is shown in the following UML diagram:
+An example sequence diagram for the full program is shown in the following UML diagram:
 
-![Activity-Diagram](docs/uml/activity_diagram.png)
+![Activity-Diagram](docs/uml/Revised 2020-11-06/sequence_diagram.png)
+
+## Activity Diagram for Controller
+
+An example activity diagram for the controller methodology is shown in the following UML diagram:
+
+![Activity-Diagram](docs/uml/Revised 2020-11-06/controller_activity.png)
