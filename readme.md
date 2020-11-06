@@ -28,18 +28,21 @@ To build the package on Ubuntu 18.04, run the following from a terminal.
 ```bash
 git clone https://github.com/danielmohansahu/ackermann-controller
 cd ackermann-controller
-chmod +x buildme.sh runme.sh testme.sh
-./buildme.sh
+mkdir build && cd build
+cmake .. && make
 ```
+A script to launch this is included in BashScripts.
 
 ### Demonstration Instructions
 
 Assuming the build succeeded, you can then run the demo code.
 
 ```bash
-# from your install directory (e.g. ackermann-controller/)
-./runme.sh
+# from your build directory (e.g. ackermann-controller/build/)
+./app/demo
 ```
+
+A script to launch this is included in BashScripts.
 
 You should see something similar to the following, which allows you to evaluate the system and play with parameters against a mock Plant.
 
@@ -52,8 +55,18 @@ Empty | Running
 Unit and System tests are run during Continuous integration, but you can run them manually from the command line as well:
 
 ```bash
-# from your install directory (e.g. ackermann-controller/)
-./testme.sh
+# from your build directory (e.g. ackermann-controller/build/)
+./test/cpp-test
+```
+A script to launch this is included in BashScripts.
+
+To generate CPPCheck and CPPLint code analysis:
+
+```bash
+# from the BashScripts directory
+chmod +x check_cppcheck.sh check_cpplint.sh
+./check_cppcheck.sh
+./check_cpplint.sh
 ```
 
 ### Results and Performance Examples
