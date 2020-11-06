@@ -74,22 +74,22 @@ struct Params {
   * @brief Maximum allowable (rightward) angular velocity of steering
   * change (rad/s)
   */
-  std::atomic<double> angular_velocity_max {std::numeric_limits<double>::max()};
+  std::atomic<double> angular_velocity_max {0.175};
   /**
   * @brief Minimum allowable (leftward) angular velocity of steering
   * change (rad/s)
   */
-  std::atomic<double> angular_velocity_min {std::numeric_limits<double>::lowest()};
+  std::atomic<double> angular_velocity_min {-0.175};
   /**
   * @brief Maximum allowable (rightward) angular acceleration of steering
   * change (rad/s^2)
   */
-  std::atomic<double> angular_acceleration_max {std::numeric_limits<double>::max()};
+  std::atomic<double> angular_acceleration_max {10.0};
   /**
   * @brief Minimum allowable (leftward) angular acceleration of steering
   * change (rad/s^2)
   */
-  std::atomic<double> angular_acceleration_min {std::numeric_limits<double>::lowest()};
+  std::atomic<double> angular_acceleration_min {-10.0};
   /**
   * @brief Maximum throttle setting - should set to 1.0
   */

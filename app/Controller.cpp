@@ -111,7 +111,7 @@ void Controller::controlLoop() {
 
     // PID controller
     double command_throttle = current_throttle + this->pid_throttle_->getCommand(throttle_error, dT);
-    double command_steering = current_steering + this->pid_heading_->getCommand(heading_error, dT);
+    double command_steering = this->pid_heading_->getCommand(heading_error, dT);
     double command_steering_vel;
 
     // apply limits and generate commands
