@@ -21,7 +21,6 @@ jobs:
             - g++-5
             - cmake
             - cmake-data
-      env: COMPILER=g++-5
     - stage: build
       script:
         - export CXX=$COMPILER;
