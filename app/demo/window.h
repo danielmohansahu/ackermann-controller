@@ -1,5 +1,16 @@
 #pragma once
 
+/**
+ * @file window.h
+ * @brief Declaration for GUI implementation
+ *
+ * @author Spencer Elyard
+ * @author Daniel M. Sahu
+ * @author Sentosh Kesani
+ *
+ * @copyright [2020]
+ */
+
 #include <memory>
 #include <atomic>
 #include <thread>
@@ -20,20 +31,39 @@ QT_BEGIN_NAMESPACE
 class QGroupBox;
 QT_END_NAMESPACE
 
+/**
+* @brief GUI implementation for user interface
+ */
 class Window : public QWidget
 {
   Q_OBJECT
 
  public:
   explicit Window(QWidget *parent = nullptr);
+
+  /**
+  * @brief Create GUI interface with pre-programmed conditions
+  * @param params Shared pointer to rover characteristic parameters
+  * @param controller Shared pointer to controller object
+  * @param plant Shared pointer to plant object (to apply received commands)
+  */
   Window(const std::shared_ptr<ackermann::Params>& params,
          const std::shared_ptr<ackermann::Controller>& controller,
          const std::shared_ptr<fake::Plant>& plant);
 
  public slots:
   // QT Slots; called via signals emitted from button clicks
+  /**
+  * @brief Begin simulation run with current parameters.
+  */
   void start();
+  /**
+  * @brief Stop current simulation run.
+  */
   void stop();
+  /**
+  * @brief Reset simulation to initial conditions.
+  */
   void reset();
 
  private:
@@ -77,7 +107,7 @@ class Window : public QWidget
   // synchronization objects
   std::atomic<bool> stop_ {true};
   std::thread thread_handle_;
-  
+
   // our shared parameters instance
   std::shared_ptr<ackermann::Params> params_;
 

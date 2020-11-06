@@ -1,6 +1,10 @@
 #pragma once
-/* @file Limits.hpp
-* @brief Class declaration for an Ackermann vehicle model.
+/**
+* @file Limits.hpp
+* @brief Class declaration for Limits class
+*
+* Object containing limitations for the Ackermann rover to prevent sending
+* steering or speed commands past allowable bounds.
 *
 * @author Spencer Elyard
 * @author Daniel M. Sahu
@@ -15,24 +19,29 @@
 
 namespace ackermann {
 
-/* @brief Class used to apply known limits to a given desired control signal.
+/**
+* @brief Class used to apply known limits to a given desired control signal.
  */
 class Limits {
  public:
-  /* @brief Constructor */
+   /**
+   * @brief Constructor
+   * @param params Shared pointer detailing rover characteristic parameters
+   */
   explicit Limits(const std::shared_ptr<const Params>& params);
 
-  /* @brief Apply known limits to the given controller command.
+  /**
+  * @brief Apply known limits to the given controller command.
    *
    * Apply known kinematic constraints (velocity, acceleration,
    * angular velocity, angular acceleration) to the given
    * potential commands, and return the limited version.
    *
-   * @param current_speed: Current speed.
-   * @param current_steering: Current commanded steering angle.
-   * @param desired_thottle: Desired throttle.
-   * @param desired_steering: Desired steering angle.
-   * @param dt: Fixed time step between commands.
+   * @param current_speed: Current speed in (m/s).
+   * @param current_steering: Current commanded steering angle (rad).
+   * @param desired_thottle: Desired throttle (generally [0,1]).
+   * @param desired_steering: Desired steering angle (rad).
+   * @param dt: Fixed time step between commands (s).
   */
   void limit(const double current_speed,
                      const double current_steering,
@@ -42,32 +51,38 @@ class Limits {
                      double& desired_steering_vel,
                      double dt) const;
 
-  /* @brief Use Parameters structure to convert throttle to speed as a
+/**
+* @brief Use Parameters structure to convert throttle to speed as a
   * function of maximum allowable speed.
-  * @param throttle Throttle setting in range of [0,1]
+  * @param throttle Throttle setting in range of generally [0,1]
   */
   double throttleToSpeed(double throttle) const;
-  /* @brief Use Parameters structure to convert speed to throttle as a
+  /**
+  * @brief Use Parameters structure to convert speed to throttle as a
   * function of maximum allowable speed.
   * @param speed Speed in range of [0,max_speed]
   */
   double speedToThrottle(double speed) const;
 
-  /* @brief Calculate the direction to minimize turning angle (eg, don't turn
+  /**
+  * @brief Calculate the direction to minimize turning angle (eg, don't turn
   * 270deg right if you can turn 90deg left
   * @param current_heading Current heading in radians
   * @param desired_heading Desired heading in radians
   */
   double shortestArcToTurn(double current_heading, double desired_heading) const;
 
-  /* @brief
+  /**
+  * @brief Bound heading to [0,360) range
   * @param current_heading Current heading in radians
   * @param desired_heading Desired heading in radians
   */
   double boundHeading(const double heading) const;
 
  private:
-  /* @brief A copy of our configuration parameters. */
+  /**
+  * @brief A copy of our configuration parameters.
+  */
   const std::shared_ptr<const Params> params_;
 };
 
