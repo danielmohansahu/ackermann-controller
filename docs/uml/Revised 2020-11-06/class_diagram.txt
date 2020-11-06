@@ -1,0 +1,107 @@
+@startuml
+
+package AckermannController {
+
+  class Params {
+    + control_frequency
+    + wheel_base
+    + max_steering_angle
+    + pid_speed PIDParams(kp_speed,ki_speed,kd_speed)
+    + pid_heading PIDParams(kp_steering, ki_steering, kd_steering)
+    + velocity_max
+    + velocity_min
+    + acceleration_max
+    + acceleration_min 
+    + anglular_velocity_max
+    + anglular_velocity_min
+    + angular_acceleration_max
+    + angular_acceleration_min
+    + throttle_max
+    + throttle_min
+  }
+
+  class Controller {
+   + Controller(Params p)
+   + start()
+   + stop()
+   + reset()
+   + isRunning()
+   + setState(speed, heading)
+   + getState(speed&, heading&)
+   + setGoal(speed, heading)
+   + getGoal(speed&, heading&)
+   + getCommand(throttle&, steering&)
+   + getWheelRPM(speed&, steering&) 
+   - Params params_    
+   - Limits limits_
+   - Model model_
+   - PID pid_throttle_
+   - PID pid_heading_
+   - Thread control_loop_handle_
+  }
+
+  class Model {
+   + Model(Params p)
+   + reset()
+   + setState(speed, heading)
+   + getState(speed&, heading&)
+   + setGoal(speed, heading)
+   + getGoal(speed&, heading&)
+   + getCommand(throttle&, steering&)
+   + getCommand(throttle&, steering&, steering_velocity&)   
+   + command(desired_speed, steering, dt)
+   + getError(speed&, heading&)
+   + getWheelRPM(speed&, steering&)   
+   - Params params_  
+   - current_throttle_
+   - current_steering_
+   - current_steering_vel
+   - desired_speed_
+   - desired_heading_            
+   - current_speed_
+   - current_heading_
+  }
+    
+  class Limits {
+   + Limits(Params p)
+   + limit(current_speed, current_steering, current_steering_vel, &desired_throttle, &desired_steering, $desired_steering_vel, dt)
+   + throttleToSpeed(throttle)
+   + speedToThrottle(speed)
+   + shortestArcToTurn(current_heading, desired_heading)
+   + boundHeading(heading)
+   - Params params_
+  }
+
+  class PID {
+    + PID(PIDParams p)
+    + reset_PID()
+    + getCommand(error, dt)
+    + get_k_p()
+    + get_k_i()
+    + get_k_d()
+    - Params params_
+    - prev_error_
+    - integral_error_
+  }
+
+  Controller *-- Limits
+  Controller *-- Model
+  Controller *-- PID
+  Controller <-- Params
+}
+
+package Testing {
+
+  class MockPlant {
+   + command(throttle, steering)
+   + setState(speed,heading)
+   + getState(speed&, heading&)
+   + reset()
+   - Params params_
+   - PlantOptions opts_
+   - Limits limits_
+   - default_random_engine generator_
+  }
+}
+
+@enduml
