@@ -21,6 +21,7 @@ class Limits {
  public:
   /* @brief Constructor */
   explicit Limits(const std::shared_ptr<const Params>& params);
+  Limits() = delete;
 
   /* @brief Apply known limits to the given controller command.
    *

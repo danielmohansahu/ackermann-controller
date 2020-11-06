@@ -45,6 +45,10 @@ class AckermannControllerTest : public ::testing::Test {
 
     // construct the controller
     controller_ = std::make_unique<ackermann::Controller>(params_);
+
+    // construct our limits class
+    limits_ = std::make_unique<ackermann::Limits>(params_);
+
   }
 
   // our base class members (we use pointers to avoid default construction)
@@ -129,12 +133,11 @@ TEST_F(AckermannControllerTest, System_FakeSetup) {
   EXPECT_DOUBLE_EQ(heading_out, 0.0);
 
   // make sure a dummy command returns an appropriate state
-  // @TODO Daniel M. Sahu get the right values for this test.
   plant_->setState(0.0, 0.0);
   plant_->command(0.5, 0.45, 0.1);
   plant_->getState(speed_out, heading_out);
   EXPECT_DOUBLE_EQ(limits_->speedToThrottle(speed_out), 0.5);
-  EXPECT_NEAR(heading_out, 0.0, 0.001);
+  EXPECT_NEAR(heading_out, 0.16, 0.01);
 }
 
 /* @brief Test that the system converges to a desired setpoint
