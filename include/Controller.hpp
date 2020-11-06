@@ -1,7 +1,8 @@
 #pragma once
 
-/* @file Controller.hpp
- * @brief Top level ACME Ackermann Controller
+/**
+ * @file Controller.hpp
+ * @brief Class declaration for top level ACME Ackermann Controller
  *
  * @author Spencer Elyard
  * @author Daniel M. Sahu
@@ -20,37 +21,52 @@
 #include "PID.hpp"
 #include "Limits.hpp"
 
+/**
+* @brief Namespace for Ackermann controller implementation
+ */
 namespace ackermann {
 
+   /**
+   * @brief Implementation of a steering and speed controller for a rover
+   * with an Ackermann steering mechanism.
+   *
+   */
 class Controller {
  public:
-  /* @brief Constructor; constructs and initializes parameters of all composition classes. */
+  /**
+  * @brief Constructor; constructs and initializes parameters of all composition classes.
+  */
   explicit Controller(const std::shared_ptr<const Params>& params);
 
   ~Controller();
 
-  /* @brief Begin execution of a control loop. */
+  /**
+  * @brief Begin execution of a control loop.
+  */
   void start();
 
-  /* @brief Stop execution of a control loop and rejoin.
+  /** @brief Stop execution of a control loop and rejoin.
    * This also calls reset() to clear any state variables.
    *
    * @ param block: Optionally wait for any running thread to rejoin. Default false.
    */
   void stop(bool block = false);
 
-  /* @brief Clear system state variables. */
+  /**
+  * @brief Clear system state variables.
+  */
   void reset();
 
-  /* @brief Return true if the core execution thread is running.
-   *
+  /**
+   * @brief Return true if the core execution thread is running.
    * This is a useful utility for testing.
    *
    * @returns: Whether or not the core control loop is executing.
    */
   bool isRunning() const;
 
-  /* @brief Set the current state (speed, heading) of the system.
+  /**
+   * @brief Set the current state (speed, heading) of the system.
    *
    * This represents an update from external sensors as to our true
    * system state. If this is not called the controller will continue
@@ -61,14 +77,16 @@ class Controller {
    */
   void setState(const double speed, const double heading);
 
-  /* @brief Get the current state (speed, heading) of the system.
+  /**
+   * @brief Get the current state (speed, heading) of the system.
    *
    * @param heading: The estimated vehicle heading.
    * @param speed: The estimated vehicle speed.
    */
   void getState(double& speed, double& heading) const;
 
-  /* @brief Set the current system setpoint (speed, heading).
+  /**
+   * @brief Set the current system setpoint (speed, heading).
    *
    * This sets a new target for our control loop. Expected usage
    * is to call this method before calling 'start', although
@@ -79,14 +97,16 @@ class Controller {
    */
   void setGoal(const double speed, const double heading);
 
-  /* @brief Get the current system setpoint (speed, heading).
+  /**
+  *  @brief Get the current system setpoint (speed, heading).
    *
    * @param heading: The current vehicle heading setpoint.
    * @param speed: The current vehicle speed setpoint.
    */
   void getGoal(double& speed, double& heading) const;
 
-  /* @brief Get the current system command (speed, heading).
+  /**
+  * @brief Get the current system command (speed, heading).
    *
    * This represents the main point of access for a polling
    * architecture, i.e. an external control loop would
@@ -99,29 +119,41 @@ class Controller {
   void getCommand(double& throttle, double& steering) const;
 
  private:
-  /* @brief Control loop (executed asynchronously) */
+  /**
+  * @brief Control loop (executed asynchronously)
+  */
   void controlLoop();
 
-  /* @brief A copy of our configuration parameters. */
+  /**
+  * @brief A copy of our configuration parameters.
+   */
   const std::shared_ptr<const Params> params_;
 
-  /* @brief Object used to apply kinematic constraints to
+  /**
+  * @brief Object used to apply kinematic constraints to
    * a calculated command (to prevent saturation)
    */
   std::unique_ptr<Limits> limits_;
 
-  /* @brief Ackermann model (used in translating
+  /**
+  * @brief Ackermann model (used in translating
    * speed/heading into wheel speeds)
    */
   std::unique_ptr<Model> model_;
 
-  /* @brief Internal encapsulated PID controller for system throttle. */
+  /**
+  * @brief Internal encapsulated PID controller for system throttle.
+  */
   std::unique_ptr<PID> pid_throttle_;
 
-  /* @brief Internal encapsulated PID controller for system heading. */
+  /**
+  * @brief Internal encapsulated PID controller for system heading.
+  */
   std::unique_ptr<PID> pid_heading_;
 
-  /* @brief Thread handle for the currently executing control loop. */
+  /**
+  * @brief Thread handle for the currently executing control loop.
+  */
   std::thread control_loop_handle_;
   std::atomic<bool> cancel_ {false};
 };
