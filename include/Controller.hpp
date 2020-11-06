@@ -34,7 +34,7 @@ class Controller {
 
   /* @brief Stop execution of a control loop and rejoin.
    * This also calls reset() to clear any state variables.
-   * 
+   *
    * @ param block: Optionally wait for any running thread to rejoin. Default false.
    */
   void stop(bool block = false);
@@ -42,57 +42,57 @@ class Controller {
   /* @brief Clear system state variables. */
   void reset();
 
-  /* @brief Return true if the core execution thread is running. 
+  /* @brief Return true if the core execution thread is running.
    *
    * This is a useful utility for testing.
-   * 
+   *
    * @returns: Whether or not the core control loop is executing.
    */
   bool isRunning() const;
 
-  /* @brief Set the current state (speed, heading) of the system. 
-   * 
+  /* @brief Set the current state (speed, heading) of the system.
+   *
    * This represents an update from external sensors as to our true
    * system state. If this is not called the controller will continue
    * open loop.
-   * 
+   *
    * @param heading: The actual vehicle heading.
    * @param speed: The actual vehicle speed.
    */
-  void setState(const double heading, const double speed);
+  void setState(const double speed, const double heading);
 
-  /* @brief Get the current state (speed, heading) of the system. 
-   * 
+  /* @brief Get the current state (speed, heading) of the system.
+   *
    * @param heading: The estimated vehicle heading.
    * @param speed: The estimated vehicle speed.
    */
-  void getState(double& heading, double& speed) const;
+  void getState(double& speed, double& heading) const;
 
-  /* @brief Set the current system setpoint (speed, heading). 
-   * 
+  /* @brief Set the current system setpoint (speed, heading).
+   *
    * This sets a new target for our control loop. Expected usage
    * is to call this method before calling 'start', although
    * concurrent execution is supported.
-   * 
+   *
    * @param heading: The desired vehicle heading.
    * @param speed: The desired vehicle speed.
    */
-  void setGoal(const double heading, const double speed);
+  void setGoal(const double speed, const double heading);
 
-  /* @brief Get the current system setpoint (speed, heading). 
-   * 
+  /* @brief Get the current system setpoint (speed, heading).
+   *
    * @param heading: The current vehicle heading setpoint.
    * @param speed: The current vehicle speed setpoint.
    */
-  void getGoal(double& heading, double& speed) const;
+  void getGoal(double& speed, double& heading) const;
 
-  /* @brief Get the current system command (speed, heading). 
-   * 
+  /* @brief Get the current system command (speed, heading).
+   *
    * This represents the main point of access for a polling
-   * architecture, i.e. an external control loop would 
+   * architecture, i.e. an external control loop would
    * periodically update the controller with the true system state
    * and request command updates.
-   * 
+   *
    * @param throttle: The latest throttle command (limited between [0,1]).
    * @param steering: The latest steering angle command (degrees).
    */
@@ -105,18 +105,18 @@ class Controller {
   /* @brief A copy of our configuration parameters. */
   const std::shared_ptr<const Params> params_;
 
-  /* @brief Ackermann model (used in translating 
-   * speed/heading into wheel speeds)
-   */
-  std::unique_ptr<Model> model_;
-
-  /* @brief Object used to apply kinematic constraints to 
+  /* @brief Object used to apply kinematic constraints to
    * a calculated command (to prevent saturation)
    */
   std::unique_ptr<Limits> limits_;
 
-  /* @brief Internal encapsulated PID controller for system speed. */
-  std::unique_ptr<PID> pid_speed_;
+  /* @brief Ackermann model (used in translating
+   * speed/heading into wheel speeds)
+   */
+  std::unique_ptr<Model> model_;
+
+  /* @brief Internal encapsulated PID controller for system throttle. */
+  std::unique_ptr<PID> pid_throttle_;
 
   /* @brief Internal encapsulated PID controller for system heading. */
   std::unique_ptr<PID> pid_heading_;

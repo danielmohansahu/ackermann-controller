@@ -82,7 +82,7 @@ void Window::reset()
     plant_->reset();
 
     // ensure that we keep the current setpoint and plant state
-    controller_->setGoal(heading_setpoint_, speed_setpoint_);
+    controller_->setGoal(speed_setpoint_, heading_setpoint_);
     plant_->setState(initial_speed_, initial_heading_);
 
     // also reset our line series and clear our chart view
@@ -109,9 +109,16 @@ void Window::execute()
   // continually evaluate the controller's commands and send them to the plant
   while (!stop_)
   {
+    // update controller goal (in case it changed locally)
+    controller_->setGoal(speed_setpoint_, heading_setpoint_);
+
     // poll Plant for current state
     double current_speed, current_heading;
     plant_->getState(current_speed, current_heading);
+
+    // poll controller for current goal
+    double target_speed, target_heading;
+    controller_->getGoal(target_speed, target_heading);
 
     // get the latest controller command
     double throttle, steering;
@@ -121,9 +128,9 @@ void Window::execute()
     plant_->command(throttle, steering, TIMESTEP);
 
     // update the QT series with our latest information
-    speedSetpointSeries->append(time, speed_setpoint_);
+    speedSetpointSeries->append(time, target_speed);
     speedAchievedSeries->append(time, current_speed);
-    headingSetpointSeries->append(time, heading_setpoint_);
+    headingSetpointSeries->append(time, target_heading);
     headingAchievedSeries->append(time, current_heading);
     commandThrottleSeries->append(time, throttle);
     commandSteeringSeries->append(time, steering);

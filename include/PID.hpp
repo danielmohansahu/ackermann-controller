@@ -41,11 +41,17 @@ class PID {
   double get_k_d() const;
 
   /* @brief Perform PID Calculation
-   * @parameter current Current value (Feedback)
-   * @parameter desired Desired value (Setpoint)
+   * @parameter current_error Current Error(Feedback)
+   * @parameter dt time
    * @return Output
    */
-  double getCommand(double current, double desired, double dt);
+  double getCommand(double current_error, double dt);
+
+  /* @brief Reset the PID
+   * @parameter None
+   * @return None
+   */
+  void reset_PID();
 
  private:
   // @brief PID Gains (kp, ki, kd)
