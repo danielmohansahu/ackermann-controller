@@ -5,9 +5,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <gtest/gtest.h>
+#include <math.h>
 
 #include <Params.hpp>
 #include <PID.hpp>
+
 
 using ackermann::PID;
 using ackermann::PIDParams;
@@ -17,12 +19,13 @@ TEST(PID_SettersAndGetters, should_pass) {
   // initialize random values for kp/ki/kd
   srand(time(NULL));
   auto params = std::make_shared<PIDParams>();
+  double out_minLimit, out_maxLimit;
   params->kp = static_cast<double>(rand() / RAND_MAX);
   params->ki = static_cast<double>(rand() / RAND_MAX);
   params->kd = static_cast<double>(rand() / RAND_MAX);
 
   // instantiate class
-  PID pid(params);
+  PID pid(params, out_minLimit = -INFINITY, out_maxLimit = INFINITY);
 
   // test getters
   EXPECT_EQ(pid.get_k_p(), params->kp);
@@ -41,7 +44,8 @@ TEST(PID_SettersAndGetters, should_pass) {
 /* @brief Test getCommand command with default params.*/
 TEST(PID_Control1, should_pass) {
   auto params = std::make_shared<PIDParams>();
-  PID pid(params);
+  double out_minLimit, out_maxLimit;
+  PID pid(params, out_minLimit = -INFINITY, out_maxLimit = INFINITY);
 
   EXPECT_EQ(pid.getCommand(0.0, 0.1), 0.0);
   EXPECT_EQ(pid.getCommand(-1.0, 0.1), 0.0);
@@ -52,7 +56,8 @@ TEST(PID_Control1, should_pass) {
 TEST(PID_Control2, should_pass) {
   // set gains
   auto params = std::make_shared<PIDParams>(0.5, 0.01, 0.125);
-  PID pid(params);
+  double out_minLimit, out_maxLimit;
+  PID pid(params, out_minLimit = -INFINITY, out_maxLimit = INFINITY);
 
   // call a few commands to get expected value
   EXPECT_DOUBLE_EQ(pid.getCommand(1, 0.1), 1.751);
@@ -64,7 +69,8 @@ TEST(PID_Control2, should_pass) {
 TEST(PID_Control3, should_pass) {
   // set gains
   auto params = std::make_shared<PIDParams>(0.1, 0.0, 0.1);
-  PID pid(params);
+  double out_minLimit, out_maxLimit;
+  PID pid(params, out_minLimit = -INFINITY, out_maxLimit = INFINITY);
 
   // call a few commands to get expected value
   EXPECT_DOUBLE_EQ(pid.getCommand(11, 1.0), 2.2);
