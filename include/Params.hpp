@@ -65,31 +65,31 @@ struct Params {
   /**
   * @brief Maximum allowable acceleration of rover (m/s^2)
   */
-  std::atomic<double> acceleration_max {2.0};
+  std::atomic<double> acceleration_max {50.0};
   /**
   * @brief Minimum allowable acceleration of rover (e.g., braking) (m/s^2)
   */
-  std::atomic<double> acceleration_min {-5.0};
+  std::atomic<double> acceleration_min {-50.0};
   /**
   * @brief Maximum allowable (rightward) angular velocity of steering
   * change (rad/s)
   */
-  std::atomic<double> angular_velocity_max {0.3};
+  std::atomic<double> angular_velocity_max {std::numeric_limits<double>::max()};
   /**
   * @brief Minimum allowable (leftward) angular velocity of steering
   * change (rad/s)
   */
-  std::atomic<double> angular_velocity_min {-0.3};
+  std::atomic<double> angular_velocity_min {std::numeric_limits<double>::lowest()};
   /**
   * @brief Maximum allowable (rightward) angular acceleration of steering
   * change (rad/s^2)
   */
-  std::atomic<double> angular_acceleration_max {30.0};
+  std::atomic<double> angular_acceleration_max {std::numeric_limits<double>::max()};
   /**
   * @brief Minimum allowable (leftward) angular acceleration of steering
   * change (rad/s^2)
   */
-  std::atomic<double> angular_acceleration_min {-30.0};
+  std::atomic<double> angular_acceleration_min {std::numeric_limits<double>::lowest()};
   /**
   * @brief Maximum throttle setting - should set to 1.0
   */

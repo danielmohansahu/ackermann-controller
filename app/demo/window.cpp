@@ -103,6 +103,14 @@ void Window::execute()
   // initialize time and some handy variables
   double time = 0.0;
 
+  // initialize range values
+  double speed_min = 0.0;
+  double speed_max = 1.0;
+  double heading_min = -M_PI/4.0;
+  double heading_max = M_PI/4.0;
+  double command_min = 0.0;
+  double command_max = 1.0;
+
   // start controller
   controller_->start();
 
@@ -128,9 +136,11 @@ void Window::execute()
     plant_->command(throttle, steering, TIMESTEP);
 
     // update the QT series with our latest information
-    speedSetpointSeries->append(time, target_speed);
+    speedSetpointSeries->append(time, speed_setpoint_);
+    speedGoalSeries->append(time, target_speed);
     speedAchievedSeries->append(time, current_speed);
-    headingSetpointSeries->append(time, target_heading);
+    headingSetpointSeries->append(time, heading_setpoint_);
+    headingGoalSeries->append(time, target_heading);
     headingAchievedSeries->append(time, current_heading);
     commandThrottleSeries->append(time, throttle);
     commandSteeringSeries->append(time, steering);
@@ -141,8 +151,17 @@ void Window::execute()
     headingChart->axisX()->setRange(x_min, time);
     commandChart->axisX()->setRange(x_min, time);
 
-    // @TODO calculate this and adjust
-    speedChart->axisY()->setRange(0, 10);
+    // update the Y ranges
+    speed_min = std::min({speed_min, static_cast<double>(speed_setpoint_), target_speed, current_speed});
+    speed_max = std::max({speed_max, static_cast<double>(speed_setpoint_), target_speed, current_speed});
+    heading_min = std::min({heading_min, static_cast<double>(heading_setpoint_), target_heading, current_heading});
+    heading_max = std::max({heading_max, static_cast<double>(heading_setpoint_), target_heading, current_heading});
+    command_min = std::min({command_min, throttle, steering});
+    command_max = std::max({command_max, throttle, steering});
+
+    speedChart->axisY()->setRange(speed_min, speed_max);
+    headingChart->axisY()->setRange(heading_min, heading_max);
+    commandChart->axisY()->setRange(command_min, command_max);
 
     // sleep and update our timestamp
     std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000 * TIMESTEP)));
@@ -165,11 +184,15 @@ QGroupBox *Window::createParametersGroup()
   controlFrequency->setValue(params_->control_frequency);
   controlFrequency->setSuffix(tr(" (hz)"));
 
+  connect(controlFrequency, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->control_frequency = new_val;});
+
   // wheel base
   QLabel *wheelBaseLabel = new QLabel(tr("Vehicle wheel base:"));
   QDoubleSpinBox *wheelBase = new QDoubleSpinBox();
   wheelBase->setValue(params_->wheel_base);
   wheelBase->setSuffix(tr(" (m)"));
+
+  connect(wheelBase, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->wheel_base = new_val;});
 
   // max steering angle
   QLabel *maxSteeringAngleLabel = new QLabel(tr("Vehicle maximum steering angle:"));
@@ -178,6 +201,8 @@ QGroupBox *Window::createParametersGroup()
   maxSteeringAngle->setMaximum(M_PI);
   maxSteeringAngle->setValue(params_->max_steering_angle);
   maxSteeringAngle->setSuffix(tr(" (rad)"));
+
+  connect(maxSteeringAngle, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->max_steering_angle = new_val;});
 
   // heading PID params (KP, KI, KD)
   QLabel *headingPIDLabel = new QLabel(tr("Heading PID Parameters:"));
@@ -191,6 +216,10 @@ QGroupBox *Window::createParametersGroup()
   kdHeading->setValue(params_->pid_heading->kd);
   kdHeading->setPrefix(tr("kd: "));
 
+  connect(kpHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->kp = new_val;});
+  connect(kiHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->ki = new_val;});
+  connect(kdHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->kd = new_val;});
+
   // speed PID params (KP, KI, KD)
   QLabel *speedPIDLabel = new QLabel(tr("Speed PID Parameters:"));
   QDoubleSpinBox *kpSpeed = new QDoubleSpinBox();
@@ -202,6 +231,10 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *kdSpeed = new QDoubleSpinBox();
   kdSpeed->setValue(params_->pid_speed->kd);
   kdSpeed->setPrefix(tr("kd: "));
+
+  connect(kpSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->kp = new_val;});
+  connect(kiSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->ki = new_val;});
+  connect(kdSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->kd = new_val;});
 
   // add all parameters to box
   QVBoxLayout *vbox = new QVBoxLayout;
@@ -311,17 +344,22 @@ QGroupBox *Window::createSpeedPlotGroup()
   // add desired setpoint series
   speedSetpointSeries = new QLineSeries();
 
+  // add controller internal setpoint series
+  speedGoalSeries = new QLineSeries();
+
   // add achieved values series
   speedAchievedSeries = new QLineSeries();
 
   // add chart instance
   speedChart = new QChart();
   speedChart->addSeries(speedSetpointSeries);
+  speedChart->addSeries(speedGoalSeries);
   speedChart->addSeries(speedAchievedSeries);
   speedChart->createDefaultAxes();
   speedChart->setTitle("Vehicle Speed (m/s)");
   speedChart->legend()->setAlignment(Qt::AlignRight);
   speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("setpoint"));
+  speedChart->legend()->markers(speedGoalSeries)[0]->setLabel(tr("goal"));
   speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("actual"));
 
   // add ChartView instance (to actually display the chart)
@@ -340,18 +378,21 @@ QGroupBox *Window::createHeadingPlotGroup()
 {
   QGroupBox *groupBox = new QGroupBox(tr("Heading Plots"));
 
-  // add dummy series (for now)
+  // add heading series
   headingSetpointSeries = new QLineSeries();
+  headingGoalSeries = new QLineSeries();
   headingAchievedSeries = new QLineSeries();
 
   // add chart instance
   headingChart = new QChart();
   headingChart->addSeries(headingSetpointSeries);
+  headingChart->addSeries(headingGoalSeries);
   headingChart->addSeries(headingAchievedSeries);
   headingChart->createDefaultAxes();
   headingChart->setTitle("Vehicle Heading (rad)");
   headingChart->legend()->setAlignment(Qt::AlignRight);
   headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("setpoint"));
+  headingChart->legend()->markers(headingGoalSeries)[0]->setLabel(tr("goal"));
   headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("actual"));
   headingChart->axisY()->setRange(-M_PI, M_PI);
 
