@@ -189,7 +189,7 @@ void Window::execute()
 
 QGroupBox *Window::createParametersGroup()
 {
-  QGroupBox *groupBox = new QGroupBox(tr("Contoller Parameters"));
+  QGroupBox *groupBox = new QGroupBox(tr("Controller Parameters"));
 
   // controller frequency
   QLabel *controlFrequencyLabel = new QLabel(tr("Desired controller loop rate:"));
