@@ -64,9 +64,9 @@ To generate CPPCheck and CPPLint code analysis:
 
 ```bash
 # from the BashScripts directory
-chmod +x BashScripts/check_cppcheck.sh BashScripts/check_cpplint.sh
-./BashScripts/check_cppcheck.sh
-./BashScripts/check_cpplint.sh
+chmod +x check_cppcheck.sh check_cpplint.sh
+./check_cppcheck.sh
+./check_cpplint.sh
 ```
 
 ## Personnel
