@@ -1,4 +1,3 @@
-# We need a decent ubuntu dist
 os: linux
 dist: bionic
 compiler: gcc
@@ -7,8 +6,6 @@ stages:
   - build
   - test
 
-# Modern cpp settings from
-#  http://genbattle.bitbucket.org/blog/2016/01/17/c++-travis-ci/
 language: cpp
 jobs:
   include:
@@ -28,5 +25,5 @@ before_install:
 install:
   - sudo apt-get install -y -qq lcov qt5-default libqt5charts5-dev
 after_success:
-  - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
+  - coveralls --root .. --exclude test --exclude app/demo
 
