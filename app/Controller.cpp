@@ -20,8 +20,12 @@ using std::chrono::duration;
 Controller::Controller(const std::shared_ptr<const Params>& params)
   : params_(params) {
     this->limits_ = std::make_unique<Limits>(params);
-    this->pid_throttle_ = std::make_unique<PID>(params_->pid_speed, 0, 2);
-    this->pid_heading_ = std::make_unique<PID>(params_->pid_heading, -10.0, 10.0);
+    this->pid_throttle_ = std::make_unique<PID>(params_->pid_speed,
+       (params_->throttle_min - params_->throttle_max),
+       (params_->throttle_max - params_->throttle_min));
+    this->pid_heading_ = std::make_unique<PID>(params_->pid_heading,
+       -2*params_->max_steering_angle,
+       2*params_->max_steering_angle);
     this->model_ = std::make_unique<Model>(params);
 }
 
