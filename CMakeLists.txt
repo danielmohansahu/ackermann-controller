@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.1)
+cmake_minimum_required(VERSION 3.4)
 project (ackermann_controller)
 
 # Add project cmake modules to path.
@@ -8,9 +8,12 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 option(COVERAGE "Generate Coverage Data" OFF)
 
 if (COVERAGE)
-    include(CodeCoverage)
-    set(LCOV_REMOVE_EXTRA "'vendor/*'")
-    setup_target_for_coverage(code_coverage test/cpp-test coverage)
+    include(CodeCoverage REQUIRED)
+    setup_target_for_coverage_lcov(
+        NAME code_coverage
+        EXECUTABLE test/cpp-test
+        BASE_DIR coverage
+        EXCLUDE "/usr/*" "vendor/*" "build/*" "app/demo/*")
     set(COVERAGE_SRCS app/demo.cpp)
 
     SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
