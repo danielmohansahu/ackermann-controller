@@ -88,10 +88,17 @@ void Window::reset()
     // also reset our line series and clear our chart view
     speedSetpointSeries->clear();
     speedAchievedSeries->clear();
+    speedGoalSeries->clear();
+    speedLeftFrontWheelSeries->clear();
+    speedRightFrontWheelSeries->clear();
+    speedLeftRearWheelSeries->clear();
+    speedRightRearWheelSeries->clear();
     headingSetpointSeries->clear();
     headingAchievedSeries->clear();
+    headingGoalSeries->clear();
     commandThrottleSeries->clear();
     commandSteeringSeries->clear();
+
     speedChart->createDefaultAxes();
     headingChart->createDefaultAxes();
     commandChart->createDefaultAxes();
@@ -132,6 +139,10 @@ void Window::execute()
     double throttle, steering;
     controller_->getCommand(throttle, steering);
 
+    // get the latest wheel speeds
+    double left_front, right_front, left_rear, right_rear;
+    controller_->getWheelLinVel(left_front, right_front, left_rear, right_rear);
+
     // apply the command to the plant
     plant_->command(throttle, steering, TIMESTEP);
 
@@ -139,6 +150,10 @@ void Window::execute()
     speedSetpointSeries->append(time, speed_setpoint_);
     speedGoalSeries->append(time, target_speed);
     speedAchievedSeries->append(time, current_speed);
+    speedLeftFrontWheelSeries->append(time, left_front);
+    speedRightFrontWheelSeries->append(time, right_front);
+    speedLeftRearWheelSeries->append(time, left_rear);
+    speedRightRearWheelSeries->append(time, right_rear);
     headingSetpointSeries->append(time, heading_setpoint_);
     headingGoalSeries->append(time, target_heading);
     headingAchievedSeries->append(time, current_heading);
@@ -152,8 +167,8 @@ void Window::execute()
     commandChart->axisX()->setRange(x_min, time);
 
     // update the Y ranges
-    speed_min = std::min({speed_min, static_cast<double>(speed_setpoint_), target_speed, current_speed});
-    speed_max = std::max({speed_max, static_cast<double>(speed_setpoint_), target_speed, current_speed});
+    speed_min = std::min({speed_min, static_cast<double>(speed_setpoint_), target_speed, current_speed, left_front, right_front, left_rear, right_rear});
+    speed_max = std::max({speed_max, static_cast<double>(speed_setpoint_), target_speed, current_speed, left_front, right_front, left_rear, right_rear});
     heading_min = std::min({heading_min, static_cast<double>(heading_setpoint_), target_heading, current_heading});
     heading_max = std::max({heading_max, static_cast<double>(heading_setpoint_), target_heading, current_heading});
     command_min = std::min({command_min, throttle, steering});
@@ -372,17 +387,31 @@ QGroupBox *Window::createSpeedPlotGroup()
   // add achieved values series
   speedAchievedSeries = new QLineSeries();
 
+  // individual wheel speed plots 
+  speedLeftFrontWheelSeries = new QLineSeries();
+  speedRightFrontWheelSeries = new QLineSeries();
+  speedLeftRearWheelSeries = new QLineSeries();
+  speedRightRearWheelSeries = new QLineSeries();
+
   // add chart instance
   speedChart = new QChart();
   speedChart->addSeries(speedSetpointSeries);
   speedChart->addSeries(speedGoalSeries);
   speedChart->addSeries(speedAchievedSeries);
+  speedChart->addSeries(speedLeftFrontWheelSeries);
+  speedChart->addSeries(speedRightFrontWheelSeries);
+  speedChart->addSeries(speedLeftRearWheelSeries);
+  speedChart->addSeries(speedRightRearWheelSeries);
   speedChart->createDefaultAxes();
   speedChart->setTitle("Vehicle Speed (m/s)");
   speedChart->legend()->setAlignment(Qt::AlignRight);
   speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("setpoint"));
   speedChart->legend()->markers(speedGoalSeries)[0]->setLabel(tr("goal"));
   speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("actual"));
+  speedChart->legend()->markers(speedLeftFrontWheelSeries)[0]->setLabel(tr("front left"));
+  speedChart->legend()->markers(speedRightFrontWheelSeries)[0]->setLabel(tr("front right"));
+  speedChart->legend()->markers(speedLeftRearWheelSeries)[0]->setLabel(tr("rear left"));
+  speedChart->legend()->markers(speedRightRearWheelSeries)[0]->setLabel(tr("rear right"));
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(speedChart);
