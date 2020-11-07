@@ -5,6 +5,7 @@
  *
  * @author Spencer Elyard
  * @author Daniel M. Sahu
+ * @author Santosh Kesani
  * @copyright [2020]
  */
 
@@ -20,7 +21,8 @@ class PID {
    * @parameter kI Integral Gain
    * @parameter kD Derivative Gain
    */
-  PID(const std::shared_ptr<const PIDParams>& params);
+  PID(const std::shared_ptr<const PIDParams>& params, 
+      double out_minLimit, double out_maxLimit);
 
   /* @brief Get the kP Proportional Gain
    * @parameter None
@@ -62,6 +64,12 @@ class PID {
 
   // @brief Integral Error
   double integral_error_;
+
+  // @brief Output Maximum Limit (For PID windup)
+  double out_maxLimit_;
+
+  //@brief Output Minimum Limit (For PID windup)
+  double out_minLimit_;
 };
 
 } // namespace ackermann
