@@ -194,6 +194,14 @@ QGroupBox *Window::createParametersGroup()
 
   connect(wheelBase, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->wheel_base = new_val;});
 
+  // track width
+  QLabel *trackWidthLabel = new QLabel(tr("Vehicle track width:"));
+  QDoubleSpinBox *trackWidth = new QDoubleSpinBox();
+  trackWidth->setValue(params_->track_width);
+  trackWidth->setSuffix(tr(" (m)"));
+
+  connect(trackWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->track_width = new_val;});
+
   // max steering angle
   QLabel *maxSteeringAngleLabel = new QLabel(tr("Vehicle maximum steering angle:"));
   QDoubleSpinBox *maxSteeringAngle = new QDoubleSpinBox();
@@ -242,6 +250,8 @@ QGroupBox *Window::createParametersGroup()
   vbox->addWidget(controlFrequency);
   vbox->addWidget(wheelBaseLabel);
   vbox->addWidget(wheelBase);
+  vbox->addWidget(trackWidthLabel);
+  vbox->addWidget(trackWidth);
   vbox->addWidget(maxSteeringAngleLabel);
   vbox->addWidget(maxSteeringAngle);
   vbox->addWidget(headingPIDLabel);
