@@ -10,6 +10,7 @@
  */
 
 #include <memory>
+#include <limits>
 #include <Params.hpp>
 
 namespace ackermann {
@@ -22,7 +23,8 @@ class PID {
    * @parameter kD Derivative Gain
    */
   PID(const std::shared_ptr<const PIDParams>& params, 
-      double out_minLimit, double out_maxLimit);
+      double out_minLimit = std::numeric_limits<double>::lowest(),
+      double out_maxLimit = std::numeric_limits<double>::max());
 
   /* @brief Get the kP Proportional Gain
    * @parameter None
