@@ -86,24 +86,39 @@ void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
   double& wheel_LeftRear, double& wheel_RightRear) const {
   // https://www.xarg.org/book/kinematics/ackerman-steering/
 
+    // if no current steering input, then the radius of curvature is infinite;
+    // this causes bad things if not caught
     if (this->current_steering_ != 0) {
+      // use bicycle model for steering input (estimate single wheel in
+      // front+center of rover)
       double turning_radius = params_->wheel_base / tan(this->current_steering_);
+      // note: left turn == negative turning radius. All calculations hold
+      // until linear velocity calculations
 
+      // rear axle is aligned with radius of turning circle
       double radius_RR = turning_radius - (params_->track_width/2);
       double radius_LR = turning_radius + (params_->track_width/2);
-
+      // front axle is not aligned; use Pythagoras to calculate radius
       double radius_RF = std::sqrt(std::pow(params_->wheel_base,2) +
         std::pow(radius_RR,2));
       double radius_LF = std::sqrt(std::pow(params_->wheel_base,2) +
         std::pow(radius_LR,2));
 
+      // angular velocity calculation - done at center, since result holds
+      // across any radius
       double curr_angular_vel = this->current_speed_ / turning_radius;
+      // calculate linear velocities at each distance from wheel to center of
+      // turning circle. Absolute value because turning_radius is negative
+      // for a left turn, but wheels still moving forward.
       wheel_LeftRear = abs(curr_angular_vel * radius_LR);
       wheel_RightRear = abs(curr_angular_vel * radius_RR);
       wheel_LeftFront = abs(curr_angular_vel * radius_LF);
       wheel_RightFront = abs(curr_angular_vel * radius_RF);
 
-    } else {
+    }
+    // if no current steering, then driving straight, and all wheel speeds
+    // equal current speed
+    else {
       wheel_LeftRear = this->current_speed_;
       wheel_RightRear = this->current_speed_;
       wheel_LeftFront = this->current_speed_;
