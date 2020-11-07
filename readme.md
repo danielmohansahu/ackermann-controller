@@ -64,21 +64,15 @@ To generate CPPCheck and CPPLint code analysis:
 
 ```bash
 # from the BashScripts directory
-chmod +x check_cppcheck.sh check_cpplint.sh
-./check_cppcheck.sh
-./check_cpplint.sh
+chmod +x BashScripts/check_cppcheck.sh BashScripts/check_cpplint.sh
+./BashScripts/check_cppcheck.sh
+./BashScripts/check_cpplint.sh
 ```
-
-### Results and Performance Examples
-**TODO: Add results and performance examples when visualization complete. Stub section included below.**
-* Example of speed PID controller effectiveness (overshoot, oscillation, limits are enforced).
-* Example of heading PID controller effectiveness (overshoot, oscillation, limits are enforced).
-* Example of wheel speed outputs during straight driving and continuous speed turns in both directions (outer wheel speeds up, inner wheel slows down).
 
 ## Personnel
 * Spencer Elyard, *TODO: Complete personnel blurb.*
 * Santosh Kesani, *TODO: Complete personnel blurb.*
-* Daniel Sahu, *TODO: Complete personnel blurb.*
+* Daniel Sahu, a roboticist working on his Masters at UMD.
 
 ## Licensing
 
@@ -107,7 +101,7 @@ doxygen/html/index.html
 ```
 
 ### Parameters and Limitations
-**TODO: Continue to add default values once established.**
+
 #### Rover Model
 The controller enforces the various limitations of the rover:
 
@@ -140,16 +134,16 @@ The controller will provide the following outputs:
 
 An overview of the classes used and their dependencies is shown in the following UML diagram:
 
-![Class-Diagram](docs/uml/Revised 2020-11-06/class_diagram.png)
+![Class-Diagram](docs/uml/class_diagram.png)
 
 ## Sequence Diagram
 
 An example sequence diagram for the full program is shown in the following UML diagram:
 
-![Activity-Diagram](docs/uml/Revised 2020-11-06/sequence_diagram.png)
+![Activity-Diagram](docs/uml/sequence_diagram.png)
 
 ## Activity Diagram for Controller
 
 An example activity diagram for the controller methodology is shown in the following UML diagram:
 
-![Activity-Diagram](docs/uml/Revised 2020-11-06/controller_activity.png)
+![Activity-Diagram](docs/uml/controller_activity.png)
