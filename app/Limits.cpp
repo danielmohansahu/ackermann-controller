@@ -106,11 +106,10 @@ void Limits::limit(const double current_speed,
     // BEGIN STEERING LIMITATION SECTION
 
     // limit heading my max angle
-    double steering_err = desired_steering - current_steering;
-    if (steering_err > params_->max_steering_angle) {
+    if (desired_steering > params_->max_steering_angle) {
       desired_steering = params_->max_steering_angle;
     }
-    if (steering_err < -params_->max_steering_angle) {
+    if (desired_steering < -params_->max_steering_angle) {
       desired_steering = -params_->max_steering_angle;
     }
 
