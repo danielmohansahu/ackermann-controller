@@ -131,12 +131,12 @@ class Plant {
   double speed_;
   double heading_;
 
+  // struct of our system options
+  PlantOptions opts_;
+
   /**
   * @brief A copy of our configuration parameters. */
   std::shared_ptr<const ackermann::Params> params_;
-
-  // struct of our system options
-  PlantOptions opts_;
 
   // random noise generation
   std::default_random_engine generator_;
