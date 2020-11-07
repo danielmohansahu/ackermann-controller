@@ -140,7 +140,7 @@ TEST(Limits_Acceleration, should_pass) {
 /* @brief Test, heading limitation (max angle)*/
 TEST(Limits_Heading_Angle, should_pass) {
   // instantiate a limits class with only heading limit
-  double dt = 0.01;
+  double dt = 10.0;
   auto p = std::make_shared<Params>(0.0, 1.0, 0.0, 0.0);
   Limits lim(p);
 
