@@ -82,4 +82,33 @@ void Model::getError(double& speed_error, double& heading_error) const {
   heading_error = limits_->shortestArcToTurn(current_heading_, desired_heading_);
 }
 
+void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
+  double& wheel_LeftRear, double& wheel_RightRear) const {
+  // https://www.xarg.org/book/kinematics/ackerman-steering/
+
+    if (this->current_steering_ != 0) {
+      double turning_radius = params_->wheel_base / tan(this->current_steering_);
+
+      double radius_RR = turning_radius - (params_->track_width/2);
+      double radius_LR = turning_radius + (params_->track_width/2);
+
+      double radius_RF = std::sqrt(std::pow(params_->wheel_base,2) +
+        std::pow(radius_RR,2));
+      double radius_LF = std::sqrt(std::pow(params_->wheel_base,2) +
+        std::pow(radius_LR,2));
+
+      double curr_angular_vel = this->current_speed_ / turning_radius;
+      wheel_LeftRear = abs(curr_angular_vel * radius_LR);
+      wheel_RightRear = abs(curr_angular_vel * radius_RR);
+      wheel_LeftFront = abs(curr_angular_vel * radius_LF);
+      wheel_RightFront = abs(curr_angular_vel * radius_RF);
+
+    } else {
+      wheel_LeftRear = this->current_speed_;
+      wheel_RightRear = this->current_speed_;
+      wheel_LeftFront = this->current_speed_;
+      wheel_RightFront = this->current_speed_;
+    }
+  }
+
 } // namespace ackermann

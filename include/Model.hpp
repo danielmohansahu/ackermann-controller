@@ -98,6 +98,18 @@ class Model {
    */
   void getError(double& speed_error, double& heading_error) const;
 
+  /**
+  * @brief Return the current linear velocity at each wheel; used for
+  * calculating wheel speed with tire information
+   *
+   * @param wheel_LeftFront&: Left front wheel linear velocity
+   * @param wheel_RightFront&: Right front wheel linear velocity
+   * @param wheel_LeftRear&: Left rear wheel linear velocity
+   * @param wheel_RightRear&: Right rear wheel linear velocity
+   */
+  void getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
+    double& wheel_LeftRear, double& wheel_RightRear) const;
+
  private:
    /**
    * @brief shared parameter object (contains system kinematics)
