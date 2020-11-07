@@ -183,6 +183,7 @@ QGroupBox *Window::createParametersGroup()
   controlFrequency->setMaximum(params_->control_frequency * 10);
   controlFrequency->setValue(params_->control_frequency);
   controlFrequency->setSuffix(tr(" (hz)"));
+  controlFrequency->setSingleStep(10.0);
 
   connect(controlFrequency, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->control_frequency = new_val;});
 
@@ -191,6 +192,7 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *wheelBase = new QDoubleSpinBox();
   wheelBase->setValue(params_->wheel_base);
   wheelBase->setSuffix(tr(" (m)"));
+  wheelBase->setSingleStep(0.1);
 
   connect(wheelBase, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->wheel_base = new_val;});
 
@@ -199,6 +201,7 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *trackWidth = new QDoubleSpinBox();
   trackWidth->setValue(params_->track_width);
   trackWidth->setSuffix(tr(" (m)"));
+  trackWidth->setSingleStep(0.1);
 
   connect(trackWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->track_width = new_val;});
 
@@ -209,6 +212,7 @@ QGroupBox *Window::createParametersGroup()
   maxSteeringAngle->setMaximum(M_PI);
   maxSteeringAngle->setValue(params_->max_steering_angle);
   maxSteeringAngle->setSuffix(tr(" (rad)"));
+  maxSteeringAngle->setSingleStep(0.1);
 
   connect(maxSteeringAngle, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->max_steering_angle = new_val;});
 
@@ -217,12 +221,15 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *kpHeading = new QDoubleSpinBox();
   kpHeading->setValue(params_->pid_heading->kp);
   kpHeading->setPrefix(tr("kp: "));
+  kpHeading->setSingleStep(0.1);
   QDoubleSpinBox *kiHeading = new QDoubleSpinBox();
   kiHeading->setValue(params_->pid_heading->ki);
   kiHeading->setPrefix(tr("ki: "));
+  kiHeading->setSingleStep(0.1);
   QDoubleSpinBox *kdHeading = new QDoubleSpinBox();
   kdHeading->setValue(params_->pid_heading->kd);
   kdHeading->setPrefix(tr("kd: "));
+  kdHeading->setSingleStep(0.1);
 
   connect(kpHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->kp = new_val;});
   connect(kiHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->ki = new_val;});
@@ -233,12 +240,15 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *kpSpeed = new QDoubleSpinBox();
   kpSpeed->setValue(params_->pid_speed->kp);
   kpSpeed->setPrefix(tr("kp: "));
+  kpSpeed->setSingleStep(0.1);
   QDoubleSpinBox *kiSpeed = new QDoubleSpinBox();
   kiSpeed->setValue(params_->pid_speed->ki);
   kiSpeed->setPrefix(tr("ki: "));
+  kiSpeed->setSingleStep(0.1);
   QDoubleSpinBox *kdSpeed = new QDoubleSpinBox();
   kdSpeed->setValue(params_->pid_speed->kd);
   kdSpeed->setPrefix(tr("kd: "));
+  kdSpeed->setSingleStep(0.1);
 
   connect(kpSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->kp = new_val;});
   connect(kiSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->ki = new_val;});
@@ -286,6 +296,7 @@ QGroupBox *Window::createSetpointsGroup()
   headingSetpoint->setMaximum(M_PI);
   headingSetpoint->setValue(heading_setpoint_);
   headingSetpoint->setSuffix(tr(" (rad)"));
+  headingSetpoint->setSingleStep(0.1);
 
   // plant initial speed
   QLabel *initialSpeedLabel = new QLabel(tr("Initial Plant speed:"));
@@ -300,6 +311,7 @@ QGroupBox *Window::createSetpointsGroup()
   initialHeading->setMaximum(M_PI);
   initialHeading->setValue(heading_setpoint_);
   initialHeading->setSuffix(tr(" (rad)"));
+  initialHeading->setSingleStep(0.1);
 
   // connect signals to slots
   connect(speedSetpoint, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){speed_setpoint_ = new_val;});
