@@ -118,6 +118,19 @@ class Controller {
    */
   void getCommand(double& throttle, double& steering) const;
 
+  /**
+  * @brief Get the current system wheel speeds.
+   *
+   * @param left_front: The left front wheel velocity.
+   * @param right_front: The right front wheel velocity.
+   * @param left_rear: The left rear wheel velocity.
+   * @param right_rear: The right rear wheel velocity.
+   */
+  void getWheelLinVel(double& left_front,
+                      double& right_front,
+                      double& left_rear,
+                      double& right_rear) const;
+
  private:
   /**
   * @brief Control loop (executed asynchronously)
