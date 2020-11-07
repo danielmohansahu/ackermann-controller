@@ -12,7 +12,7 @@ class AckemannControllerTest : public ::testing::Test {
  protected:
   void SetUp() override {
     // construct our base classes;
-    params_ = std::make_shared<ackermann::Params>(1.25, 45.0, 1.01, 0.15);
+    params_ = std::make_shared<ackermann::Params>(0.45, 0.45, 0.785, 1.0, 1.0);
     controller_ = std::make_unique<ackermann::Controller>(params_);
   }
 

@@ -11,6 +11,7 @@
 #include "fake/plant.h"
 
 #define WHEEL_BASE 1.5
+#define TRACK_WIDTH 1.5
 #define MAX_WHEEL_SEPARATION 45.0
 #define CONTROL_FREQUENCY 100.0
 
@@ -30,7 +31,7 @@ class AckermannControllerTest : public ::testing::Test {
       opts_ = std::make_unique<fake::PlantOptions>(WHEEL_BASE,
                                                    MAX_WHEEL_SEPARATION);
     if (!params_) {
-      params_ = std::make_shared<ackermann::Params>(WHEEL_BASE,
+      params_ = std::make_shared<ackermann::Params>(WHEEL_BASE, TRACK_WIDTH,
                                                     MAX_WHEEL_SEPARATION,
                                                     1.0,
                                                     1.0);

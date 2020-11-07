@@ -15,7 +15,7 @@ class AckemannModelTest : public ::testing::Test {
  protected:
   void SetUp() override {
     // construct our base classes;
-    params_ = std::make_shared<ackermann::Params>(1.0, 2.0, 0.0, 0.0);
+    params_ = std::make_shared<ackermann::Params>(0.45, 0.45, 0.785, 1.0, 1.0);
     params_->velocity_max = 10.0;
     params_->velocity_min = -1.0;
     params_->acceleration_max = 100;

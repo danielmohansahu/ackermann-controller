@@ -115,15 +115,20 @@ struct Params {
   */
   std::atomic<double> wheel_base;
   /**
+  * @brief Width between left and right tires (m)
+  */
+  std::atomic<double> track_width;
+  /**
   * @brief Maximum angle of steering mechanism (rad)
   */
   std::atomic<double> max_steering_angle;
 
   /* @brief Constructor */
-  Params(double wheel_base_, double max_steering_angle_, double kp_speed_, double kp_heading_)
+  Params(double wheel_base_, double track_width_, double max_steering_angle_, double kp_speed_, double kp_heading_)
     : pid_speed(std::make_shared<PIDParams>(kp_speed_)),
       pid_heading(std::make_shared<PIDParams>(kp_heading_)),
       wheel_base(wheel_base_),
+      track_width(track_width_),
       max_steering_angle(max_steering_angle_)
   {}
 };
