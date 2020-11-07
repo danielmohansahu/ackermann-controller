@@ -128,9 +128,11 @@ void Window::execute()
     plant_->command(throttle, steering, TIMESTEP);
 
     // update the QT series with our latest information
-    speedSetpointSeries->append(time, target_speed);
+    speedSetpointSeries->append(time, speed_setpoint_);
+    speedGoalSeries->append(time, target_speed);
     speedAchievedSeries->append(time, current_speed);
-    headingSetpointSeries->append(time, target_heading);
+    headingSetpointSeries->append(time, heading_setpoint_);
+    headingGoalSeries->append(time, target_heading);
     headingAchievedSeries->append(time, current_heading);
     commandThrottleSeries->append(time, throttle);
     commandSteeringSeries->append(time, steering);
@@ -311,17 +313,22 @@ QGroupBox *Window::createSpeedPlotGroup()
   // add desired setpoint series
   speedSetpointSeries = new QLineSeries();
 
+  // add controller internal setpoint series
+  speedGoalSeries = new QLineSeries();
+
   // add achieved values series
   speedAchievedSeries = new QLineSeries();
 
   // add chart instance
   speedChart = new QChart();
   speedChart->addSeries(speedSetpointSeries);
+  speedChart->addSeries(speedGoalSeries);
   speedChart->addSeries(speedAchievedSeries);
   speedChart->createDefaultAxes();
   speedChart->setTitle("Vehicle Speed (m/s)");
   speedChart->legend()->setAlignment(Qt::AlignRight);
   speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("setpoint"));
+  speedChart->legend()->markers(speedGoalSeries)[0]->setLabel(tr("goal"));
   speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("actual"));
 
   // add ChartView instance (to actually display the chart)
@@ -340,18 +347,21 @@ QGroupBox *Window::createHeadingPlotGroup()
 {
   QGroupBox *groupBox = new QGroupBox(tr("Heading Plots"));
 
-  // add dummy series (for now)
+  // add heading series
   headingSetpointSeries = new QLineSeries();
+  headingGoalSeries = new QLineSeries();
   headingAchievedSeries = new QLineSeries();
 
   // add chart instance
   headingChart = new QChart();
   headingChart->addSeries(headingSetpointSeries);
+  headingChart->addSeries(headingGoalSeries);
   headingChart->addSeries(headingAchievedSeries);
   headingChart->createDefaultAxes();
   headingChart->setTitle("Vehicle Heading (rad)");
   headingChart->legend()->setAlignment(Qt::AlignRight);
   headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("setpoint"));
+  headingChart->legend()->markers(headingGoalSeries)[0]->setLabel(tr("goal"));
   headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("actual"));
   headingChart->axisY()->setRange(-M_PI, M_PI);
 

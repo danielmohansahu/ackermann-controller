@@ -87,10 +87,12 @@ class Window : public QWidget
 
   // QT data series and chart objects (used in visualization)
   QLineSeries* speedSetpointSeries;
+  QLineSeries* speedGoalSeries;
   QLineSeries* speedAchievedSeries;
   QChart* speedChart;
 
   QLineSeries* headingSetpointSeries;
+  QLineSeries* headingGoalSeries;
   QLineSeries* headingAchievedSeries;
   QChart* headingChart;
 
