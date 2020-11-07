@@ -134,16 +134,16 @@ The controller will provide the following outputs:
 
 An overview of the classes used and their dependencies is shown in the following UML diagram:
 
-![Class-Diagram](docs/uml/class_diagram.png)
+![Class-Diagram](docs/uml/revised/class_diagram.png)
 
 ## Sequence Diagram
 
 An example sequence diagram for the full program is shown in the following UML diagram:
 
-![Activity-Diagram](docs/uml/sequence_diagram.png)
+![Activity-Diagram](docs/uml/revised/sequence_diagram.png)
 
 ## Activity Diagram for Controller
 
 An example activity diagram for the controller methodology is shown in the following UML diagram:
 
-![Activity-Diagram](docs/uml/controller_activity.png)
+![Activity-Diagram](docs/uml/revised/controller_activity.png)
