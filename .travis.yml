@@ -1,6 +1,7 @@
 # We need a decent ubuntu dist
 os: linux
 dist: bionic
+compiler: gcc
 
 stages:
   - build
@@ -11,30 +12,14 @@ stages:
 language: cpp
 jobs:
   include:
-    - os: linux
-      compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-            - cmake
-            - cmake-data
     - stage: build
       script:
-        - export CXX=$COMPILER;
-        - mkdir build
-        - cd build
-        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ../
-        - make
+        - mkdir build && cd build
+        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug .. && make
     - stage: test
       script:
-        - export CXX=$COMPILER;
-        - mkdir build
-        - cd build
-        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ../
-        - make
+        - mkdir build && cd build
+        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug .. && make
         - make code_coverage
         - test/cpp-test
       
@@ -42,9 +27,6 @@ before_install:
   - pip install --user cpp-coveralls
 install:
   - sudo apt-get install -y -qq lcov qt5-default libqt5charts5-dev
-
 after_success:
   - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
 
-notifications:
-  email: false
