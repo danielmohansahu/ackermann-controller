@@ -13,6 +13,7 @@ jobs:
       script:
         - mkdir build && cd build
         - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug .. && make
+        - make code_coverage
     - stage: test
       script:
         - mkdir build && cd build
@@ -24,6 +25,6 @@ before_install:
   - pip install --user cpp-coveralls
 install:
   - sudo apt-get install -y -qq lcov qt5-default libqt5charts5-dev
-after_success:
-  - coveralls --root .. -E test -E app/demo/ -E vendor -E build
+# after_success:
+#   - coveralls --root .. -E test -E app/demo/ -E build
 
