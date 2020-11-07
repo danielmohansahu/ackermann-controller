@@ -2,28 +2,18 @@ os: linux
 dist: bionic
 compiler: gcc
 
-stages:
-  - build
-  - test
-
-language: cpp
-jobs:
-  include:
-    - stage: build
-      script:
-        - mkdir build && cd build
-        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug .. && make
-        - make code_coverage
-    - stage: test
-      script:
-        - mkdir build && cd build
-        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug .. && make
-        - test/cpp-test
-        - make code_coverage
-      
 before_install:
   - pip install --user cpp-coveralls
 install:
   - sudo apt-get install -y -qq lcov qt5-default libqt5charts5-dev
 after_success:
   - coveralls --root .. --build-root . --verbose --exclude app/demo/ --exclude build/CMakeFiles/ --exclude build/app/demo_autogen/
+
+language: cpp
+jobs:
+  include:
+      script:
+        - mkdir build && cd build
+        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug .. && make
+        - test/cpp-test
+        - make code_coverage
