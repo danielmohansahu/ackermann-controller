@@ -2,7 +2,7 @@
  *
  * @author Spencer Elyard
  * @author Daniel M. Sahu
- * @author Sentosh Kesani
+ * @author Santosh Kesani
  *
  * @copyright [2020]
  */

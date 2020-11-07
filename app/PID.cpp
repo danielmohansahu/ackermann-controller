@@ -12,10 +12,13 @@
 
 namespace ackermann {
 
-PID::PID(const std::shared_ptr<const PIDParams>& params)
+PID::PID(const std::shared_ptr<const PIDParams>& params, 
+         double out_minLimit, double out_maxLimit)
   : params_{params},
     prev_error_{0.0},
-    integral_error_{0.0} {
+    integral_error_{0.0},
+    out_minLimit_{out_minLimit},
+    out_maxLimit_{out_maxLimit} {
 }
 
 double PID::get_k_p() const {return this->params_->kp;}
@@ -29,6 +32,14 @@ double PID::getCommand(double current_error, double dt) {
   double derivative = (current_error - prev_error_) / dt;
   // calculate output
   double output = (params_->kp*current_error) + (params_->ki*integral_error_) + (params_->kd*derivative);
+  // PID windup
+  if (output > out_maxLimit_) {
+    integral_error_ -= output - out_maxLimit_;
+    output = out_maxLimit_;
+  } else if (output < out_minLimit_) {
+      integral_error_ += out_minLimit_ - output;
+      output = out_minLimit_;
+  }
   // save error as previous prev_error_
   prev_error_ = current_error;
   // return output;
