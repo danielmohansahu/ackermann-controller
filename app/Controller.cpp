@@ -2,7 +2,7 @@
  *
  * @author Spencer Elyard
  * @author Daniel M. Sahu
- * @author Sentosh Kesani
+ * @author Santosh Kesani
  *
  * @copyright [2020]
  */
@@ -20,8 +20,12 @@ using std::chrono::duration;
 Controller::Controller(const std::shared_ptr<const Params>& params)
   : params_(params) {
     this->limits_ = std::make_unique<Limits>(params);
-    this->pid_throttle_ = std::make_unique<PID>(params_->pid_speed);
-    this->pid_heading_ = std::make_unique<PID>(params_->pid_heading);
+    this->pid_throttle_ = std::make_unique<PID>(params_->pid_speed,
+       (params_->throttle_min - params_->throttle_max),
+       (params_->throttle_max - params_->throttle_min));
+    this->pid_heading_ = std::make_unique<PID>(params_->pid_heading,
+       -2*params_->max_steering_angle,
+       2*params_->max_steering_angle);
     this->model_ = std::make_unique<Model>(params);
 }
 
@@ -77,14 +81,17 @@ void Controller::getCommand(double& throttle, double& steering) const {
 }
 
 void Controller::controlLoop() {
+  // loop monitoring variables
+  unsigned int timing_violations = 0;
+  const double timing_threshold = 0.1;
+
   // initialize timing variables
-  std::chrono::milliseconds duration(static_cast<int>(1000/params_->control_frequency));
+  std::chrono::microseconds duration(static_cast<int>(1000000/params_->control_frequency));
   auto next_loop_time = steady_clock::now();
 
   // execute loop at the desired frequency
   while (!cancel_) {
     // update next target time
-    next_loop_time += duration;
     double dT = 1/params_->control_frequency;
 
     // get goal values
@@ -122,9 +129,19 @@ void Controller::controlLoop() {
     // apply commands
     this->model_->command(command_throttle, command_steering, dT);
 
-
     // sleep until next loop
-    std::this_thread::sleep_until(next_loop_time);
+    std::this_thread::sleep_until(next_loop_time + duration);
+
+    // check and warn if this loop time is longer or shorter than expected
+    auto actual_duration = std::chrono::duration_cast<std::chrono::microseconds>(steady_clock::now() - next_loop_time);
+    double timing_ratio = static_cast<double>(actual_duration.count() - duration.count())/duration.count();
+    if (std::abs(timing_ratio) > timing_threshold)
+      // increment problem count
+      std::cerr << "Loop frequency violation #" << ++timing_violations
+                << ": off by " << static_cast<int>(timing_ratio * 100) << "%" << std::endl;
+
+    // update next loop time
+    next_loop_time += duration;
   }
 }
 

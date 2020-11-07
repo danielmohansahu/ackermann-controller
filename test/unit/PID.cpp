@@ -5,9 +5,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <gtest/gtest.h>
+#include <math.h>
 
 #include <Params.hpp>
 #include <PID.hpp>
+
 
 using ackermann::PID;
 using ackermann::PIDParams;
