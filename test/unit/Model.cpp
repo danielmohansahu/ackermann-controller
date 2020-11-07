@@ -76,7 +76,7 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
     model_->setState(speed, heading);
     model_->getState(speed_out, heading_out);
     EXPECT_DOUBLE_EQ(speed, speed_out);
-    EXPECT_DOUBLE_EQ((2*M_PI + heading), heading_out);
+    EXPECT_DOUBLE_EQ(heading, heading_out);
   }
 
   // test setting and getting command
