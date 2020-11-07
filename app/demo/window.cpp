@@ -106,8 +106,8 @@ void Window::execute()
   // initialize range values
   double speed_min = 0.0;
   double speed_max = 1.0;
-  double heading_min = -M_PI/4.0;
-  double heading_max = M_PI/4.0;
+  double heading_min = 0.0;
+  double heading_max = M_PI/2.0;
   double command_min = 0.0;
   double command_max = 1.0;
 
@@ -197,8 +197,7 @@ QGroupBox *Window::createParametersGroup()
   // max steering angle
   QLabel *maxSteeringAngleLabel = new QLabel(tr("Vehicle maximum steering angle:"));
   QDoubleSpinBox *maxSteeringAngle = new QDoubleSpinBox();
-  maxSteeringAngle->setMinimum(-M_PI);
-  maxSteeringAngle->setMaximum(M_PI);
+  maxSteeringAngle->setMaximum(2.0 * M_PI);
   maxSteeringAngle->setValue(params_->max_steering_angle);
   maxSteeringAngle->setSuffix(tr(" (rad)"));
 
@@ -272,8 +271,7 @@ QGroupBox *Window::createSetpointsGroup()
   // heading setpoint
   QLabel *headingSetpointLabel = new QLabel(tr("Desired Plant heading:"));
   headingSetpoint = new QDoubleSpinBox();
-  headingSetpoint->setMinimum(-M_PI);
-  headingSetpoint->setMaximum(M_PI);
+  headingSetpoint->setMaximum(2.0 * M_PI);
   headingSetpoint->setValue(heading_setpoint_);
   headingSetpoint->setSuffix(tr(" (rad)"));
 
@@ -286,8 +284,7 @@ QGroupBox *Window::createSetpointsGroup()
   // speed setpoint
   QLabel *initialHeadingLabel = new QLabel(tr("Initial Plant heading:"));
   initialHeading = new QDoubleSpinBox();
-  initialHeading->setMinimum(-M_PI);
-  initialHeading->setMaximum(M_PI);
+  initialHeading->setMaximum(2.0 * M_PI);
   initialHeading->setValue(heading_setpoint_);
   initialHeading->setSuffix(tr(" (rad)"));
 
@@ -394,7 +391,7 @@ QGroupBox *Window::createHeadingPlotGroup()
   headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("setpoint"));
   headingChart->legend()->markers(headingGoalSeries)[0]->setLabel(tr("goal"));
   headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("actual"));
-  headingChart->axisY()->setRange(-M_PI, M_PI);
+  headingChart->axisY()->setRange(0.0, 2.0 * M_PI);
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(headingChart);
@@ -425,7 +422,7 @@ QGroupBox *Window::createCommandPlotGroup()
   commandChart->legend()->setAlignment(Qt::AlignRight);
   commandChart->legend()->markers(commandThrottleSeries)[0]->setLabel(tr("throttle"));
   commandChart->legend()->markers(commandSteeringSeries)[0]->setLabel(tr("steer"));
-  commandChart->axisY()->setRange(-M_PI, M_PI);
+  commandChart->axisY()->setRange(0.0, 2.0 * M_PI);
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(commandChart);
