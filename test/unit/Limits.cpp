@@ -309,9 +309,9 @@ TEST(HeadingLimits, should_pass) {
   }
   // check 2 - negative
   {
-    double desired_heading = -M_PI/2;
+    double desired_heading = 3*M_PI/2;
     double calc_heading = lim.boundHeading(desired_heading);
-    EXPECT_DOUBLE_EQ(3*M_PI/2,calc_heading);
+    EXPECT_DOUBLE_EQ(-M_PI/2,calc_heading);
   }
   // check 3 - positive
   {

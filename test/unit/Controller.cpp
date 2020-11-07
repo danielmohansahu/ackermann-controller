@@ -66,7 +66,7 @@ TEST_F(AckemannControllerTest, ControllerSettingAndGetting) {
     controller_->setGoal(speed, heading);
     controller_->getGoal(speed_out, heading_out);
     EXPECT_EQ(speed, speed_out);
-    EXPECT_EQ((2*M_PI + heading), heading_out);
+    EXPECT_EQ(heading, heading_out);
   }
 }
 
