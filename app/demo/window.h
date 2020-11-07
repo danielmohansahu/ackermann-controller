@@ -15,6 +15,7 @@
 #include <atomic>
 #include <thread>
 #include <chrono>
+#include <algorithm>
 
 #include <QWidget>
 #include <QtCharts>

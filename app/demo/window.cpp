@@ -103,6 +103,14 @@ void Window::execute()
   // initialize time and some handy variables
   double time = 0.0;
 
+  // initialize range values
+  double speed_min = 0.0;
+  double speed_max = 1.0;
+  double heading_min = -M_PI/4.0;
+  double heading_max = M_PI/4.0;
+  double command_min = 0.0;
+  double command_max = 1.0;
+
   // start controller
   controller_->start();
 
@@ -143,8 +151,17 @@ void Window::execute()
     headingChart->axisX()->setRange(x_min, time);
     commandChart->axisX()->setRange(x_min, time);
 
-    // @TODO calculate this and adjust
-    speedChart->axisY()->setRange(0, 10);
+    // update the Y ranges
+    speed_min = std::min({speed_min, static_cast<double>(speed_setpoint_), target_speed, current_speed});
+    speed_max = std::max({speed_max, static_cast<double>(speed_setpoint_), target_speed, current_speed});
+    heading_min = std::min({heading_min, static_cast<double>(heading_setpoint_), target_heading, current_heading});
+    heading_max = std::max({heading_max, static_cast<double>(heading_setpoint_), target_heading, current_heading});
+    command_min = std::min({command_min, throttle, steering});
+    command_max = std::max({command_max, throttle, steering});
+
+    speedChart->axisY()->setRange(speed_min, speed_max);
+    headingChart->axisY()->setRange(heading_min, heading_max);
+    commandChart->axisY()->setRange(command_min, command_max);
 
     // sleep and update our timestamp
     std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000 * TIMESTEP)));
