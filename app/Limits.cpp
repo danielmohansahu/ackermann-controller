@@ -55,11 +55,11 @@ double Limits::shortestArcToTurn(double current_heading, double desired_heading)
 double Limits::boundHeading(const double heading) const {
   double temp_heading = heading;
 
-  if (temp_heading < 0) {
-    while (temp_heading < 0) {temp_heading += 2*M_PI;}
+  if (temp_heading < -M_PI) {
+    while (temp_heading < -M_PI) {temp_heading += 2*M_PI;}
   }
-  if (temp_heading >= 2*M_PI) {
-    while (temp_heading > 2*M_PI) {temp_heading -= 2*M_PI;}
+  if (temp_heading >= M_PI) {
+    while (temp_heading > M_PI) {temp_heading -= 2*M_PI;}
   }
   return temp_heading;
 
