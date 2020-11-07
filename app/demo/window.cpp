@@ -184,11 +184,15 @@ QGroupBox *Window::createParametersGroup()
   controlFrequency->setValue(params_->control_frequency);
   controlFrequency->setSuffix(tr(" (hz)"));
 
+  connect(controlFrequency, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->control_frequency = new_val;});
+
   // wheel base
   QLabel *wheelBaseLabel = new QLabel(tr("Vehicle wheel base:"));
   QDoubleSpinBox *wheelBase = new QDoubleSpinBox();
   wheelBase->setValue(params_->wheel_base);
   wheelBase->setSuffix(tr(" (m)"));
+
+  connect(wheelBase, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->wheel_base = new_val;});
 
   // max steering angle
   QLabel *maxSteeringAngleLabel = new QLabel(tr("Vehicle maximum steering angle:"));
@@ -197,6 +201,8 @@ QGroupBox *Window::createParametersGroup()
   maxSteeringAngle->setMaximum(M_PI);
   maxSteeringAngle->setValue(params_->max_steering_angle);
   maxSteeringAngle->setSuffix(tr(" (rad)"));
+
+  connect(maxSteeringAngle, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->max_steering_angle = new_val;});
 
   // heading PID params (KP, KI, KD)
   QLabel *headingPIDLabel = new QLabel(tr("Heading PID Parameters:"));
@@ -210,6 +216,10 @@ QGroupBox *Window::createParametersGroup()
   kdHeading->setValue(params_->pid_heading->kd);
   kdHeading->setPrefix(tr("kd: "));
 
+  connect(kpHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->kp = new_val;});
+  connect(kiHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->ki = new_val;});
+  connect(kdHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->kd = new_val;});
+
   // speed PID params (KP, KI, KD)
   QLabel *speedPIDLabel = new QLabel(tr("Speed PID Parameters:"));
   QDoubleSpinBox *kpSpeed = new QDoubleSpinBox();
@@ -221,6 +231,10 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *kdSpeed = new QDoubleSpinBox();
   kdSpeed->setValue(params_->pid_speed->kd);
   kdSpeed->setPrefix(tr("kd: "));
+
+  connect(kpSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->kp = new_val;});
+  connect(kiSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->ki = new_val;});
+  connect(kdSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->kd = new_val;});
 
   // add all parameters to box
   QVBoxLayout *vbox = new QVBoxLayout;
