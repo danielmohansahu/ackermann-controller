@@ -26,4 +26,4 @@ before_install:
 install:
   - sudo apt-get install -y -qq lcov qt5-default libqt5charts5-dev
 after_success:
-  - coveralls --root .. --verbose --exclude test --exclude app/demo/ --exclude build --gcov-options '\-lp'
+  - coveralls --root .. --build-root . --verbose --exclude app/demo/ --exclude build/CMakeFiles/ --exclude build/app/demo_autogen/

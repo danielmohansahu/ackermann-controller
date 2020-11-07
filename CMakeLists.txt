@@ -12,7 +12,6 @@ if (COVERAGE)
     setup_target_for_coverage_lcov(
         NAME code_coverage
         EXECUTABLE test/cpp-test
-        BASE_DIR coverage
         EXCLUDE "/usr/*" "vendor/*" "build/*" "app/demo/*")
     set(COVERAGE_SRCS app/demo.cpp)
 
