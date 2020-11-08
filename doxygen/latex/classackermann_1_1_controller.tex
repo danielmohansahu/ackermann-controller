@@ -1,5 +1,5 @@
-\hypertarget{classackermann_1_1_controller}{}\doxysection{ackermann\+::Controller Class Reference}
-\label{classackermann_1_1_controller}\index{ackermann::Controller@{ackermann::Controller}}
+\hypertarget{classackermann_1_1_controller}{}\section{ackermann\+:\+:Controller Class Reference}
+\label{classackermann_1_1_controller}\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}}
 
 
 Implementation of a steering and speed controller for a rover with an Ackermann steering mechanism.  
@@ -9,46 +9,44 @@ Implementation of a steering and speed controller for a rover with an Ackermann 
 
 {\ttfamily \#include $<$Controller.\+hpp$>$}
 
-\doxysubsection*{Public Member Functions}
+\subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classackermann_1_1_controller_a4bf9f0657a103e0144ef14f9b8a7c96e}{Controller}} (const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_params}{Params}} $>$ \&params)
+\hyperlink{classackermann_1_1_controller_a4bf9f0657a103e0144ef14f9b8a7c96e}{Controller} (const std\+::shared\+\_\+ptr$<$ const \hyperlink{structackermann_1_1_params}{Params} $>$ \&params)
 \begin{DoxyCompactList}\small\item\em Constructor; constructs and initializes parameters of all composition classes. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classackermann_1_1_controller_a65fb63861770f823cd30713833383aa6}\label{classackermann_1_1_controller_a65fb63861770f823cd30713833383aa6}} 
-void \mbox{\hyperlink{classackermann_1_1_controller_a65fb63861770f823cd30713833383aa6}{start}} ()
+void \hyperlink{classackermann_1_1_controller_a65fb63861770f823cd30713833383aa6}{start} ()
 \begin{DoxyCompactList}\small\item\em Begin execution of a control loop. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classackermann_1_1_controller_a285777e5abee8b5ec7eb683410215a04}{stop}} (bool block=false)
-\begin{DoxyCompactList}\small\item\em Stop execution of a control loop and rejoin. This also calls \mbox{\hyperlink{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}{reset()}} to clear any state variables. \end{DoxyCompactList}\item 
+void \hyperlink{classackermann_1_1_controller_a285777e5abee8b5ec7eb683410215a04}{stop} (bool block=false)
+\begin{DoxyCompactList}\small\item\em Stop execution of a control loop and rejoin. This also calls \hyperlink{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}{reset()} to clear any state variables. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}\label{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}} 
-void \mbox{\hyperlink{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}{reset}} ()
+void \hyperlink{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}{reset} ()
 \begin{DoxyCompactList}\small\item\em Clear system state variables. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{classackermann_1_1_controller_ac42d34ea838ccf8e9f83199b5753c08e}{is\+Running}} () const
+bool \hyperlink{classackermann_1_1_controller_ac42d34ea838ccf8e9f83199b5753c08e}{is\+Running} () const
 \begin{DoxyCompactList}\small\item\em Return true if the core execution thread is running. This is a useful utility for testing. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classackermann_1_1_controller_aee37f9adf9e8b2ec31499c8f7838531d}{set\+State}} (const double speed, const double heading)
+void \hyperlink{classackermann_1_1_controller_aee37f9adf9e8b2ec31499c8f7838531d}{set\+State} (const double speed, const double heading)
 \begin{DoxyCompactList}\small\item\em Set the current state (speed, heading) of the system. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classackermann_1_1_controller_a6a282c7083ce5a240d5e8e71782cb106}{get\+State}} (double \&speed, double \&heading) const
+void \hyperlink{classackermann_1_1_controller_a6a282c7083ce5a240d5e8e71782cb106}{get\+State} (double \&speed, double \&heading) const
 \begin{DoxyCompactList}\small\item\em Get the current state (speed, heading) of the system; return as parameters specified. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classackermann_1_1_controller_a2c048f93364371bb99445b68cb4ad064}{set\+Goal}} (const double speed, const double heading)
+void \hyperlink{classackermann_1_1_controller_a2c048f93364371bb99445b68cb4ad064}{set\+Goal} (const double speed, const double heading)
 \begin{DoxyCompactList}\small\item\em Set the current system setpoint (speed, heading). \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classackermann_1_1_controller_ad768d0fdc4ad85510ba90af05ef6e4c4}{get\+Goal}} (double \&speed, double \&heading) const
+void \hyperlink{classackermann_1_1_controller_ad768d0fdc4ad85510ba90af05ef6e4c4}{get\+Goal} (double \&speed, double \&heading) const
 \begin{DoxyCompactList}\small\item\em Get the current system setpoint (speed, heading); return as parameters specified. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classackermann_1_1_controller_a4af9cff4fa372a7bd245fe50aaf05859}{get\+Command}} (double \&throttle, double \&steering) const
+void \hyperlink{classackermann_1_1_controller_a4af9cff4fa372a7bd245fe50aaf05859}{get\+Command} (double \&throttle, double \&steering) const
 \begin{DoxyCompactList}\small\item\em Get the current system command (speed, heading); return as parameters specified. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classackermann_1_1_controller_ab1831f2b1e80c29e5d110c55e11e2d2e}{get\+Wheel\+Lin\+Vel}} (double \&left\+\_\+front, double \&right\+\_\+front, double \&left\+\_\+rear, double \&right\+\_\+rear) const
+void \hyperlink{classackermann_1_1_controller_ab1831f2b1e80c29e5d110c55e11e2d2e}{get\+Wheel\+Lin\+Vel} (double \&left\+\_\+front, double \&right\+\_\+front, double \&left\+\_\+rear, double \&right\+\_\+rear) const
 \begin{DoxyCompactList}\small\item\em Get the current system wheel speeds; return as parameters specified. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Detailed Description}
+\subsection{Detailed Description}
 Implementation of a steering and speed controller for a rover with an Ackermann steering mechanism. 
 
-
-
-\doxysubsection{Constructor \& Destructor Documentation}
+\subsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classackermann_1_1_controller_a4bf9f0657a103e0144ef14f9b8a7c96e}\label{classackermann_1_1_controller_a4bf9f0657a103e0144ef14f9b8a7c96e}} 
-\index{ackermann::Controller@{ackermann::Controller}!Controller@{Controller}}
-\index{Controller@{Controller}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{Controller()}{Controller()}}
-{\footnotesize\ttfamily ackermann\+::\+Controller\+::\+Controller (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_params}{Params}} $>$ \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!Controller@{Controller}}
+\index{Controller@{Controller}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{Controller()}{Controller()}}
+{\footnotesize\ttfamily ackermann\+::\+Controller\+::\+Controller (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ const \hyperlink{structackermann_1_1_params}{Params} $>$ \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
 
 
 
@@ -59,13 +57,21 @@ Constructor; constructs and initializes parameters of all composition classes.
 {\em params} & Shared pointer detailing rover characteristic parameters \\
 \hline
 \end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classackermann_1_1_controller_a4bf9f0657a103e0144ef14f9b8a7c96e_cgraph}
+\end{center}
+\end{figure}
 
 
-\doxysubsection{Member Function Documentation}
+\subsection{Member Function Documentation}
 \mbox{\Hypertarget{classackermann_1_1_controller_a4af9cff4fa372a7bd245fe50aaf05859}\label{classackermann_1_1_controller_a4af9cff4fa372a7bd245fe50aaf05859}} 
-\index{ackermann::Controller@{ackermann::Controller}!getCommand@{getCommand}}
-\index{getCommand@{getCommand}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{getCommand()}{getCommand()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!get\+Command@{get\+Command}}
+\index{get\+Command@{get\+Command}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{get\+Command()}{getCommand()}}
 {\footnotesize\ttfamily void ackermann\+::\+Controller\+::get\+Command (\begin{DoxyParamCaption}\item[{double \&}]{throttle,  }\item[{double \&}]{steering }\end{DoxyParamCaption}) const}
 
 
@@ -82,9 +88,9 @@ This represents the main point of access for a polling architecture, i.\+e. an e
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classackermann_1_1_controller_ad768d0fdc4ad85510ba90af05ef6e4c4}\label{classackermann_1_1_controller_ad768d0fdc4ad85510ba90af05ef6e4c4}} 
-\index{ackermann::Controller@{ackermann::Controller}!getGoal@{getGoal}}
-\index{getGoal@{getGoal}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{getGoal()}{getGoal()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!get\+Goal@{get\+Goal}}
+\index{get\+Goal@{get\+Goal}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{get\+Goal()}{getGoal()}}
 {\footnotesize\ttfamily void ackermann\+::\+Controller\+::get\+Goal (\begin{DoxyParamCaption}\item[{double \&}]{speed,  }\item[{double \&}]{heading }\end{DoxyParamCaption}) const}
 
 
@@ -99,9 +105,9 @@ Get the current system setpoint (speed, heading); return as parameters specified
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classackermann_1_1_controller_a6a282c7083ce5a240d5e8e71782cb106}\label{classackermann_1_1_controller_a6a282c7083ce5a240d5e8e71782cb106}} 
-\index{ackermann::Controller@{ackermann::Controller}!getState@{getState}}
-\index{getState@{getState}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{getState()}{getState()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!get\+State@{get\+State}}
+\index{get\+State@{get\+State}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{get\+State()}{getState()}}
 {\footnotesize\ttfamily void ackermann\+::\+Controller\+::get\+State (\begin{DoxyParamCaption}\item[{double \&}]{speed,  }\item[{double \&}]{heading }\end{DoxyParamCaption}) const}
 
 
@@ -116,9 +122,9 @@ Get the current state (speed, heading) of the system; return as parameters speci
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classackermann_1_1_controller_ab1831f2b1e80c29e5d110c55e11e2d2e}\label{classackermann_1_1_controller_ab1831f2b1e80c29e5d110c55e11e2d2e}} 
-\index{ackermann::Controller@{ackermann::Controller}!getWheelLinVel@{getWheelLinVel}}
-\index{getWheelLinVel@{getWheelLinVel}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{getWheelLinVel()}{getWheelLinVel()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!get\+Wheel\+Lin\+Vel@{get\+Wheel\+Lin\+Vel}}
+\index{get\+Wheel\+Lin\+Vel@{get\+Wheel\+Lin\+Vel}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{get\+Wheel\+Lin\+Vel()}{getWheelLinVel()}}
 {\footnotesize\ttfamily void ackermann\+::\+Controller\+::get\+Wheel\+Lin\+Vel (\begin{DoxyParamCaption}\item[{double \&}]{left\+\_\+front,  }\item[{double \&}]{right\+\_\+front,  }\item[{double \&}]{left\+\_\+rear,  }\item[{double \&}]{right\+\_\+rear }\end{DoxyParamCaption}) const}
 
 
@@ -137,9 +143,9 @@ Get the current system wheel speeds; return as parameters specified.
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classackermann_1_1_controller_ac42d34ea838ccf8e9f83199b5753c08e}\label{classackermann_1_1_controller_ac42d34ea838ccf8e9f83199b5753c08e}} 
-\index{ackermann::Controller@{ackermann::Controller}!isRunning@{isRunning}}
-\index{isRunning@{isRunning}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{isRunning()}{isRunning()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!is\+Running@{is\+Running}}
+\index{is\+Running@{is\+Running}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{is\+Running()}{isRunning()}}
 {\footnotesize\ttfamily bool ackermann\+::\+Controller\+::is\+Running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
@@ -150,9 +156,9 @@ Return true if the core execution thread is running. This is a useful utility fo
 \+: Whether or not the core control loop is executing. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classackermann_1_1_controller_a2c048f93364371bb99445b68cb4ad064}\label{classackermann_1_1_controller_a2c048f93364371bb99445b68cb4ad064}} 
-\index{ackermann::Controller@{ackermann::Controller}!setGoal@{setGoal}}
-\index{setGoal@{setGoal}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{setGoal()}{setGoal()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!set\+Goal@{set\+Goal}}
+\index{set\+Goal@{set\+Goal}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{set\+Goal()}{setGoal()}}
 {\footnotesize\ttfamily void ackermann\+::\+Controller\+::set\+Goal (\begin{DoxyParamCaption}\item[{const double}]{speed,  }\item[{const double}]{heading }\end{DoxyParamCaption})}
 
 
@@ -169,9 +175,9 @@ This sets a new target for our control loop. Expected usage is to call this meth
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classackermann_1_1_controller_aee37f9adf9e8b2ec31499c8f7838531d}\label{classackermann_1_1_controller_aee37f9adf9e8b2ec31499c8f7838531d}} 
-\index{ackermann::Controller@{ackermann::Controller}!setState@{setState}}
-\index{setState@{setState}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{setState()}{setState()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!set\+State@{set\+State}}
+\index{set\+State@{set\+State}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{set\+State()}{setState()}}
 {\footnotesize\ttfamily void ackermann\+::\+Controller\+::set\+State (\begin{DoxyParamCaption}\item[{const double}]{speed,  }\item[{const double}]{heading }\end{DoxyParamCaption})}
 
 
@@ -188,26 +194,26 @@ This represents an update from external sensors as to our true system state. If 
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classackermann_1_1_controller_a285777e5abee8b5ec7eb683410215a04}\label{classackermann_1_1_controller_a285777e5abee8b5ec7eb683410215a04}} 
-\index{ackermann::Controller@{ackermann::Controller}!stop@{stop}}
-\index{stop@{stop}!ackermann::Controller@{ackermann::Controller}}
-\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+\index{ackermann\+::\+Controller@{ackermann\+::\+Controller}!stop@{stop}}
+\index{stop@{stop}!ackermann\+::\+Controller@{ackermann\+::\+Controller}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
 {\footnotesize\ttfamily void ackermann\+::\+Controller\+::stop (\begin{DoxyParamCaption}\item[{bool}]{block = {\ttfamily false} }\end{DoxyParamCaption})}
 
 
 
-Stop execution of a control loop and rejoin. This also calls \mbox{\hyperlink{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}{reset()}} to clear any state variables. 
+Stop execution of a control loop and rejoin. This also calls \hyperlink{classackermann_1_1_controller_ab225ab7b942ed1590cc91b0343860924}{reset()} to clear any state variables. 
 
 @ param block\+: Optionally wait for any running thread to rejoin. Default false. Here is the caller graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{classackermann_1_1_controller_a285777e5abee8b5ec7eb683410215a04_icgraph}
+\includegraphics[width=342pt]{classackermann_1_1_controller_a285777e5abee8b5ec7eb683410215a04_icgraph}
 \end{center}
 \end{figure}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-include/\mbox{\hyperlink{_controller_8hpp}{Controller.\+hpp}}\item 
+include/\hyperlink{_controller_8hpp}{Controller.\+hpp}\item 
 app/Controller.\+cpp\end{DoxyCompactItemize}

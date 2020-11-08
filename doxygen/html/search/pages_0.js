@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ackermann_20controller_131',['Ackermann Controller',['../index.html',1,'']]]
+  ['ackermann_20controller',['Ackermann Controller',['../index.html',1,'']]]
 ];

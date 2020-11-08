@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fake_72',['fake',['../namespacefake.html',1,'']]]
+  ['fake',['fake',['../namespacefake.html',1,'']]]
 ];
