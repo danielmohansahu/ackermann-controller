@@ -127,18 +127,28 @@ class Plant {
   void command(const double throttle, const double steering, const double dt);
 
  private:
-  // state variables
+   /**
+   * @brief speed variable
+   */
   double speed_;
+  /**
+  * @brief heading variable
+  */
   double heading_;
 
-  // struct of our system options
+  /**
+  * @brief struct of our system options
+  */
   PlantOptions opts_;
 
   /**
-  * @brief A copy of our configuration parameters. */
+  * @brief A copy of our configuration parameters.
+  */
   std::shared_ptr<const ackermann::Params> params_;
 
-  // random noise generation
+  /**
+  * @brief random noise generation
+  */
   std::default_random_engine generator_;
   //std::normal_distribution<double> dist_;
 
