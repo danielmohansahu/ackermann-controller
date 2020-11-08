@@ -1,1 +1,1 @@
-cppcheck --enable=all --std=c++11 -I ../include/ --suppress=missingIncludeSystem $( find ../. -name \*.hpp -or -name \*.cpp -or -name \*.h | grep -vE -e "^.././BashScripts" -e "^.././build" -e "^.././cmake" -e "^.././docs" -e "^.././doxygen" -e "^.././vendor" )
+cppcheck --enable=all --language=c++ --std=c++11 -I ../include/ --suppress=missingIncludeSystem $( find ../. -name \*.hpp -or -name \*.cpp -or -name \*.h | grep -vE -e "^.././BashScripts" -e "^.././build" -e "^.././cmake" -e "^.././docs" -e "^.././doxygen" -e "^.././vendor" )
