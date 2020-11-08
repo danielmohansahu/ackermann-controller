@@ -36,12 +36,16 @@ class Limits {
    *
    * Apply known kinematic constraints (velocity, acceleration,
    * angular velocity, angular acceleration) to the given
-   * potential commands, and return the limited version.
+   * potential commands, and return the limited version. (Return paramaters
+   * noted)
    *
    * @param current_speed: Current speed in (m/s).
    * @param current_steering: Current commanded steering angle (rad).
-   * @param desired_thottle: Desired throttle (generally [0,1]).
-   * @param desired_steering: Desired steering angle (rad).
+   * @param desired_thottle: (Return Parameter) Desired throttle
+   * (generally [0,1]).
+   * @param desired_steering: (Return Parameter) Desired steering angle (rad).
+   * @param desired_steering_vel: (Return parameter) Desired steering velocity
+   * (rad/s).
    * @param dt: Fixed time step between commands (s).
   */
   void limit(const double current_speed,
@@ -56,12 +60,14 @@ class Limits {
 * @brief Use Parameters structure to convert throttle to speed as a
   * function of maximum allowable speed.
   * @param throttle Throttle setting in range of generally [0,1]
+  * @return Speed based on throttle input (linear relationship) (m/s)
   */
   double throttleToSpeed(double throttle) const;
   /**
   * @brief Use Parameters structure to convert speed to throttle as a
   * function of maximum allowable speed.
   * @param speed Speed in range of [0,max_speed]
+  * @return Throttle position estimate from speed (linear relationship) [0,1]
   */
   double speedToThrottle(double speed) const;
 
@@ -70,13 +76,15 @@ class Limits {
   * 270deg right if you can turn 90deg left
   * @param current_heading Current heading in radians
   * @param desired_heading Desired heading in radians
+  * @return Angle and direction (+/-) to turn (rad)
   */
   double shortestArcToTurn(double current_heading, double desired_heading) const;
 
   /**
-  * @brief Bound heading to [0,360) range
+  * @brief Bound heading to [-pi,pi) range; prevents odd behavior.
   * @param current_heading Current heading in radians
   * @param desired_heading Desired heading in radians
+  * @return Bound heading in radians
   */
   double boundHeading(const double heading) const;
 
