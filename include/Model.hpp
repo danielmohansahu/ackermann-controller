@@ -1,6 +1,7 @@
 #pragma once
 
-/** @file Model.hpp
+/**
+* @file Model.hpp
  * @brief Class declaration for an Ackermann vehicle model.
  *
  * @author Spencer Elyard
