@@ -24,6 +24,7 @@ class Model {
  public:
   /**
   * @brief Constructor
+  * @param params Shared pointer detailing rover characteristic parameters
   */
   Model(const std::shared_ptr<const Params>& params);
 
@@ -41,7 +42,8 @@ class Model {
   void setState(const double speed, const double heading);
 
   /**
-  * @brief Get the current state estimate.
+  * @brief Get the current state estimate; return
+  * as parameters specified.
    *
    * @param speed: Estimated system speed (m/s).
    * @param heading: Estimated system heading (rad).
@@ -49,7 +51,7 @@ class Model {
   void getState(double& speed, double& heading) const;
 
   /**
-  * @brief Get the target setpoint.
+  * @brief Set the target setpoint.
    *
    * @param speed: Desired system speed (m/s).
    * @param heading: Desired system heading (rad).
@@ -57,7 +59,8 @@ class Model {
   void setGoal(const double speed, const double heading);
 
   /**
-  * @brief Get the current setpoint.
+  * @brief Get the current setpoint; return
+  * as parameters specified.
    *
    * @param speed: Desired system speed (m/s).
    * @param heading: Desired system heading (rad).
@@ -65,7 +68,8 @@ class Model {
   void getGoal(double& speed, double& heading) const;
 
   /**
-  * @brief Get the current commanded throttle and steering angle.
+  * @brief Get the current commanded throttle and steering angle; return
+  * as parameters specified.
    *
    * @param throttle: The last commanded throttle (limited to [0,1]).
    * @param steering: The last commanded steering angle (rad).
@@ -73,7 +77,8 @@ class Model {
   void getCommand(double& throttle, double& steering) const;
 
   /**
-  * @brief Get the current commanded throttle and steering angle.
+  * @brief Get the current commanded throttle and steering angle; return
+  * as parameters specified.
    *
    * @param throttle: The last commanded throttle (limited to [0,1]).
    * @param steering: The last commanded steering angle (rad).
@@ -91,7 +96,8 @@ class Model {
   void command(double desired_speed, double steering, const double dt);
 
   /**
-  * @brief Return the current error between desired and setpoint.
+  * @brief Return the current error between desired and setpoint; return
+  * as parameters specified.
    *
    * @param speed_error: Current speed error (m/s).
    * @param heading_error: Current heading error (rad).
@@ -100,7 +106,8 @@ class Model {
 
   /**
   * @brief Return the current linear velocity at each wheel; used for
-  * calculating wheel speed with tire information
+  * calculating wheel speed with tire information. Return
+  * as parameters specified.
    *
    * @param wheel_LeftFront&: Left front wheel linear velocity
    * @param wheel_RightFront&: Right front wheel linear velocity
@@ -123,35 +130,35 @@ class Model {
   // system state variables
   // use for current conditions for limits
   /**
-  * Current throttle setting for rover.
+  * @brief Current throttle setting for rover.
   */
   std::atomic<double> current_throttle_ {0.0};
   /**
-  * Current steering position for rover.
+  * @brief Current steering position for rover.
   */
   std::atomic<double> current_steering_ {0.0};
   /**
-  * Current steering velocity for rover.
+  * @brief Current steering velocity for rover.
   */
   std::atomic<double> current_steering_vel_ {0.0};
 
   //use for setting goal
   /**
-  * Desired speed for rover.
+  * @brief Desired speed for rover.
   */
   std::atomic<double> desired_speed_ {0.0};
   /**
-  * Desired heading for rover.
+  * @brief Desired heading for rover.
   */
   std::atomic<double> desired_heading_ {0.0};
 
   //current states
   /**
-  * Current speed for rover.
+  * @brief Current speed for rover.
   */
   std::atomic<double> current_speed_ {0.0};
   /**
-  * Current heading for rover.
+  * @brief Current heading for rover.
   */
   std::atomic<double> current_heading_ {0.0};
 
