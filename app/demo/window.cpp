@@ -405,13 +405,13 @@ QGroupBox *Window::createSpeedPlotGroup()
   speedChart->createDefaultAxes();
   speedChart->setTitle("Vehicle Speed (m/s)");
   speedChart->legend()->setAlignment(Qt::AlignRight);
-  speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("setpoint"));
-  speedChart->legend()->markers(speedGoalSeries)[0]->setLabel(tr("goal"));
-  speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("actual"));
-  speedChart->legend()->markers(speedLeftFrontWheelSeries)[0]->setLabel(tr("front left"));
-  speedChart->legend()->markers(speedRightFrontWheelSeries)[0]->setLabel(tr("front right"));
-  speedChart->legend()->markers(speedLeftRearWheelSeries)[0]->setLabel(tr("rear left"));
-  speedChart->legend()->markers(speedRightRearWheelSeries)[0]->setLabel(tr("rear right"));
+  speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("Desired Setpoint"));
+  speedChart->legend()->markers(speedGoalSeries)[0]->setLabel(tr("Controller Goal"));
+  speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("Simulated Response"));
+  speedChart->legend()->markers(speedLeftFrontWheelSeries)[0]->setLabel(tr("Wheel Command (front left)"));
+  speedChart->legend()->markers(speedRightFrontWheelSeries)[0]->setLabel(tr("Wheel Command (front right)"));
+  speedChart->legend()->markers(speedLeftRearWheelSeries)[0]->setLabel(tr("Wheel Command (rear left)"));
+  speedChart->legend()->markers(speedRightRearWheelSeries)[0]->setLabel(tr("Wheel Command (rear right)"));
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(speedChart);
@@ -442,9 +442,9 @@ QGroupBox *Window::createHeadingPlotGroup()
   headingChart->createDefaultAxes();
   headingChart->setTitle("Vehicle Heading (rad)");
   headingChart->legend()->setAlignment(Qt::AlignRight);
-  headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("setpoint"));
-  headingChart->legend()->markers(headingGoalSeries)[0]->setLabel(tr("goal"));
-  headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("actual"));
+  headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("Desired Setpoint"));
+  headingChart->legend()->markers(headingGoalSeries)[0]->setLabel(tr("Controller Goal"));
+  headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("Simulated Response"));
   headingChart->axisY()->setRange(-M_PI, M_PI);
 
   // add ChartView instance (to actually display the chart)
@@ -474,8 +474,8 @@ QGroupBox *Window::createCommandPlotGroup()
   commandChart->createDefaultAxes();
   commandChart->setTitle("Controller Commands");
   commandChart->legend()->setAlignment(Qt::AlignRight);
-  commandChart->legend()->markers(commandThrottleSeries)[0]->setLabel(tr("throttle"));
-  commandChart->legend()->markers(commandSteeringSeries)[0]->setLabel(tr("steer"));
+  commandChart->legend()->markers(commandThrottleSeries)[0]->setLabel(tr("Commanded Throttle"));
+  commandChart->legend()->markers(commandSteeringSeries)[0]->setLabel(tr("Commanded Steer"));
   commandChart->axisY()->setRange(-M_PI, M_PI);
 
   // add ChartView instance (to actually display the chart)
