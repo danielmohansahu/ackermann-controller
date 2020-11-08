@@ -115,8 +115,10 @@ class Model {
    * @param wheel_LeftRear&: Left rear wheel linear velocity
    * @param wheel_RightRear&: Right rear wheel linear velocity
    */
-  void getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
-    double& wheel_LeftRear, double& wheel_RightRear) const;
+  void getWheelLinVel(double& wheel_LeftFront,
+                      double& wheel_RightFront,
+                      double& wheel_LeftRear,
+                      double& wheel_RightRear) const;
 
  private:
    /**

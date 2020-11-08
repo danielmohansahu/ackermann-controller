@@ -58,7 +58,8 @@ struct PlantOptions {
   * @param wheel_base Distance between front and rear axles (m)
   * @param max_steering_angle Maximum steering angle (rad)
   */
-  PlantOptions(double wheel_base_, double max_steering_angle_)
+  PlantOptions(double wheel_base_,
+              double max_steering_angle_)
     : wheel_base(wheel_base_),
       max_steering_angle(max_steering_angle_) {
   }

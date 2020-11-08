@@ -128,8 +128,11 @@ struct Params {
   std::atomic<double> max_steering_angle;
 
   /* @brief Constructor */
-  Params(double wheel_base_, double track_width_, double max_steering_angle_,
-     double kp_speed_, double kp_heading_)
+  Params(double wheel_base_,
+         double track_width_,
+         double max_steering_angle_,
+         double kp_speed_,
+         double kp_heading_)
     : pid_speed(std::make_shared<PIDParams>(kp_speed_)),
       pid_heading(std::make_shared<PIDParams>(kp_heading_)),
       wheel_base(wheel_base_),

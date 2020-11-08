@@ -12,8 +12,8 @@
 
 int main(int argc, char *argv[]) {
   // instantiate shared controller parameters instance
-  auto params = std::make_shared<ackermann::Params>(0.45, 0.45, 0.785,
-    0.02, 0.2);
+  auto params = std::make_shared<ackermann::Params>(
+    0.45, 0.45, 0.785, 0.02, 0.2);
 
   // construct controller class
   auto controller = std::make_shared<ackermann::Controller>(params);

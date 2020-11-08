@@ -25,9 +25,13 @@ TEST(Limits_NoLimit, should_pass) {
     double desired_steering = original_steering;
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(original_throttle, desired_throttle);
     EXPECT_DOUBLE_EQ(original_steering, desired_steering);
   }
@@ -40,9 +44,13 @@ TEST(Limits_NoLimit, should_pass) {
     double desired_steering = original_steering;
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(original_throttle, desired_throttle);
     EXPECT_DOUBLE_EQ(original_steering, desired_steering);
   }
@@ -56,9 +64,13 @@ TEST(Limits_NoLimit, should_pass) {
     double desired_steering = original_steering;
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(original_throttle, desired_throttle);
     EXPECT_DOUBLE_EQ(original_steering, desired_steering);
   }
@@ -80,9 +92,13 @@ TEST(Limits_Velocity, should_pass) {
     double desired_steering = original_steering;
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(desired_throttle, lim.speedToThrottle(p->velocity_max));
     EXPECT_DOUBLE_EQ(original_steering, desired_steering);
   }
@@ -95,9 +111,13 @@ TEST(Limits_Velocity, should_pass) {
     double desired_steering = original_steering;
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(desired_throttle, lim.speedToThrottle(p->velocity_min));
     EXPECT_DOUBLE_EQ(original_steering, desired_steering);
   }
@@ -121,11 +141,15 @@ TEST(Limits_Acceleration, should_pass) {
     double desired_steering = original_steering;
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(lim.throttleToSpeed(desired_throttle),
-     (p->acceleration_max*dt));
+                     p->acceleration_max*dt);
     EXPECT_DOUBLE_EQ(original_steering, desired_steering);
   }
 
@@ -137,9 +161,13 @@ TEST(Limits_Acceleration, should_pass) {
     double desired_steering = original_steering;
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(lim.throttleToSpeed(desired_throttle), 0);
     EXPECT_DOUBLE_EQ(original_steering, desired_steering);
   }
@@ -160,9 +188,13 @@ TEST(Limits_Heading_Angle, should_pass) {
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
     double desired_throttle = 1;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(desired_steering, p->max_steering_angle);
   }
 
@@ -174,9 +206,13 @@ TEST(Limits_Heading_Angle, should_pass) {
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
     double desired_throttle = 1;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(desired_steering, (-1*p->max_steering_angle));
   }
 }
@@ -197,9 +233,13 @@ TEST(Limits_Heading_AngularVelocity, should_pass) {
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
     double desired_throttle = 1;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(desired_steering_vel, p->angular_velocity_max);
     EXPECT_DOUBLE_EQ(desired_steering, desired_steering_vel*dt);
   }
@@ -212,9 +252,13 @@ TEST(Limits_Heading_AngularVelocity, should_pass) {
     double current_steering_vel = 0;
     double desired_steering_vel = current_steering_vel;
     double desired_throttle = 1;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ(desired_steering_vel, p->angular_velocity_min);
     EXPECT_DOUBLE_EQ(desired_steering, desired_steering_vel*dt);
   }
@@ -236,15 +280,21 @@ TEST(Limits_Heading_AngularAcceleration, should_pass) {
     double desired_steering_vel = current_steering_vel;
     double original_throttle = 1.0;
     double desired_throttle = original_throttle;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ((desired_steering_vel - current_steering_vel)/dt,
-      p->angular_acceleration_max);
+                     p->angular_acceleration_max);
     EXPECT_DOUBLE_EQ(desired_steering_vel,
-      p->angular_acceleration_max*dt);
-    EXPECT_DOUBLE_EQ(desired_steering, original_steering +
-      (current_steering_vel*dt) + (.5*p->angular_acceleration_max*dt*dt));
+                     p->angular_acceleration_max*dt);
+    EXPECT_DOUBLE_EQ(desired_steering,
+                     original_steering
+                     + current_steering_vel*dt
+                     + (.5*p->angular_acceleration_max*dt*dt));
   }
 
   {
@@ -255,14 +305,20 @@ TEST(Limits_Heading_AngularAcceleration, should_pass) {
     double desired_steering_vel = current_steering_vel;
     double original_throttle = 1.0;
     double desired_throttle = original_throttle;
-    lim.limit(lim.throttleToSpeed(original_throttle), original_steering,
-      current_steering_vel, desired_throttle, desired_steering,
-      desired_steering_vel, dt);
+    lim.limit(lim.throttleToSpeed(original_throttle),
+              original_steering,
+              current_steering_vel,
+              desired_throttle,
+              desired_steering,
+              desired_steering_vel,
+              dt);
     EXPECT_DOUBLE_EQ((desired_steering_vel - current_steering_vel)/dt,
-      p->angular_acceleration_min);
+                     p->angular_acceleration_min);
     EXPECT_DOUBLE_EQ(desired_steering_vel, p->angular_acceleration_min*dt);
-    EXPECT_DOUBLE_EQ(desired_steering, original_steering +
-      (current_steering_vel*dt) + (.5*p->angular_acceleration_min*dt*dt));
+    EXPECT_DOUBLE_EQ(desired_steering,
+                     original_steering
+                      + (current_steering_vel*dt)
+                      + (.5*p->angular_acceleration_min*dt*dt));
   }
 }
 

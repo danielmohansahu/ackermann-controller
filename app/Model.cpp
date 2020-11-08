@@ -66,8 +66,9 @@ double& steer_vel) const {
   steer_vel = this->current_steering_vel_;
 }
 
-void Model::command(const double cmd_throttle, const double steering,
-const double dt) {
+void Model::command(const double cmd_throttle,
+                    const double steering,
+                    const double dt) {
   // update current throttle to new value
   this->current_throttle_ = cmd_throttle;
   // take throttle and convert to speed
@@ -76,19 +77,22 @@ const double dt) {
   this->current_steering_vel_ = (steering - this->current_steering_) / dt;
   this->current_steering_ = steering;
   // update current heading to new heading value
-  this->current_heading_ = limits_->boundHeading(this->current_heading_ +
-    ((this->current_speed_/params_->wheel_base) * tan(steering) * dt));
+  this->current_heading_ = limits_->boundHeading(
+    this->current_heading_
+    + ((this->current_speed_/params_->wheel_base) * tan(steering) * dt));
 }
 
 void Model::getError(double& speed_error, double& heading_error) const {
   speed_error = desired_speed_ - current_speed_;
   // minimize heading error
   heading_error = limits_->shortestArcToTurn(current_heading_,
-    desired_heading_);
+                                             desired_heading_);
 }
 
-void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
-  double& wheel_LeftRear, double& wheel_RightRear) const {
+void Model::getWheelLinVel(double& wheel_LeftFront,
+                           double& wheel_RightFront,
+                           double& wheel_LeftRear,
+                           double& wheel_RightRear) const {
   // https://www.xarg.org/book/kinematics/ackerman-steering/
 
     // if no current steering input, then the radius of curvature is infinite;

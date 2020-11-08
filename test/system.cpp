@@ -87,8 +87,8 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
   auto start = steady_clock::now();
 
   // loop until we've ran out of time
-  while (duration_cast<seconds>(steady_clock::now() - start).count() <
-    max_duration) {
+  while (duration_cast<seconds>(steady_clock::now() - start).count()
+         < max_duration) {
     // calculate latest command
     double throttle, steering;
     c->getCommand(throttle, steering);

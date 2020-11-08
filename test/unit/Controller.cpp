@@ -117,9 +117,8 @@ TEST_F(AckemannControllerTest, ControllerThreading) {
       controller_->getGoal(throttle, steering);
 
       if (!controller_->isRunning()) {
-        std::cerr <<
-        "Encountered error in control loop; probably a threading issue."
-        << std::endl;
+        std::cerr << "Encountered error in control loop; "
+                  << "probably a threading issue." << std::endl;
         EXPECT_FALSE(true);
         break;
       }
@@ -130,10 +129,4 @@ TEST_F(AckemannControllerTest, ControllerThreading) {
     controller_->stop(true);
     EXPECT_FALSE(controller_->isRunning());
   }
-}
-
-/* @brief Test Controller with default params */
-// @TODO Daniel M. Sahu: Write this test.
-TEST_F(AckemannControllerTest, ControllerTiming) {
-  //
 }

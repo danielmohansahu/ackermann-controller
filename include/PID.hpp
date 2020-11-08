@@ -32,8 +32,8 @@ class PID {
    * output
    */
   explicit PID(const std::shared_ptr<const PIDParams>& params,
-      double out_minLimit = std::numeric_limits<double>::lowest(),
-      double out_maxLimit = std::numeric_limits<double>::max());
+               double out_minLimit = std::numeric_limits<double>::lowest(),
+               double out_maxLimit = std::numeric_limits<double>::max());
 
   /**
   * @brief Get the kP Proportional Gain
