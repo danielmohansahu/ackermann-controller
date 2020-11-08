@@ -10,7 +10,10 @@ This is an implementation of an [Ackermann Steering Geometry](https://en.wikiped
 
 To calculate the Ackermann steering angles for a four wheeled vehicles, a simplified model with a single front and rear wheel is assumed. The steering angle of this simulated single steering wheel is used to calculate the updated heading of the rover along with the vehicle wheel base. For an Ackermann steering system, the two actual steering wheels are perpindicular to the radius of the turning circle traced by each wheel; the difference in angles for each of these wheels can be calculated based on the track of the rover. The different turning circles and the vehicle speed are used to calculate individual wheel speeds.
   
-For more detailed information on this project please explore [the generated docs](docs/doxygen/html/index.html).
+For more detailed information on this project please explore the generated docs. After cloning the repository open [them](docs/doxygen/html/index.html) in the web browser of your choice, e.g.
+```bash
+firefox docs/doxygen/html/index.html
+```
 
 ## Dependencies
 
