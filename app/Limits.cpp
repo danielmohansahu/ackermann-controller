@@ -1,13 +1,12 @@
-/* @file Limits.cpp
- *
+/**
+*  @file Limits.cpp
+*
  * @author Spencer Elyard
  * @author Daniel M. Sahu
  * @author Santosh Kesani
  *
  * @copyright [2020]
  */
-
-// @TODO Currently STUB implementation; needs to be filled
 
 #include <Limits.hpp>
 #include <cmath>
@@ -45,7 +44,8 @@ double Limits::speedToThrottle(double speed) const {
   return throttle_calc;
 }
 
-double Limits::shortestArcToTurn(double current_heading, double desired_heading) const {
+double Limits::shortestArcToTurn(double current_heading, double
+desired_heading) const {
   double heading_command = (desired_heading - current_heading);
   if (heading_command > M_PI) {heading_command -= 2*M_PI;}
   if (heading_command < -M_PI) {heading_command += 2*M_PI;}
@@ -62,7 +62,6 @@ double Limits::boundHeading(const double heading) const {
     while (temp_heading > M_PI) {temp_heading -= 2*M_PI;}
   }
   return temp_heading;
-
 }
 
 void Limits::limit(const double current_speed,
@@ -72,11 +71,12 @@ void Limits::limit(const double current_speed,
                    double& desired_steering,
                    double& desired_steering_vel,
                    double dt) const {
-
     // BEGIN THROTTLE LIMITATION SECTION
     // limit current_throttle to [min,max]
-    if (desired_throttle > params_->throttle_max) {desired_throttle = params_->throttle_max;}
-    if (desired_throttle < params_->throttle_min) {desired_throttle = params_->throttle_min;}
+    if (desired_throttle > params_->throttle_max) {desired_throttle =
+       params_->throttle_max;}
+    if (desired_throttle < params_->throttle_min) {desired_throttle =
+       params_->throttle_min;}
     // scale throttle to velocity commanded
     double new_velocity = throttleToSpeed(desired_throttle);
     if (new_velocity > params_->velocity_max) {
@@ -104,7 +104,6 @@ void Limits::limit(const double current_speed,
     // END THROTTLE LIMITATION SECTION
 
     // BEGIN STEERING LIMITATION SECTION
-
     // limit heading my max angle
     if (desired_steering > params_->max_steering_angle) {
       desired_steering = params_->max_steering_angle;
@@ -140,4 +139,4 @@ void Limits::limit(const double current_speed,
     }
 }
 
-} // namespace ackermann
+}  // namespace ackermann

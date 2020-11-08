@@ -27,7 +27,7 @@ class Model {
   * @brief Constructor
   * @param params Shared pointer detailing rover characteristic parameters
   */
-  Model(const std::shared_ptr<const Params>& params);
+  explicit Model(const std::shared_ptr<const Params>& params);
 
   /**
   * @brief Reset system state variables to defaults.

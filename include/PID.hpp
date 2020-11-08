@@ -31,7 +31,7 @@ class PID {
    * @param out_maxLimit Optional, clamp maximum value of PID controller
    * output
    */
-  PID(const std::shared_ptr<const PIDParams>& params,
+  explicit PID(const std::shared_ptr<const PIDParams>& params,
       double out_minLimit = std::numeric_limits<double>::lowest(),
       double out_maxLimit = std::numeric_limits<double>::max());
 

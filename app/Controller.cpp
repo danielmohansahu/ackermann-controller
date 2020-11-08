@@ -29,8 +29,7 @@ Controller::Controller(const std::shared_ptr<const Params>& params)
     this->model_ = std::make_unique<Model>(params);
 }
 
-Controller::~Controller()
-{
+Controller::~Controller() {
   stop(true);
 }
 
@@ -93,7 +92,8 @@ void Controller::controlLoop() {
   const double timing_threshold = 0.1;
 
   // initialize timing variables
-  std::chrono::microseconds duration(static_cast<int>(1000000/params_->control_frequency));
+  std::chrono::microseconds duration(static_cast<int>(1000000/
+    params_->control_frequency));
   auto next_loop_time = steady_clock::now();
 
   // execute loop at the desired frequency
@@ -106,14 +106,13 @@ void Controller::controlLoop() {
     this->model_->getGoal(desired_speed, desired_heading);
 
     // get model current state
-    double current_speed,current_heading;
+    double current_speed, current_heading;
     this->model_->getState(current_speed, current_heading);
 
     // get current throttle, current steering, current steering velocity
     double current_throttle, current_steering, current_steering_vel;
-    this->model_->getCommand(current_throttle, current_steering, current_steering_vel);
-    //std::cout << "CS: " << current_steering << std::endl;
-    //std::cout << "CSV: " << current_steering_vel << std::endl;
+    this->model_->getCommand(current_throttle, current_steering,
+      current_steering_vel);
 
     // convert speed error to throttle error
     double throttle_error = limits_->speedToThrottle(desired_speed)
@@ -124,8 +123,10 @@ void Controller::controlLoop() {
     this->model_->getError(speed_error, heading_error);
 
     // PID controller
-    double command_throttle = current_throttle + this->pid_throttle_->getCommand(throttle_error, dT);
-    double command_steering = this->pid_heading_->getCommand(heading_error, dT);
+    double command_throttle = current_throttle + this->pid_throttle_->
+      getCommand(throttle_error, dT);
+    double command_steering = this->pid_heading_->
+      getCommand(heading_error, dT);
     double command_steering_vel;
 
     // apply limits and generate commands
@@ -140,16 +141,19 @@ void Controller::controlLoop() {
     std::this_thread::sleep_until(next_loop_time + duration);
 
     // check and warn if this loop time is longer or shorter than expected
-    auto actual_duration = std::chrono::duration_cast<std::chrono::microseconds>(steady_clock::now() - next_loop_time);
-    double timing_ratio = static_cast<double>(actual_duration.count() - duration.count())/duration.count();
+    auto actual_duration = std::chrono::duration_cast
+      <std::chrono::microseconds>(steady_clock::now() - next_loop_time);
+    double timing_ratio = static_cast<double>(actual_duration.count() -
+      duration.count())/duration.count();
     if (std::abs(timing_ratio) > timing_threshold)
       // increment problem count
       std::cerr << "Loop frequency violation #" << ++timing_violations
-                << ": off by " << static_cast<int>(timing_ratio * 100) << "%" << std::endl;
+                << ": off by " << static_cast<int>(timing_ratio * 100) <<
+                   "%" << std::endl;
 
     // update next loop time
     next_loop_time += duration;
   }
 }
 
-} // namespace ackermann
+}  // namespace ackermann

@@ -58,13 +58,15 @@ void Model::getCommand(double& throttle, double& steering) const {
   steering = this->current_steering_;
 }
 
-void Model::getCommand(double& throttle, double& steering, double& steer_vel) const {
+void Model::getCommand(double& throttle, double& steering,
+double& steer_vel) const {
   throttle = this->current_throttle_;
   steering = this->current_steering_;
   steer_vel = this->current_steering_vel_;
 }
 
-void Model::command(const double cmd_throttle, const double steering, const double dt) {
+void Model::command(const double cmd_throttle, const double steering,
+const double dt) {
   // update current throttle to new value
   this->current_throttle_ = cmd_throttle;
   // take throttle and convert to speed
@@ -73,13 +75,15 @@ void Model::command(const double cmd_throttle, const double steering, const doub
   this->current_steering_vel_ = (steering - this->current_steering_) / dt;
   this->current_steering_ = steering;
   // update current heading to new heading value
-  this->current_heading_ = limits_->boundHeading(this->current_heading_ + ((this->current_speed_/params_->wheel_base) * tan(steering) * dt));
+  this->current_heading_ = limits_->boundHeading(this->current_heading_ +
+    ((this->current_speed_/params_->wheel_base) * tan(steering) * dt));
 }
 
 void Model::getError(double& speed_error, double& heading_error) const {
   speed_error = desired_speed_ - current_speed_;
   // minimize heading error
-  heading_error = limits_->shortestArcToTurn(current_heading_, desired_heading_);
+  heading_error = limits_->shortestArcToTurn(current_heading_,
+    desired_heading_);
 }
 
 void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
@@ -91,7 +95,8 @@ void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
     if (this->current_steering_ != 0) {
       // use bicycle model for steering input (estimate single wheel in
       // front+center of rover)
-      double turning_radius = params_->wheel_base / tan(this->current_steering_);
+      double turning_radius = params_->wheel_base /
+        tan(this->current_steering_);
       // note: left turn == negative turning radius. All calculations hold
       // until linear velocity calculations
 
@@ -99,10 +104,10 @@ void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
       double radius_RR = turning_radius - (params_->track_width/2);
       double radius_LR = turning_radius + (params_->track_width/2);
       // front axle is not aligned; use Pythagoras to calculate radius
-      double radius_RF = std::sqrt(std::pow(params_->wheel_base,2) +
-        std::pow(radius_RR,2));
-      double radius_LF = std::sqrt(std::pow(params_->wheel_base,2) +
-        std::pow(radius_LR,2));
+      double radius_RF = std::sqrt(std::pow(params_->wheel_base, 2) +
+        std::pow(radius_RR, 2));
+      double radius_LF = std::sqrt(std::pow(params_->wheel_base, 2) +
+        std::pow(radius_LR, 2));
 
       // angular velocity calculation - done at center, since result holds
       // across any radius
@@ -114,11 +119,9 @@ void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
       wheel_RightRear = abs(curr_angular_vel * radius_RR);
       wheel_LeftFront = abs(curr_angular_vel * radius_LF);
       wheel_RightFront = abs(curr_angular_vel * radius_RF);
-
-    }
+    } else {
     // if no current steering, then driving straight, and all wheel speeds
     // equal current speed
-    else {
       wheel_LeftRear = this->current_speed_;
       wheel_RightRear = this->current_speed_;
       wheel_LeftFront = this->current_speed_;
@@ -126,4 +129,4 @@ void Model::getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
     }
   }
 
-} // namespace ackermann
+}  // namespace ackermann

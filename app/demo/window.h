@@ -35,8 +35,7 @@ QT_END_NAMESPACE
 /**
 * @brief GUI implementation for user interface
  */
-class Window : public QWidget
-{
+class Window : public QWidget {
   Q_OBJECT
 
  public:
@@ -94,7 +93,7 @@ class Window : public QWidget
   QLineSeries* speedRightFrontWheelSeries;
   QLineSeries* speedLeftRearWheelSeries;
   QLineSeries* speedRightRearWheelSeries;
-  
+
   QChart* speedChart;
 
   QLineSeries* headingSetpointSeries;
