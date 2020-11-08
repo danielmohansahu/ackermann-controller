@@ -86,6 +86,9 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
   // initialize clock
   auto start = steady_clock::now();
 
+  // success count (makes sure we don't just get lucky)
+  unsigned int success_count = 0;
+
   // loop until we've ran out of time
   while (duration_cast<seconds>(steady_clock::now() - start).count()
          < max_duration) {
@@ -102,8 +105,13 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
     // check whether or not we're within desired tolerance
     // (and can report success)
     if (std::abs(current_speed - desired_speed) < speed_tolerance
-        || std::abs(current_heading - desired_heading) < heading_tolerance)
-      return true;
+        || std::abs(current_heading - desired_heading) < heading_tolerance) {
+      if (++success_count >= CONTROL_FREQUENCY)
+        return true;
+    } else {
+      // reset success count
+      success_count = 0;
+    }
 
     // check if we should break (stopped running, etc.)
     if (!c->isRunning())
