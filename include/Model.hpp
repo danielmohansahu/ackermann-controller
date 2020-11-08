@@ -27,7 +27,7 @@ class Model {
   * @brief Constructor
   * @param params Shared pointer detailing rover characteristic parameters
   */
-  Model(const std::shared_ptr<const Params>& params);
+  explicit Model(const std::shared_ptr<const Params>& params);
 
   /**
   * @brief Reset system state variables to defaults.
@@ -115,8 +115,10 @@ class Model {
    * @param wheel_LeftRear&: Left rear wheel linear velocity
    * @param wheel_RightRear&: Right rear wheel linear velocity
    */
-  void getWheelLinVel(double& wheel_LeftFront, double& wheel_RightFront,
-    double& wheel_LeftRear, double& wheel_RightRear) const;
+  void getWheelLinVel(double& wheel_LeftFront,
+                      double& wheel_RightFront,
+                      double& wheel_LeftRear,
+                      double& wheel_RightRear) const;
 
  private:
    /**
@@ -143,7 +145,7 @@ class Model {
   */
   std::atomic<double> current_steering_vel_ {0.0};
 
-  //use for setting goal
+  // use for setting goal
   /**
   * @brief Desired speed for rover.
   */
@@ -153,7 +155,7 @@ class Model {
   */
   std::atomic<double> desired_heading_ {0.0};
 
-  //current states
+  // current states
   /**
   * @brief Current speed for rover.
   */
@@ -162,8 +164,5 @@ class Model {
   * @brief Current heading for rover.
   */
   std::atomic<double> current_heading_ {0.0};
-
-
 };
-
-} // namespace ackermann
+}  // namespace ackermann

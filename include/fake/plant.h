@@ -58,7 +58,8 @@ struct PlantOptions {
   * @param wheel_base Distance between front and rear axles (m)
   * @param max_steering_angle Maximum steering angle (rad)
   */
-  PlantOptions(double wheel_base_, double max_steering_angle_)
+  PlantOptions(double wheel_base_,
+              double max_steering_angle_)
     : wheel_base(wheel_base_),
       max_steering_angle(max_steering_angle_) {
   }
@@ -89,7 +90,8 @@ class Plant {
     * @param opts Plant specifications (wheel base, max steering)
     * @param params Shared pointer; model parameters.
     */
-  explicit Plant(const PlantOptions& opts, const std::shared_ptr<const ackermann::Params>& params);
+  explicit Plant(const PlantOptions& opts,
+     const std::shared_ptr<const ackermann::Params>& params);
 
   /**
   * @brief Reset all state variables to their defaults.
@@ -150,7 +152,7 @@ class Plant {
   * @brief random noise generation
   */
   std::default_random_engine generator_;
-  //std::normal_distribution<double> dist_;
+  std::normal_distribution<double> dist_;
 
   /**
   * @brief Object used to apply kinematic constraints to
@@ -159,4 +161,4 @@ class Plant {
   std::unique_ptr<ackermann::Limits> limits_;
 };
 
-} // namespace fake
+}  // namespace fake
