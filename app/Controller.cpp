@@ -125,7 +125,7 @@ void Controller::controlLoop() {
     this->model_->getError(speed_error, heading_error);
 
     // PID controller
-    double command_throttle = 
+    double command_throttle =
       current_throttle + this->pid_throttle_->getCommand(throttle_error, dT);
     double command_steering =
       this->pid_heading_->getCommand(heading_error, dT);

@@ -63,17 +63,6 @@ struct PlantOptions {
     : wheel_base(wheel_base_),
       max_steering_angle(max_steering_angle_) {
   }
-
-  /**
-  * @brief Print out the current set of state variables
-  */
-  void print() {
-    std::cout << "PlantOptions: " << std::endl;
-    std::cout << "\twheel_base: " << wheel_base << std::endl;
-    std::cout << "\tmax_steering_angle: " << max_steering_angle << std::endl;
-    std::cout << "\tnoise_mean: " << noise_mean << std::endl;
-    std::cout << "\tnoise_stddev: " << noise_stddev << std::endl;
-  }
 };
 
 /**
