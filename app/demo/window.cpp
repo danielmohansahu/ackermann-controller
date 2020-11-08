@@ -159,16 +159,30 @@ void Window::execute() {
     commandChart->axisX()->setRange(x_min, time);
 
     // update the Y ranges
-    speed_min = std::min({speed_min, static_cast<double>(speed_setpoint_),
-      target_speed, current_speed, left_front, right_front, left_rear,
-      right_rear});
-    speed_max = std::max({speed_max, static_cast<double>(speed_setpoint_),
-       target_speed, current_speed, left_front, right_front, left_rear,
-       right_rear});
-    heading_min = std::min({heading_min, static_cast<double>(heading_setpoint_),
-       target_heading, current_heading});
-    heading_max = std::max({heading_max, static_cast<double>(heading_setpoint_),
-       target_heading, current_heading});
+    speed_min = std::min({speed_min,
+                          static_cast<double>(speed_setpoint_),
+                          target_speed,
+                          current_speed,
+                          left_front,
+                          right_front,
+                          left_rear,
+                          right_rear});
+    speed_max = std::max({speed_max,
+                          static_cast<double>(speed_setpoint_),
+                          target_speed,
+                          current_speed,
+                          left_front,
+                          right_front,
+                          left_rear,
+                          right_rear});
+    heading_min = std::min({heading_min,
+                            static_cast<double>(heading_setpoint_),
+                            target_heading,
+                            current_heading});
+    heading_max = std::max({heading_max,
+                            static_cast<double>(heading_setpoint_),
+                            target_heading,
+                            current_heading});
     command_min = std::min({command_min, throttle, steering});
     command_max = std::max({command_max, throttle, steering});
 
@@ -187,6 +201,8 @@ void Window::execute() {
 }
 
 QGroupBox *Window::createParametersGroup() {
+  // Construct group box containing all settable parameters
+
   QGroupBox *groupBox = new QGroupBox(tr("Controller Parameters"));
 
   // controller frequency
@@ -199,8 +215,10 @@ QGroupBox *Window::createParametersGroup() {
   controlFrequency->setSuffix(tr(" (hz)"));
   controlFrequency->setSingleStep(10.0);
 
-  connect(controlFrequency, QOverload<double>::of(&QDoubleSpinBox::valueChanged)
-  , this, [this](double new_val){params_->control_frequency = new_val;});
+  connect(controlFrequency,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->control_frequency = new_val;});
 
   // wheel base
   QLabel *wheelBaseLabel = new QLabel(tr("Vehicle wheel base:"));
@@ -209,8 +227,10 @@ QGroupBox *Window::createParametersGroup() {
   wheelBase->setSuffix(tr(" (m)"));
   wheelBase->setSingleStep(0.1);
 
-  connect(wheelBase, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
-    [this](double new_val){params_->wheel_base = new_val;});
+  connect(wheelBase,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->wheel_base = new_val;});
 
   // track width
   QLabel *trackWidthLabel = new QLabel(tr("Vehicle track width:"));
@@ -219,8 +239,10 @@ QGroupBox *Window::createParametersGroup() {
   trackWidth->setSuffix(tr(" (m)"));
   trackWidth->setSingleStep(0.1);
 
-  connect(trackWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-    this, [this](double new_val){params_->track_width = new_val;});
+  connect(trackWidth,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->track_width = new_val;});
 
   // max steering angle
   QLabel *maxSteeringAngleLabel = new QLabel(
@@ -232,8 +254,10 @@ QGroupBox *Window::createParametersGroup() {
   maxSteeringAngle->setSuffix(tr(" (rad)"));
   maxSteeringAngle->setSingleStep(0.1);
 
-  connect(maxSteeringAngle, QOverload<double>::of(&QDoubleSpinBox::valueChanged)
-  , this, [this](double new_val){params_->max_steering_angle = new_val;});
+  connect(maxSteeringAngle,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->max_steering_angle = new_val;});
 
   // heading PID params (KP, KI, KD)
   QLabel *headingPIDLabel = new QLabel(tr("Heading PID Parameters:"));
@@ -250,12 +274,18 @@ QGroupBox *Window::createParametersGroup() {
   kdHeading->setPrefix(tr("kd: "));
   kdHeading->setSingleStep(0.1);
 
-  connect(kpHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
-    [this](double new_val){params_->pid_heading->kp = new_val;});
-  connect(kiHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
-    [this](double new_val){params_->pid_heading->ki = new_val;});
-  connect(kdHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
-    [this](double new_val){params_->pid_heading->kd = new_val;});
+  connect(kpHeading,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->pid_heading->kp = new_val;});
+  connect(kiHeading,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->pid_heading->ki = new_val;});
+  connect(kdHeading,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->pid_heading->kd = new_val;});
 
   // speed PID params (KP, KI, KD)
   QLabel *speedPIDLabel = new QLabel(tr("Speed PID Parameters:"));
@@ -272,12 +302,18 @@ QGroupBox *Window::createParametersGroup() {
   kdSpeed->setPrefix(tr("kd: "));
   kdSpeed->setSingleStep(0.1);
 
-  connect(kpSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
-    [this](double new_val){params_->pid_speed->kp = new_val;});
-  connect(kiSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
-    [this](double new_val){params_->pid_speed->ki = new_val;});
-  connect(kdSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
-    [this](double new_val){params_->pid_speed->kd = new_val;});
+  connect(kpSpeed,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->pid_speed->kp = new_val;});
+  connect(kiSpeed,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->pid_speed->ki = new_val;});
+  connect(kdSpeed,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){params_->pid_speed->kd = new_val;});
 
   // add all parameters to box
   QVBoxLayout *vbox = new QVBoxLayout;
@@ -305,6 +341,8 @@ QGroupBox *Window::createParametersGroup() {
 }
 
 QGroupBox *Window::createSetpointsGroup() {
+  // Construct the GroupBox that allows users to set setpoints
+
   QGroupBox *groupBox = new QGroupBox(
     tr("Contoller Goals and Initial Conditions"));
 
@@ -339,14 +377,22 @@ QGroupBox *Window::createSetpointsGroup() {
   initialHeading->setSingleStep(0.1);
 
   // connect signals to slots
-  connect(speedSetpoint, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-   this, [this](double new_val){speed_setpoint_ = new_val;});
-  connect(headingSetpoint, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-   this, [this](double new_val){heading_setpoint_ = new_val;});
-  connect(initialSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-   this, [this](double new_val){initial_speed_ = new_val;});
-  connect(initialHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-   this, [this](double new_val){initial_heading_ = new_val;});
+  connect(speedSetpoint,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){speed_setpoint_ = new_val;});
+  connect(headingSetpoint,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){heading_setpoint_ = new_val;});
+  connect(initialSpeed,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){initial_speed_ = new_val;});
+  connect(initialHeading,
+          QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+          this,
+          [this](double new_val){initial_heading_ = new_val;});
 
   // add all parameters to box
   QVBoxLayout *vbox = new QVBoxLayout;
@@ -366,6 +412,8 @@ QGroupBox *Window::createSetpointsGroup() {
 }
 
 QGroupBox *Window::createControllerOperationsGroup() {
+  // Construct the GroupBox that allows start/stop execution
+
   QGroupBox *groupBox = new QGroupBox(tr("Controller Operations"));
 
   QPushButton *startButton = new QPushButton(tr("start"));
@@ -388,6 +436,8 @@ QGroupBox *Window::createControllerOperationsGroup() {
 }
 
 QGroupBox *Window::createSpeedPlotGroup() {
+  // Construct the GroupBox for plotting speed plots
+
   QGroupBox *groupBox = new QGroupBox(tr("Speed Plots"));
 
   // add desired setpoint series
@@ -445,6 +495,7 @@ QGroupBox *Window::createSpeedPlotGroup() {
 }
 
 QGroupBox *Window::createHeadingPlotGroup() {
+  // Construct the GroupBox for plotting heading plots
   QGroupBox *groupBox = new QGroupBox(tr("Heading Plots"));
 
   // add heading series
@@ -481,6 +532,7 @@ QGroupBox *Window::createHeadingPlotGroup() {
 }
 
 QGroupBox *Window::createCommandPlotGroup() {
+  // Construct the GroupBox for plotting command plots
   QGroupBox *groupBox = new QGroupBox(tr("Command Plots"));
 
   // add dummy series (for now)

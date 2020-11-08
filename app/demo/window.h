@@ -47,7 +47,7 @@ class Window : public QWidget {
   * @brief Create GUI interface with pre-programmed conditions
   * @param params Shared pointer to rover characteristic parameters
   * @param controller Shared pointer to controller object
-  * @param plant Shared pointer to plant object (to apply received commands)
+  * @param plant Shared pointer to plant object (to simulate commands)
   */
   Window(const std::shared_ptr<ackermann::Params>& params,
          const std::shared_ptr<ackermann::Controller>& controller,
@@ -55,6 +55,7 @@ class Window : public QWidget {
 
  public slots:
   // QT Slots; called via signals emitted from button clicks
+
   /**
   * @brief Begin simulation run with current parameters.
   */
@@ -69,11 +70,19 @@ class Window : public QWidget {
   void reset();
 
  private:
+  /**
+  * @brief Initialize QT GUI class.
+  * 
+  * A common execution method called from different constructors.
+  */
   void init();
 
+  /**
+  * @brief Execution loop; spun off as an asynchronous thread.
+  */
   void execute();
 
-  // create group boxes
+  // Group boxes, for logical grouping of GUI sections.
   QGroupBox *createParametersGroup();
   QGroupBox *createSetpointsGroup();
   QGroupBox *createControllerOperationsGroup();
@@ -95,25 +104,24 @@ class Window : public QWidget {
   QLineSeries* speedRightFrontWheelSeries;
   QLineSeries* speedLeftRearWheelSeries;
   QLineSeries* speedRightRearWheelSeries;
-
-  QChart* speedChart;
-
   QLineSeries* headingSetpointSeries;
   QLineSeries* headingGoalSeries;
   QLineSeries* headingAchievedSeries;
-  QChart* headingChart;
-
   QLineSeries* commandThrottleSeries;
   QLineSeries* commandSteeringSeries;
+
+  // QT Charts (each has multiple line series associated.)
+  QChart* speedChart;
+  QChart* headingChart;
   QChart* commandChart;
 
-  // setpoint (e.g. goal) data
+  // setpoint (e.g. goal) data set through UI
   std::atomic<double> speed_setpoint_ {0.0};
   std::atomic<double> heading_setpoint_ {0.0};
   std::atomic<double> initial_speed_ {0.0};
   std::atomic<double> initial_heading_ {0.0};
 
-  // synchronization objects
+  // thread synchronization objects
   std::atomic<bool> stop_ {true};
   std::thread thread_handle_;
 
