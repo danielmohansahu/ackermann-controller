@@ -21,8 +21,7 @@
 namespace ackermann {
 
 Model::Model(const std::shared_ptr<const Params>& params)
-  : params_(params) {
-  this->limits_ = std::make_unique<Limits>(params);
+  : params_(params), limits_(std::make_unique<Limits>(params)) {
   this->reset();
 }
 

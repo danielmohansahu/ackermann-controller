@@ -9,14 +9,12 @@ namespace fake {
 
 Plant::Plant(const PlantOptions& opts, const std::shared_ptr<const
   ackermann::Params>& params)
-: opts_(opts), params_(params) {
+: opts_(opts), params_(params),
+  limits_(std::make_unique<ackermann::Limits>(params)) {
   this->speed_ = 0.0;
   this->heading_ = 0.0;
-  this->opts_ = opts;
   // this->dist_.mean = opts.noise_mean;
   // this->dist_.stddev = opts.noise_stddev;
-  this->params_ = params;
-  this->limits_ = std::make_unique<ackermann::Limits>(params);
 }
 
 void Plant::reset() {
