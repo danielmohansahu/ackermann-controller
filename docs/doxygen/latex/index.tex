@@ -1,0 +1,156 @@
+\href{https://travis-ci.org/danielmohansahu/ackermann-controller}{\tt } \href{https://coveralls.io/github/danielmohansahu/ackermann-controller?branch=master}{\tt } 
+
+This is an implementation of an \href{https://en.wikipedia.org/wiki/Ackermann_steering_geometry}{\tt Ackermann Steering Geometry} controller. The user is able to input a desired heading and speed in the global reference frame which the controller will drive the robot model towards, based upon rover parameters and limitations.
+
+To calculate the Ackermann steering angles for a four wheeled vehicles, a simplified model with a single front and rear wheel is assumed. The steering angle of this simulated single steering wheel is used to calculate the updated heading of the rover along with the vehicle wheel base. For an Ackermann steering system, the two actual steering wheels are perpindicular to the radius of the turning circle traced by each wheel; the difference in angles for each of these wheels can be calculated based on the track of the rover. The different turning circles and the vehicle speed are used to calculate individual wheel speeds.
+
+This project requires a C++11 enabled compiler and {\ttfamily cmake}. In addition, we use Q\+T5 for visualization of our demo.
+
+Q\+T5 (and Qt\+Charts) can be installed via the following command on Ubuntu 18.\+04\+:
+
+
+\begin{DoxyCode}
+sudo apt-get install qt5-default libqt5charts5-dev
+\end{DoxyCode}
+
+
+To build the package on Ubuntu 18.\+04, run the following from a terminal.
+
+
+\begin{DoxyCode}
+git clone https://github.com/danielmohansahu/ackermann-controller
+cd ackermann-controller
+mkdir build && cd build
+cmake .. && make
+\end{DoxyCode}
+ A script to launch this is included in Bash\+Scripts.
+
+Assuming the build succeeded, you can then run the demo code.
+
+
+\begin{DoxyCode}
+# from your build directory (e.g. ackermann-controller/build/)
+./app/demo
+\end{DoxyCode}
+
+
+A script to launch this is included in Bash\+Scripts.
+
+You should see something similar to the following, which allows you to evaluate the system and play with parameters against a mock Plant.
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Empty }&\textbf{ Running  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Empty }&\textbf{ Running  }\\\cline{1-2}
+\endhead
+$<$img src=\char`\"{}docs/media/empty\+\_\+demo.\+png\char`\"{} alt=\char`\"{}\char`\"{}Empty Demo\char`\"{}\char`\"{}/$>$ &$<$img src=\char`\"{}docs/media/running\+\_\+demo.\+png\char`\"{} alt=\char`\"{}\char`\"{}Running Demo\char`\"{}\char`\"{}/$>$ \\\cline{1-2}
+\end{longtabu}
+
+
+Unit and System tests are run during Continuous integration, but you can run them manually from the command line as well\+:
+
+
+\begin{DoxyCode}
+# from your build directory (e.g. ackermann-controller/build/)
+./test/cpp-test
+\end{DoxyCode}
+ A script to launch this is included in Bash\+Scripts.
+
+To generate C\+P\+P\+Check and C\+P\+P\+Lint code analysis\+:
+
+
+\begin{DoxyCode}
+# from the BashScripts directory
+chmod +x check\_cppcheck.sh check\_cpplint.sh
+./check\_cppcheck.sh
+./check\_cpplint.sh
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item Spencer Elyard, {\itshape T\+O\+DO\+: Complete personnel blurb.}
+\item Santosh Kesani, {\itshape T\+O\+DO\+: Complete personnel blurb.}
+\item Daniel Sahu, a roboticist working on his Masters at U\+MD.
+\end{DoxyItemize}
+
+This project uses the M\+IT License as described in \mbox{[}the license file\mbox{]}(L\+I\+C\+E\+N\+SE).
+
+Details on the status of our Agile Iterative Process (A\+IP) \href{https://docs.google.com/spreadsheets/d/1nx85sowA3IRX-usU_M1hhwHplOLXMWdkvec2w3Roi5Q/edit?usp=sharing}{\tt can be found here}
+
+Sprint planning notes and reviews \href{https://docs.google.com/document/d/1MEoRXtJXdUWnkTbJmcDfJYct3i6_LEJ-TULpP2h_qYA/edit?usp=sharing}{\tt can be found here}.
+
+{\bfseries T\+O\+DO\+: Annote bugs and issues when uncovered.}
+
+To generate Doxygen documentation\+:
+
+
+\begin{DoxyCode}
+# from your install directory (e.g. ackermann-controller/)
+doxygen Doxyfile
+\end{DoxyCode}
+
+
+To access Doxygen documentation, navigate to\+: 
+\begin{DoxyCode}
+doxygen/html/index.html
+\end{DoxyCode}
+
+
+The controller enforces the various limitations of the rover\+:
+
+
+\begin{DoxyItemize}
+\item Physical Parameters
+\begin{DoxyItemize}
+\item Robot wheel base (length between front and rear wheels). (0.\+45 meters for demo)
+\item Maximum allowable steering angle (absolute value) (0.\+785 radians for demo)
+\end{DoxyItemize}
+\item Dynamic Limitations
+\begin{DoxyItemize}
+\item Maximum (forward) and minimum (reverse) speed limitations (10 m/s and 0 m/s for demo).
+\item Maximum (forward) and minimum (reverse) acceleration limitations (+/-\/ 5 m/s$^\wedge$2 for demo).
+\item Maximum (right) and minimum (left) angular velocity limitations (T\+BD)
+\item Maximum (right) and minimum (left) angular acecleration limitations (T\+BD)
+\end{DoxyItemize}
+\item Controller Parameters
+\begin{DoxyItemize}
+\item Frequency (100hz for demo)
+\item P\+ID controller parameters for speed control
+\item P\+ID controller parameters for heading control
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+The controller will accept the following inputs\+:
+
+
+\begin{DoxyItemize}
+\item Desired heading (global coordinate frame) and speed
+\item Updates to current speed and heading from rover model
+\end{DoxyItemize}
+
+The controller will provide the following outputs\+:
+
+
+\begin{DoxyItemize}
+\item Throttle and Steering Commands, limited as appropriate by the established limitations from the rover model
+\item Current calculated speed and heading
+\item Current desired heading (global coordinate frame) and speed
+\end{DoxyItemize}
+
+An overview of the classes used and their dependencies is shown in the following U\+ML diagram\+:
+
+
+
+An example sequence diagram for the full program is shown in the following U\+ML diagram\+:
+
+
+
+An example activity diagram for the controller methodology is shown in the following U\+ML diagram\+:
+
+ 

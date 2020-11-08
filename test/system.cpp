@@ -42,14 +42,13 @@ class AckermannControllerTest : public ::testing::Test {
     }
 
     // construct our plant
-    plant_ = std::make_unique<fake::Plant>(*opts_,params_);
+    plant_ = std::make_unique<fake::Plant>(*opts_, params_);
 
     // construct the controller
     controller_ = std::make_unique<ackermann::Controller>(params_);
 
     // construct our limits class
     limits_ = std::make_unique<ackermann::Limits>(params_);
-
   }
 
   // our base class members (we use pointers to avoid default construction)
@@ -87,8 +86,12 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
   // initialize clock
   auto start = steady_clock::now();
 
+  // success count (makes sure we don't just get lucky)
+  unsigned int success_count = 0;
+
   // loop until we've ran out of time
-  while (duration_cast<seconds>(steady_clock::now() - start).count() < max_duration) {
+  while (duration_cast<seconds>(steady_clock::now() - start).count()
+         < max_duration) {
     // calculate latest command
     double throttle, steering;
     c->getCommand(throttle, steering);
@@ -102,8 +105,13 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
     // check whether or not we're within desired tolerance
     // (and can report success)
     if (std::abs(current_speed - desired_speed) < speed_tolerance
-        || std::abs(current_heading - desired_heading) < heading_tolerance)
-      return true;
+        || std::abs(current_heading - desired_heading) < heading_tolerance) {
+      if (++success_count >= CONTROL_FREQUENCY)
+        return true;
+    } else {
+      // reset success count
+      success_count = 0;
+    }
 
     // check if we should break (stopped running, etc.)
     if (!c->isRunning())

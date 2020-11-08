@@ -1,0 +1,183 @@
+\hypertarget{classackermann_1_1_limits}{}\section{ackermann\+:\+:Limits Class Reference}
+\label{classackermann_1_1_limits}\index{ackermann\+::\+Limits@{ackermann\+::\+Limits}}
+
+
+Class used to apply known limits to a given desired control signal.  
+
+
+
+
+{\ttfamily \#include $<$Limits.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classackermann_1_1_limits_ab33a83c243c38ae9f046c77d49a6de58}{Limits} (const std\+::shared\+\_\+ptr$<$ const \hyperlink{structackermann_1_1_params}{Params} $>$ \&params)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classackermann_1_1_limits_a1fcf66ef8f8161d38e3d77c1e5acfb92}{limit} (const double current\+\_\+speed, const double current\+\_\+steering, const double current\+\_\+steering\+\_\+vel, double \&desired\+\_\+throttle, double \&desired\+\_\+steering, double \&desired\+\_\+steering\+\_\+vel, double dt) const
+\begin{DoxyCompactList}\small\item\em Apply known limits to the given controller command. \end{DoxyCompactList}\item 
+double \hyperlink{classackermann_1_1_limits_a0e75c61fc7d5d90c6f64af78d8cf76ff}{throttle\+To\+Speed} (double throttle) const
+\begin{DoxyCompactList}\small\item\em Use Parameters structure to convert throttle to speed as a function of maximum allowable speed. \end{DoxyCompactList}\item 
+double \hyperlink{classackermann_1_1_limits_abb347d9d57d22dfe47ef704ea6d10d7d}{speed\+To\+Throttle} (double speed) const
+\begin{DoxyCompactList}\small\item\em Use Parameters structure to convert speed to throttle as a function of maximum allowable speed. \end{DoxyCompactList}\item 
+double \hyperlink{classackermann_1_1_limits_a7fb25c558450b31945d1b13db4573a08}{shortest\+Arc\+To\+Turn} (double current\+\_\+heading, double desired\+\_\+heading) const
+\begin{DoxyCompactList}\small\item\em Calculate the direction to minimize turning angle (eg, don\textquotesingle{}t turn 270deg right if you can turn 90deg left. \end{DoxyCompactList}\item 
+double \hyperlink{classackermann_1_1_limits_a18e0ace6fde91bf5b641197dafbd5f57}{bound\+Heading} (const double heading) const
+\begin{DoxyCompactList}\small\item\em Bound heading to \mbox{[}-\/pi,pi) range; prevents odd behavior. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class used to apply known limits to a given desired control signal. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classackermann_1_1_limits_ab33a83c243c38ae9f046c77d49a6de58}\label{classackermann_1_1_limits_ab33a83c243c38ae9f046c77d49a6de58}} 
+\index{ackermann\+::\+Limits@{ackermann\+::\+Limits}!Limits@{Limits}}
+\index{Limits@{Limits}!ackermann\+::\+Limits@{ackermann\+::\+Limits}}
+\subsubsection{\texorpdfstring{Limits()}{Limits()}}
+{\footnotesize\ttfamily ackermann\+::\+Limits\+::\+Limits (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ const \hyperlink{structackermann_1_1_params}{Params} $>$ \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Shared pointer detailing rover characteristic parameters \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classackermann_1_1_limits_a18e0ace6fde91bf5b641197dafbd5f57}\label{classackermann_1_1_limits_a18e0ace6fde91bf5b641197dafbd5f57}} 
+\index{ackermann\+::\+Limits@{ackermann\+::\+Limits}!bound\+Heading@{bound\+Heading}}
+\index{bound\+Heading@{bound\+Heading}!ackermann\+::\+Limits@{ackermann\+::\+Limits}}
+\subsubsection{\texorpdfstring{bound\+Heading()}{boundHeading()}}
+{\footnotesize\ttfamily double ackermann\+::\+Limits\+::bound\+Heading (\begin{DoxyParamCaption}\item[{const double}]{heading }\end{DoxyParamCaption}) const}
+
+
+
+Bound heading to \mbox{[}-\/pi,pi) range; prevents odd behavior. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+\_\+heading} & Current heading in radians \\
+\hline
+{\em desired\+\_\+heading} & Desired heading in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Bound heading in radians 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classackermann_1_1_limits_a1fcf66ef8f8161d38e3d77c1e5acfb92}\label{classackermann_1_1_limits_a1fcf66ef8f8161d38e3d77c1e5acfb92}} 
+\index{ackermann\+::\+Limits@{ackermann\+::\+Limits}!limit@{limit}}
+\index{limit@{limit}!ackermann\+::\+Limits@{ackermann\+::\+Limits}}
+\subsubsection{\texorpdfstring{limit()}{limit()}}
+{\footnotesize\ttfamily void ackermann\+::\+Limits\+::limit (\begin{DoxyParamCaption}\item[{const double}]{current\+\_\+speed,  }\item[{const double}]{current\+\_\+steering,  }\item[{const double}]{current\+\_\+steering\+\_\+vel,  }\item[{double \&}]{desired\+\_\+throttle,  }\item[{double \&}]{desired\+\_\+steering,  }\item[{double \&}]{desired\+\_\+steering\+\_\+vel,  }\item[{double}]{dt }\end{DoxyParamCaption}) const}
+
+
+
+Apply known limits to the given controller command. 
+
+Apply known kinematic constraints (velocity, acceleration, angular velocity, angular acceleration) to the given potential commands, and return the limited version. (Return paramaters noted)
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+\_\+speed} & Current speed in (m/s). \\
+\hline
+{\em current\+\_\+steering} & Current commanded steering angle (rad). \\
+\hline
+{\em desired\+\_\+thottle} & (Return Parameter) Desired throttle (generally \mbox{[}0,1\mbox{]}). \\
+\hline
+{\em desired\+\_\+steering} & (Return Parameter) Desired steering angle (rad). \\
+\hline
+{\em desired\+\_\+steering\+\_\+vel} & (Return parameter) Desired steering velocity (rad/s). \\
+\hline
+{\em dt} & Fixed time step between commands (s). \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{classackermann_1_1_limits_a1fcf66ef8f8161d38e3d77c1e5acfb92_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classackermann_1_1_limits_a7fb25c558450b31945d1b13db4573a08}\label{classackermann_1_1_limits_a7fb25c558450b31945d1b13db4573a08}} 
+\index{ackermann\+::\+Limits@{ackermann\+::\+Limits}!shortest\+Arc\+To\+Turn@{shortest\+Arc\+To\+Turn}}
+\index{shortest\+Arc\+To\+Turn@{shortest\+Arc\+To\+Turn}!ackermann\+::\+Limits@{ackermann\+::\+Limits}}
+\subsubsection{\texorpdfstring{shortest\+Arc\+To\+Turn()}{shortestArcToTurn()}}
+{\footnotesize\ttfamily double ackermann\+::\+Limits\+::shortest\+Arc\+To\+Turn (\begin{DoxyParamCaption}\item[{double}]{current\+\_\+heading,  }\item[{double}]{desired\+\_\+heading }\end{DoxyParamCaption}) const}
+
+
+
+Calculate the direction to minimize turning angle (eg, don\textquotesingle{}t turn 270deg right if you can turn 90deg left. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+\_\+heading} & Current heading in radians \\
+\hline
+{\em desired\+\_\+heading} & Desired heading in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Angle and direction (+/-\/) to turn (rad) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classackermann_1_1_limits_abb347d9d57d22dfe47ef704ea6d10d7d}\label{classackermann_1_1_limits_abb347d9d57d22dfe47ef704ea6d10d7d}} 
+\index{ackermann\+::\+Limits@{ackermann\+::\+Limits}!speed\+To\+Throttle@{speed\+To\+Throttle}}
+\index{speed\+To\+Throttle@{speed\+To\+Throttle}!ackermann\+::\+Limits@{ackermann\+::\+Limits}}
+\subsubsection{\texorpdfstring{speed\+To\+Throttle()}{speedToThrottle()}}
+{\footnotesize\ttfamily double ackermann\+::\+Limits\+::speed\+To\+Throttle (\begin{DoxyParamCaption}\item[{double}]{speed }\end{DoxyParamCaption}) const}
+
+
+
+Use Parameters structure to convert speed to throttle as a function of maximum allowable speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Speed in range of \mbox{[}0,max\+\_\+speed\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Throttle position estimate from speed (linear relationship) \mbox{[}0,1\mbox{]} 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{classackermann_1_1_limits_abb347d9d57d22dfe47ef704ea6d10d7d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classackermann_1_1_limits_a0e75c61fc7d5d90c6f64af78d8cf76ff}\label{classackermann_1_1_limits_a0e75c61fc7d5d90c6f64af78d8cf76ff}} 
+\index{ackermann\+::\+Limits@{ackermann\+::\+Limits}!throttle\+To\+Speed@{throttle\+To\+Speed}}
+\index{throttle\+To\+Speed@{throttle\+To\+Speed}!ackermann\+::\+Limits@{ackermann\+::\+Limits}}
+\subsubsection{\texorpdfstring{throttle\+To\+Speed()}{throttleToSpeed()}}
+{\footnotesize\ttfamily double ackermann\+::\+Limits\+::throttle\+To\+Speed (\begin{DoxyParamCaption}\item[{double}]{throttle }\end{DoxyParamCaption}) const}
+
+
+
+Use Parameters structure to convert throttle to speed as a function of maximum allowable speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em throttle} & Throttle setting in range of generally \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Speed based on throttle input (linear relationship) (m/s) 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{classackermann_1_1_limits_a0e75c61fc7d5d90c6f64af78d8cf76ff_icgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{_limits_8hpp}{Limits.\+hpp}\item 
+app/\hyperlink{_limits_8cpp}{Limits.\+cpp}\end{DoxyCompactItemize}

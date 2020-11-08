@@ -58,20 +58,10 @@ struct PlantOptions {
   * @param wheel_base Distance between front and rear axles (m)
   * @param max_steering_angle Maximum steering angle (rad)
   */
-  PlantOptions(double wheel_base_, double max_steering_angle_)
+  PlantOptions(double wheel_base_,
+              double max_steering_angle_)
     : wheel_base(wheel_base_),
       max_steering_angle(max_steering_angle_) {
-  }
-
-  /**
-  * @brief Print out the current set of state variables
-  */
-  void print() {
-    std::cout << "PlantOptions: " << std::endl;
-    std::cout << "\twheel_base: " << wheel_base << std::endl;
-    std::cout << "\tmax_steering_angle: " << max_steering_angle << std::endl;
-    std::cout << "\tnoise_mean: " << noise_mean << std::endl;
-    std::cout << "\tnoise_stddev: " << noise_stddev << std::endl;
   }
 };
 
@@ -89,7 +79,8 @@ class Plant {
     * @param opts Plant specifications (wheel base, max steering)
     * @param params Shared pointer; model parameters.
     */
-  explicit Plant(const PlantOptions& opts, const std::shared_ptr<const ackermann::Params>& params);
+  explicit Plant(const PlantOptions& opts,
+     const std::shared_ptr<const ackermann::Params>& params);
 
   /**
   * @brief Reset all state variables to their defaults.
@@ -127,20 +118,30 @@ class Plant {
   void command(const double throttle, const double steering, const double dt);
 
  private:
-  // state variables
+   /**
+   * @brief speed variable
+   */
   double speed_;
+  /**
+  * @brief heading variable
+  */
   double heading_;
 
-  // struct of our system options
+  /**
+  * @brief struct of our system options
+  */
   PlantOptions opts_;
 
   /**
-  * @brief A copy of our configuration parameters. */
+  * @brief A copy of our configuration parameters.
+  */
   std::shared_ptr<const ackermann::Params> params_;
 
-  // random noise generation
+  /**
+  * @brief random noise generation
+  */
   std::default_random_engine generator_;
-  //std::normal_distribution<double> dist_;
+  std::normal_distribution<double> dist_;
 
   /**
   * @brief Object used to apply kinematic constraints to
@@ -149,4 +150,4 @@ class Plant {
   std::unique_ptr<ackermann::Limits> limits_;
 };
 
-} // namespace fake
+}  // namespace fake

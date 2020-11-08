@@ -1,0 +1,6 @@
+<map id="include/Controller.hpp" name="include/Controller.hpp">
+<area shape="rect" id="node7" href="$_params_8hpp.html" title="Parameters used in the Ackermann controller system. " alt="" coords="207,229,299,256"/>
+<area shape="rect" id="node9" href="$_model_8hpp.html" title="Class declaration for an Ackermann vehicle model. " alt="" coords="233,80,316,107"/>
+<area shape="rect" id="node10" href="$_limits_8hpp.html" title="Class declaration for Limits class. " alt="" coords="397,155,480,181"/>
+<area shape="rect" id="node11" href="$_p_i_d_8hpp.html" title="Class declaration for a PID controller. " alt="" coords="302,155,373,181"/>
+</map>

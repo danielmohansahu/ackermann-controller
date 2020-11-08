@@ -1,13 +1,12 @@
-/* @file Limits.cpp
- *
+/**
+*  @file Limits.cpp
+*
  * @author Spencer Elyard
  * @author Daniel M. Sahu
  * @author Santosh Kesani
  *
  * @copyright [2020]
  */
-
-// @TODO Currently STUB implementation; needs to be filled
 
 #include <Limits.hpp>
 #include <cmath>
@@ -20,49 +19,56 @@ Limits::Limits(const std::shared_ptr<const Params>& params)
 
 double Limits::throttleToSpeed(double throttle) const {
   double speed_calc;
-  if (throttle > params_->throttle_max) {throttle = params_->throttle_max;}
-  if (throttle < params_->throttle_min) {throttle = params_->throttle_min;}
+  if (throttle > params_->throttle_max)
+    throttle = params_->throttle_max;
+  if (throttle < params_->throttle_min)
+    throttle = params_->throttle_min;
 
-  if (throttle <= 0) {
+  if (throttle <= 0)
     speed_calc = 0;
-  }  else {
+  else
     speed_calc = throttle * params_->velocity_max;
-  }
+
   return speed_calc;
 }
 
 double Limits::speedToThrottle(double speed) const {
   double throttle_calc;
 
-  if (speed > params_->velocity_max) {speed = params_->velocity_max;}
-  if (speed < params_->velocity_min) {speed = params_->velocity_min;}
+  if (speed > params_->velocity_max)
+    speed = params_->velocity_max;
+  if (speed < params_->velocity_min)
+    speed = params_->velocity_min;
 
-  if (speed <= 0) {
+  if (speed <= 0)
     throttle_calc = 0;
-  }  else {
+  else
     throttle_calc = speed / params_->velocity_max;
-  }
   return throttle_calc;
 }
 
-double Limits::shortestArcToTurn(double current_heading, double desired_heading) const {
+double Limits::shortestArcToTurn(double current_heading,
+                                 double desired_heading) const {
   double heading_command = (desired_heading - current_heading);
-  if (heading_command > M_PI) {heading_command -= 2*M_PI;}
-  if (heading_command < -M_PI) {heading_command += 2*M_PI;}
+  if (heading_command > M_PI)
+    heading_command -= 2*M_PI;
+  if (heading_command < -M_PI)
+    heading_command += 2*M_PI;
   return heading_command;
 }
 
 double Limits::boundHeading(const double heading) const {
   double temp_heading = heading;
 
-  if (temp_heading < -M_PI) {
-    while (temp_heading < -M_PI) {temp_heading += 2*M_PI;}
-  }
-  if (temp_heading >= M_PI) {
-    while (temp_heading > M_PI) {temp_heading -= 2*M_PI;}
-  }
-  return temp_heading;
+  if (temp_heading < -M_PI)
+    while (temp_heading < -M_PI)
+      temp_heading += 2*M_PI;
 
+  if (temp_heading >= M_PI)
+    while (temp_heading > M_PI)
+      temp_heading -= 2*M_PI;
+
+  return temp_heading;
 }
 
 void Limits::limit(const double current_speed,
@@ -72,11 +78,13 @@ void Limits::limit(const double current_speed,
                    double& desired_steering,
                    double& desired_steering_vel,
                    double dt) const {
-
     // BEGIN THROTTLE LIMITATION SECTION
     // limit current_throttle to [min,max]
-    if (desired_throttle > params_->throttle_max) {desired_throttle = params_->throttle_max;}
-    if (desired_throttle < params_->throttle_min) {desired_throttle = params_->throttle_min;}
+    if (desired_throttle > params_->throttle_max)
+      desired_throttle = params_->throttle_max;
+    if (desired_throttle < params_->throttle_min)
+      desired_throttle = params_->throttle_min;
+
     // scale throttle to velocity commanded
     double new_velocity = throttleToSpeed(desired_throttle);
     if (new_velocity > params_->velocity_max) {
@@ -104,7 +112,6 @@ void Limits::limit(const double current_speed,
     // END THROTTLE LIMITATION SECTION
 
     // BEGIN STEERING LIMITATION SECTION
-
     // limit heading my max angle
     if (desired_steering > params_->max_steering_angle) {
       desired_steering = params_->max_steering_angle;
@@ -129,15 +136,17 @@ void Limits::limit(const double current_speed,
     if (steering_accel > params_->angular_acceleration_max) {
       steering_accel = params_->angular_acceleration_max;
       desired_steering_vel = current_steering_vel + steering_accel*dt;
-      desired_steering = current_steering + (current_steering_vel*dt)
-        + .5*steering_accel*dt*dt;
+      desired_steering = current_steering
+                         + (current_steering_vel*dt)
+                         + .5*steering_accel*dt*dt;
     }
     if (steering_accel < params_->angular_acceleration_min) {
       steering_accel = params_->angular_acceleration_min;
       desired_steering_vel = current_steering_vel + steering_accel*dt;
-      desired_steering = current_steering + (current_steering_vel*dt)
-        + .5*steering_accel*dt*dt;
+      desired_steering = current_steering
+                         + (current_steering_vel*dt)
+                         + .5*steering_accel*dt*dt;
     }
 }
 
-} // namespace ackermann
+}  // namespace ackermann

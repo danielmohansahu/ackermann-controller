@@ -1,0 +1,29 @@
+Returning CPPLint check, level 4 and 5 errors only.
+.././app/demo/window.h:22:  <thread> is an unapproved C++11 header.  [build/c++11] [5]
+.././app/demo/window.h:23:  <chrono> is an unapproved C++11 header.  [build/c++11] [5]
+.././include/Controller.hpp:16:  <thread> is an unapproved C++11 header.  [build/c++11] [5]
+.././include/Controller.hpp:17:  <chrono> is an unapproved C++11 header.  [build/c++11] [5]
+.././include/fake/plant.h:18:  <thread> is an unapproved C++11 header.  [build/c++11] [5]
+.././include/fake/plant.h:19:  <chrono> is an unapproved C++11 header.  [build/c++11] [5]
+.././test/system.cpp:6:  <chrono> is an unapproved C++11 header.  [build/c++11] [5]
+Done processing .././app/Controller.cpp
+Done processing .././app/Limits.cpp
+Done processing .././app/Model.cpp
+Done processing .././app/PID.cpp
+Done processing .././app/demo.cpp
+Done processing .././app/demo/window.cpp
+Done processing .././app/demo/window.h
+Done processing .././app/fake/plant.cpp
+Done processing .././include/Controller.hpp
+Done processing .././include/Limits.hpp
+Done processing .././include/Model.hpp
+Done processing .././include/PID.hpp
+Done processing .././include/Params.hpp
+Done processing .././include/fake/plant.h
+Done processing .././test/main.cpp
+Done processing .././test/system.cpp
+Done processing .././test/unit/Controller.cpp
+Done processing .././test/unit/Limits.cpp
+Done processing .././test/unit/Model.cpp
+Done processing .././test/unit/PID.cpp
+Total errors found: 7

@@ -1,0 +1,135 @@
+\hypertarget{structackermann_1_1_params}{}\section{ackermann\+:\+:Params Struct Reference}
+\label{structackermann_1_1_params}\index{ackermann\+::\+Params@{ackermann\+::\+Params}}
+
+
+Structure containing rover characteristics and limitations.  
+
+
+
+
+{\ttfamily \#include $<$Params.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a4d036653d2b7f9e6cbfaea12d5dca6f4}\label{structackermann_1_1_params_a4d036653d2b7f9e6cbfaea12d5dca6f4}} 
+{\bfseries Params} (double wheel\+\_\+base\+\_\+, double track\+\_\+width\+\_\+, double max\+\_\+steering\+\_\+angle\+\_\+, double kp\+\_\+speed\+\_\+, double kp\+\_\+heading\+\_\+)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a065f737848871356232ff7092baed140}\label{structackermann_1_1_params_a065f737848871356232ff7092baed140}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a065f737848871356232ff7092baed140}{control\+\_\+frequency} \{100.\+0\}
+\begin{DoxyCompactList}\small\item\em Desired frequency of controller loop. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_ab41d61361183158ea37d6c8577dcad82}\label{structackermann_1_1_params_ab41d61361183158ea37d6c8577dcad82}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_ab41d61361183158ea37d6c8577dcad82}{velocity\+\_\+max} \{10.\+0\}
+\begin{DoxyCompactList}\small\item\em Maximum allowable velocity of rover (m/s). Used with throttle command for speed calculation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_ad6c5babc5a52cf56d57ea664ca5a0c04}\label{structackermann_1_1_params_ad6c5babc5a52cf56d57ea664ca5a0c04}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_ad6c5babc5a52cf56d57ea664ca5a0c04}{velocity\+\_\+min} \{0.\+0\}
+\begin{DoxyCompactList}\small\item\em Minimum allowable velocity of rover (m/s). Backwards driving not yet implemented, set to 0 m/s until implemented.. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a7273215906e350eb609b463398acbfba}\label{structackermann_1_1_params_a7273215906e350eb609b463398acbfba}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a7273215906e350eb609b463398acbfba}{acceleration\+\_\+max} \{50.\+0\}
+\begin{DoxyCompactList}\small\item\em Maximum allowable acceleration of rover (m/s$^\wedge$2) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a9b8d3b799a556afb69f3f8acd0abfa66}\label{structackermann_1_1_params_a9b8d3b799a556afb69f3f8acd0abfa66}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a9b8d3b799a556afb69f3f8acd0abfa66}{acceleration\+\_\+min} \{-\/50.\+0\}
+\begin{DoxyCompactList}\small\item\em Minimum allowable acceleration of rover (e.\+g., braking) (m/s$^\wedge$2) \end{DoxyCompactList}\item 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_aad93f5ef58bf87db04c9e21f3c1067ca}{angular\+\_\+velocity\+\_\+max}
+\begin{DoxyCompactList}\small\item\em Maximum allowable (rightward) angular velocity of steering change (rad/s) \end{DoxyCompactList}\item 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a20071280825a5dfdf0eba12fa45c6886}{angular\+\_\+velocity\+\_\+min}
+\begin{DoxyCompactList}\small\item\em Minimum allowable (leftward) angular velocity of steering change (rad/s) \end{DoxyCompactList}\item 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a69fd058a9c869f1db12b030a99f3141d}{angular\+\_\+acceleration\+\_\+max}
+\begin{DoxyCompactList}\small\item\em Maximum allowable (rightward) angular acceleration of steering change (rad/s$^\wedge$2) \end{DoxyCompactList}\item 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a5baf993ebf740d79eeb1e19e041ceb8e}{angular\+\_\+acceleration\+\_\+min}
+\begin{DoxyCompactList}\small\item\em Minimum allowable (leftward) angular acceleration of steering change (rad/s$^\wedge$2) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a77e9e8355199625173a243b96963a543}\label{structackermann_1_1_params_a77e9e8355199625173a243b96963a543}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a77e9e8355199625173a243b96963a543}{throttle\+\_\+max} \{1.\+0\}
+\begin{DoxyCompactList}\small\item\em Maximum throttle setting -\/ should set to 1.\+0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a105dda9186730914c63f6e39593d0e77}\label{structackermann_1_1_params_a105dda9186730914c63f6e39593d0e77}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a105dda9186730914c63f6e39593d0e77}{throttle\+\_\+min} \{0.\+0\}
+\begin{DoxyCompactList}\small\item\em Minimum throttle setting -\/ should set to 0.\+0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_adcbcf331c428efc01e2be5da332b6e99}\label{structackermann_1_1_params_adcbcf331c428efc01e2be5da332b6e99}} 
+const std\+::shared\+\_\+ptr$<$ \hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params} $>$ \hyperlink{structackermann_1_1_params_adcbcf331c428efc01e2be5da332b6e99}{pid\+\_\+speed}
+\begin{DoxyCompactList}\small\item\em Speed controller \hyperlink{classackermann_1_1_p_i_d}{P\+ID} parameters. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_ab8ef5ea67822f187c7a03f94e20a24d0}\label{structackermann_1_1_params_ab8ef5ea67822f187c7a03f94e20a24d0}} 
+const std\+::shared\+\_\+ptr$<$ \hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params} $>$ \hyperlink{structackermann_1_1_params_ab8ef5ea67822f187c7a03f94e20a24d0}{pid\+\_\+heading}
+\begin{DoxyCompactList}\small\item\em Heading controller \hyperlink{classackermann_1_1_p_i_d}{P\+ID} parameters. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a68ecfa01510e295926dd23b1cfb1d83a}\label{structackermann_1_1_params_a68ecfa01510e295926dd23b1cfb1d83a}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a68ecfa01510e295926dd23b1cfb1d83a}{wheel\+\_\+base}
+\begin{DoxyCompactList}\small\item\em Length between front and rear axles (m) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a429093b21328bce330f930f55c1e3b3c}\label{structackermann_1_1_params_a429093b21328bce330f930f55c1e3b3c}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a429093b21328bce330f930f55c1e3b3c}{track\+\_\+width}
+\begin{DoxyCompactList}\small\item\em Width between left and right tires (m) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structackermann_1_1_params_a7bfb774e679c8e5372ec512a62f5d0ce}\label{structackermann_1_1_params_a7bfb774e679c8e5372ec512a62f5d0ce}} 
+std\+::atomic$<$ double $>$ \hyperlink{structackermann_1_1_params_a7bfb774e679c8e5372ec512a62f5d0ce}{max\+\_\+steering\+\_\+angle}
+\begin{DoxyCompactList}\small\item\em Maximum angle of steering mechanism (rad) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Structure containing rover characteristics and limitations. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structackermann_1_1_params_a69fd058a9c869f1db12b030a99f3141d}\label{structackermann_1_1_params_a69fd058a9c869f1db12b030a99f3141d}} 
+\index{ackermann\+::\+Params@{ackermann\+::\+Params}!angular\+\_\+acceleration\+\_\+max@{angular\+\_\+acceleration\+\_\+max}}
+\index{angular\+\_\+acceleration\+\_\+max@{angular\+\_\+acceleration\+\_\+max}!ackermann\+::\+Params@{ackermann\+::\+Params}}
+\subsubsection{\texorpdfstring{angular\+\_\+acceleration\+\_\+max}{angular\_acceleration\_max}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ ackermann\+::\+Params\+::angular\+\_\+acceleration\+\_\+max}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+\{
+    std::numeric\_limits<double>::max()\}
+\end{DoxyCode}
+
+
+Maximum allowable (rightward) angular acceleration of steering change (rad/s$^\wedge$2) 
+
+\mbox{\Hypertarget{structackermann_1_1_params_a5baf993ebf740d79eeb1e19e041ceb8e}\label{structackermann_1_1_params_a5baf993ebf740d79eeb1e19e041ceb8e}} 
+\index{ackermann\+::\+Params@{ackermann\+::\+Params}!angular\+\_\+acceleration\+\_\+min@{angular\+\_\+acceleration\+\_\+min}}
+\index{angular\+\_\+acceleration\+\_\+min@{angular\+\_\+acceleration\+\_\+min}!ackermann\+::\+Params@{ackermann\+::\+Params}}
+\subsubsection{\texorpdfstring{angular\+\_\+acceleration\+\_\+min}{angular\_acceleration\_min}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ ackermann\+::\+Params\+::angular\+\_\+acceleration\+\_\+min}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+\{
+    std::numeric\_limits<double>::lowest()\}
+\end{DoxyCode}
+
+
+Minimum allowable (leftward) angular acceleration of steering change (rad/s$^\wedge$2) 
+
+\mbox{\Hypertarget{structackermann_1_1_params_aad93f5ef58bf87db04c9e21f3c1067ca}\label{structackermann_1_1_params_aad93f5ef58bf87db04c9e21f3c1067ca}} 
+\index{ackermann\+::\+Params@{ackermann\+::\+Params}!angular\+\_\+velocity\+\_\+max@{angular\+\_\+velocity\+\_\+max}}
+\index{angular\+\_\+velocity\+\_\+max@{angular\+\_\+velocity\+\_\+max}!ackermann\+::\+Params@{ackermann\+::\+Params}}
+\subsubsection{\texorpdfstring{angular\+\_\+velocity\+\_\+max}{angular\_velocity\_max}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ ackermann\+::\+Params\+::angular\+\_\+velocity\+\_\+max}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+\{
+    std::numeric\_limits<double>::max()\}
+\end{DoxyCode}
+
+
+Maximum allowable (rightward) angular velocity of steering change (rad/s) 
+
+\mbox{\Hypertarget{structackermann_1_1_params_a20071280825a5dfdf0eba12fa45c6886}\label{structackermann_1_1_params_a20071280825a5dfdf0eba12fa45c6886}} 
+\index{ackermann\+::\+Params@{ackermann\+::\+Params}!angular\+\_\+velocity\+\_\+min@{angular\+\_\+velocity\+\_\+min}}
+\index{angular\+\_\+velocity\+\_\+min@{angular\+\_\+velocity\+\_\+min}!ackermann\+::\+Params@{ackermann\+::\+Params}}
+\subsubsection{\texorpdfstring{angular\+\_\+velocity\+\_\+min}{angular\_velocity\_min}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ ackermann\+::\+Params\+::angular\+\_\+velocity\+\_\+min}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+\{
+    std::numeric\_limits<double>::lowest()\}
+\end{DoxyCode}
+
+
+Minimum allowable (leftward) angular velocity of steering change (rad/s) 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{_params_8hpp}{Params.\+hpp}\end{DoxyCompactItemize}

@@ -3,12 +3,14 @@
  */
 
 #include <gtest/gtest.h>
-#include "Model.hpp"
-#include "Limits.hpp"
-#include "Model.hpp"
-#include "Params.hpp"
+
 #include <iostream>
 #include <cmath>
+
+#include "Model.hpp"
+#include "Limits.hpp"
+#include "Params.hpp"
+
 
 /* @brief Test Fixture for repeated independent construction of the Model. */
 class AckemannModelTest : public ::testing::Test {
@@ -32,7 +34,6 @@ class AckemannModelTest : public ::testing::Test {
 
 /* @brief Test all setters and Getters. */
 TEST_F(AckemannModelTest, Model_SettersAndGetters) {
-
   // test setting and getting state
   {
     double speed, heading, speed_out, heading_out;
@@ -53,11 +54,11 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
   // test reset
   {
     double speed, heading;
-    model_->getState(speed,heading);
-    EXPECT_NE(speed,0);
-    EXPECT_NE(heading,0);
+    model_->getState(speed, heading);
+    EXPECT_NE(speed, 0);
+    EXPECT_NE(heading, 0);
     model_->reset();
-    model_->getState(speed,heading);
+    model_->getState(speed, heading);
     EXPECT_DOUBLE_EQ(speed, 0);
     EXPECT_DOUBLE_EQ(heading, 0);
   }
@@ -101,7 +102,6 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
 
 /* @brief Test error calculation. */
 TEST_F(AckemannModelTest, Model_Error) {
-
   // test error #1: by default everything should be 0.0
   {
     // set state and goal
@@ -135,7 +135,7 @@ TEST_F(AckemannModelTest, Model_Error) {
     double speed_error, heading_error;
     model_->getError(speed_error, heading_error);
     EXPECT_DOUBLE_EQ(speed_error, -6.0);
-    EXPECT_DOUBLE_EQ(heading_error,-(M_PI - 0.1));
+    EXPECT_DOUBLE_EQ(heading_error, -(M_PI - 0.1));
   }
 
 // test error #3: calculate expected error, opposite direction
@@ -153,7 +153,6 @@ TEST_F(AckemannModelTest, Model_Error) {
 
 /* @brief Test command execution. */
 TEST_F(AckemannModelTest, Model_Command) {
-
   // test error #1: commanding a 0.0 move should set state to 0.0
   {
     // set goal
@@ -166,7 +165,8 @@ TEST_F(AckemannModelTest, Model_Command) {
     EXPECT_DOUBLE_EQ(heading, 0.0);
   }
 
-  // test error #2: commanding a 0.0 move for infinite time should always should set speed to 0.0
+  // test error #2: commanding a 0.0 move for infinite time should always
+  // should set speed to 0.0
   {
     // set goal
     model_->setState(100.0, 0.0);
@@ -178,7 +178,8 @@ TEST_F(AckemannModelTest, Model_Command) {
     EXPECT_DOUBLE_EQ(heading, 0.0);
   }
 
-  // test error #3: commanding a 0.0 move for infinite time should always should set speed to 0.0
+  // test error #3: commanding a 0.0 move for infinite time should always
+  // should set speed to 0.0
   {
     // set goal
     model_->setState(-100.0, 0.0);
@@ -193,7 +194,6 @@ TEST_F(AckemannModelTest, Model_Command) {
 
 /* @brief Test command execution. */
 TEST_F(AckemannModelTest, WheelSpeedCalc) {
-
   // test error #1: zero speed, zero steering
   {
     // set goal
@@ -203,13 +203,12 @@ TEST_F(AckemannModelTest, WheelSpeedCalc) {
     model_->setState(speed_cmd, 0.0);
     model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
 
-    double LF,RF,LR,RR;
-    model_->getWheelLinVel(LF,RF,LR,RR);
-    EXPECT_DOUBLE_EQ(LF,speed_cmd);
-    EXPECT_DOUBLE_EQ(RF,speed_cmd);
-    EXPECT_DOUBLE_EQ(LR,speed_cmd);
-    EXPECT_DOUBLE_EQ(RR,speed_cmd);
-
+    double LF, RF, LR, RR;
+    model_->getWheelLinVel(LF, RF, LR, RR);
+    EXPECT_DOUBLE_EQ(LF, speed_cmd);
+    EXPECT_DOUBLE_EQ(RF, speed_cmd);
+    EXPECT_DOUBLE_EQ(LR, speed_cmd);
+    EXPECT_DOUBLE_EQ(RR, speed_cmd);
   }
 
   // test error #2: positive speed, zero steering
@@ -221,13 +220,12 @@ TEST_F(AckemannModelTest, WheelSpeedCalc) {
     model_->setState(speed_cmd, 0.0);
     model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
 
-    double LF,RF,LR,RR;
-    model_->getWheelLinVel(LF,RF,LR,RR);
-    EXPECT_DOUBLE_EQ(LF,speed_cmd);
-    EXPECT_DOUBLE_EQ(RF,speed_cmd);
-    EXPECT_DOUBLE_EQ(LR,speed_cmd);
-    EXPECT_DOUBLE_EQ(RR,speed_cmd);
-
+    double LF, RF, LR, RR;
+    model_->getWheelLinVel(LF, RF, LR, RR);
+    EXPECT_DOUBLE_EQ(LF, speed_cmd);
+    EXPECT_DOUBLE_EQ(RF, speed_cmd);
+    EXPECT_DOUBLE_EQ(LR, speed_cmd);
+    EXPECT_DOUBLE_EQ(RR, speed_cmd);
   }
 
   // test error #3: positive speed, right turn
@@ -239,13 +237,12 @@ TEST_F(AckemannModelTest, WheelSpeedCalc) {
     model_->setState(speed_cmd, 0.0);
     model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
 
-    double LF,RF,LR,RR;
-    model_->getWheelLinVel(LF,RF,LR,RR);
-    EXPECT_NEAR(RF,2, 1E-10);
-    EXPECT_NEAR(LF,2*std::sqrt(5), 1E-10);
-    EXPECT_NEAR(LR,4, 1E-10);
-    EXPECT_NEAR(RR,0, 1E-10);
-
+    double LF, RF, LR, RR;
+    model_->getWheelLinVel(LF, RF, LR, RR);
+    EXPECT_NEAR(RF, 2, 1E-10);
+    EXPECT_NEAR(LF, 2*std::sqrt(5), 1E-10);
+    EXPECT_NEAR(LR, 4, 1E-10);
+    EXPECT_NEAR(RR, 0, 1E-10);
   }
 
   // test error #3: positive speed, left turn
@@ -257,12 +254,11 @@ TEST_F(AckemannModelTest, WheelSpeedCalc) {
     model_->setState(speed_cmd, 0.0);
     model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
 
-    double LF,RF,LR,RR;
-    model_->getWheelLinVel(LF,RF,LR,RR);
-    EXPECT_NEAR(LF,2, 1E-10);
-    EXPECT_NEAR(RF,2*std::sqrt(5), 1E-10);
-    EXPECT_NEAR(RR,4, 1E-10);
-    EXPECT_NEAR(LR,0, 1E-10);
-
+    double LF, RF, LR, RR;
+    model_->getWheelLinVel(LF, RF, LR, RR);
+    EXPECT_NEAR(LF, 2, 1E-10);
+    EXPECT_NEAR(RF, 2*std::sqrt(5), 1E-10);
+    EXPECT_NEAR(RR, 4, 1E-10);
+    EXPECT_NEAR(LR, 0, 1E-10);
   }
 }
