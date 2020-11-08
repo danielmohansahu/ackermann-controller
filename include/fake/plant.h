@@ -152,7 +152,7 @@ class Plant {
   * @brief random noise generation
   */
   std::default_random_engine generator_;
-  // std::normal_distribution<double> dist_;
+  std::normal_distribution<double> dist_;
 
   /**
   * @brief Object used to apply kinematic constraints to

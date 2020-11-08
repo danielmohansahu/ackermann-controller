@@ -11,11 +11,9 @@ Plant::Plant(const PlantOptions& opts,
              const std::shared_ptr<const ackermann::Params>& params)
   : opts_(opts),
     params_(params),
+    dist_(opts.noise_mean, opts.noise_stddev),
     limits_(std::make_unique<ackermann::Limits>(params)) {
-  this->speed_ = 0.0;
-  this->heading_ = 0.0;
-  // this->dist_.mean = opts.noise_mean;
-  // this->dist_.stddev = opts.noise_stddev;
+  this->reset();
 }
 
 void Plant::reset() {
@@ -39,12 +37,6 @@ void Plant::command(const double throttle,
   // sanity check inputs
   double steering_capped = steering;
   if (std::abs(steering) > opts_.max_steering_angle) {
-    /*
-    std::cout << "Given a commanded steering angle beyond our limit ("
-              << steering << " vs. " << opts_.max_steering_angle << ")"
-              << std::endl; */
-    // if we're debugging, this is a failure
-    // assert(false);
     steering_capped = ((steering > 0) - (steering < 0)) *
                       opts_.max_steering_angle;
   }
@@ -58,9 +50,10 @@ void Plant::command(const double throttle,
   this->heading_ = limits_->boundHeading(this->heading_
                    + ((this->speed_/params_->wheel_base)
                       * tan(steering_capped) * dt));
+
   // add in some noise for good measure
-  // speed_ += dist_(generator_);
-  // heading_ += dist_(generator_);
+  speed_ += dist_(generator_);
+  heading_ += dist_(generator_);
 }
 
 }  // namespace fake
