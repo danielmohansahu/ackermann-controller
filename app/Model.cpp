@@ -11,9 +11,11 @@
  * https://www.xarg.org/book/kinematics/ackerman-steering/
  */
 
-#include <iostream>
 #include <Model.hpp>
+
 #include <math.h>
+
+#include <iostream>
 #include <atomic>
 
 namespace ackermann {

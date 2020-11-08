@@ -1,3 +1,4 @@
+ // Copyright [2020] Elyard/Kesani/Sahu
 #pragma once
 /**
 * @file Limits.hpp
@@ -9,7 +10,7 @@
 * @author Spencer Elyard
 * @author Daniel M. Sahu
 * @author Santosh Kesani
-* @copyright [2020]
+* @copyright Copyright [2020] Elyard/Kesani/Sahu
 */
 
 #include <memory>
@@ -78,7 +79,8 @@ class Limits {
   * @param desired_heading Desired heading in radians
   * @return Angle and direction (+/-) to turn (rad)
   */
-  double shortestArcToTurn(double current_heading, double desired_heading) const;
+  double shortestArcToTurn(double current_heading, double desired_heading)
+  const;
 
   /**
   * @brief Bound heading to [-pi,pi) range; prevents odd behavior.
@@ -95,4 +97,4 @@ class Limits {
   const std::shared_ptr<const Params> params_;
 };
 
-} // namespace ackermann
+}  // namespace ackermann

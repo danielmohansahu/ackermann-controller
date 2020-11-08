@@ -1,3 +1,5 @@
+ // Copyright [2020] Elyard/Kesani/Sahu
+
 #pragma once
 
 /**
@@ -8,8 +10,12 @@
  * @author Daniel M. Sahu
  * @author Sentosh Kesani
  *
- * @copyright [2020]
+ * @copyright Copyright [2020] Elyard/Kesani/Sahu
  */
+
+#include <QWidget>
+#include <QtCharts>
+#include <fake/plant.h>
 
 #include <memory>
 #include <atomic>
@@ -17,12 +23,8 @@
 #include <chrono>
 #include <algorithm>
 
-#include <QWidget>
-#include <QtCharts>
-
 #include <Params.hpp>
 #include <Controller.hpp>
-#include <fake/plant.h>
 
 // some handy visualization variables
 #define TIMESTEP 0.1

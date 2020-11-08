@@ -39,7 +39,7 @@ struct PIDParams {
   * @param ki_ Integral parameter
   * @param kd_ Derivative parameter
   */
-  PIDParams(double kp_ = 0.0, double ki_ = 0.0, double kd_ = 0.0)
+  explicit PIDParams(double kp_ = 0.0, double ki_ = 0.0, double kd_ = 0.0)
     : kp(kp_), ki(ki_), kd(kd_)
   {};
 };
@@ -74,22 +74,26 @@ struct Params {
   * @brief Maximum allowable (rightward) angular velocity of steering
   * change (rad/s)
   */
-  std::atomic<double> angular_velocity_max {std::numeric_limits<double>::max()};
+  std::atomic<double> angular_velocity_max {
+    std::numeric_limits<double>::max()};
   /**
   * @brief Minimum allowable (leftward) angular velocity of steering
   * change (rad/s)
   */
-  std::atomic<double> angular_velocity_min {std::numeric_limits<double>::lowest()};
+  std::atomic<double> angular_velocity_min {
+    std::numeric_limits<double>::lowest()};
   /**
   * @brief Maximum allowable (rightward) angular acceleration of steering
   * change (rad/s^2)
   */
-  std::atomic<double> angular_acceleration_max {std::numeric_limits<double>::max()};
+  std::atomic<double> angular_acceleration_max {
+    std::numeric_limits<double>::max()};
   /**
   * @brief Minimum allowable (leftward) angular acceleration of steering
   * change (rad/s^2)
   */
-  std::atomic<double> angular_acceleration_min {std::numeric_limits<double>::lowest()};
+  std::atomic<double> angular_acceleration_min {
+    std::numeric_limits<double>::lowest()};
   /**
   * @brief Maximum throttle setting - should set to 1.0
   */
@@ -124,7 +128,8 @@ struct Params {
   std::atomic<double> max_steering_angle;
 
   /* @brief Constructor */
-  Params(double wheel_base_, double track_width_, double max_steering_angle_, double kp_speed_, double kp_heading_)
+  Params(double wheel_base_, double track_width_, double max_steering_angle_,
+     double kp_speed_, double kp_heading_)
     : pid_speed(std::make_shared<PIDParams>(kp_speed_)),
       pid_heading(std::make_shared<PIDParams>(kp_heading_)),
       wheel_base(wheel_base_),
@@ -133,4 +138,4 @@ struct Params {
   {}
 };
 
-} // namespace ackermann
+}  // namespace ackermann

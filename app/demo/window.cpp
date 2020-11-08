@@ -1,8 +1,9 @@
-/** @file window.cpp
- * @copyright [2020]
+/**
+* @file window.cpp
+ * @copyright Copyright [2020] Elyard/Kesani/Sahu
  */
 
-#include "window.h"
+#include "demo/window.h"
 
 #include <math.h>
 

@@ -13,7 +13,6 @@
 
 namespace ackermann {
 
-using namespace std::chrono_literals;
 using std::chrono::steady_clock;
 using std::chrono::duration;
 

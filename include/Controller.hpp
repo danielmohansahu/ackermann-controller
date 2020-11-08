@@ -175,4 +175,4 @@ class Controller {
   std::atomic<bool> cancel_ {false};
 };
 
-} // namespace ackermann
+}  // namespace ackermann

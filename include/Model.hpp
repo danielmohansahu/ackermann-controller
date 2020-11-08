@@ -143,7 +143,7 @@ class Model {
   */
   std::atomic<double> current_steering_vel_ {0.0};
 
-  //use for setting goal
+  // use for setting goal
   /**
   * @brief Desired speed for rover.
   */
@@ -153,7 +153,7 @@ class Model {
   */
   std::atomic<double> desired_heading_ {0.0};
 
-  //current states
+  // current states
   /**
   * @brief Current speed for rover.
   */
@@ -162,8 +162,5 @@ class Model {
   * @brief Current heading for rover.
   */
   std::atomic<double> current_heading_ {0.0};
-
-
 };
-
-} // namespace ackermann
+}  // namespace ackermann

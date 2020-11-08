@@ -42,14 +42,13 @@ class AckermannControllerTest : public ::testing::Test {
     }
 
     // construct our plant
-    plant_ = std::make_unique<fake::Plant>(*opts_,params_);
+    plant_ = std::make_unique<fake::Plant>(*opts_, params_);
 
     // construct the controller
     controller_ = std::make_unique<ackermann::Controller>(params_);
 
     // construct our limits class
     limits_ = std::make_unique<ackermann::Limits>(params_);
-
   }
 
   // our base class members (we use pointers to avoid default construction)
@@ -88,7 +87,8 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
   auto start = steady_clock::now();
 
   // loop until we've ran out of time
-  while (duration_cast<seconds>(steady_clock::now() - start).count() < max_duration) {
+  while (duration_cast<seconds>(steady_clock::now() - start).count() <
+    max_duration) {
     // calculate latest command
     double throttle, steering;
     c->getCommand(throttle, steering);

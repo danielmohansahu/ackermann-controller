@@ -4,11 +4,11 @@
 
 #include <QApplication>
 
+#include <fake/plant.h>
 #include <Controller.hpp>
 #include <Params.hpp>
-#include <fake/plant.h>
-
 #include "demo/window.h"
+
 
 int main(int argc, char *argv[]) {
   // instantiate shared controller parameters instance
