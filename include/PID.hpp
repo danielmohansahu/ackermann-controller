@@ -67,11 +67,11 @@ class PID {
   // @brief Integral Error
   double integral_error_;
 
-  // @brief Output Maximum Limit (For PID windup)
-  double out_maxLimit_;
-
   //@brief Output Minimum Limit (For PID windup)
   double out_minLimit_;
+
+  // @brief Output Maximum Limit (For PID windup)
+  double out_maxLimit_;
 };
 
 } // namespace ackermann

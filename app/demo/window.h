@@ -90,6 +90,11 @@ class Window : public QWidget
   QLineSeries* speedSetpointSeries;
   QLineSeries* speedGoalSeries;
   QLineSeries* speedAchievedSeries;
+  QLineSeries* speedLeftFrontWheelSeries;
+  QLineSeries* speedRightFrontWheelSeries;
+  QLineSeries* speedLeftRearWheelSeries;
+  QLineSeries* speedRightRearWheelSeries;
+  
   QChart* speedChart;
 
   QLineSeries* headingSetpointSeries;

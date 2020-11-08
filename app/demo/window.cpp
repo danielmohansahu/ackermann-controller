@@ -88,10 +88,17 @@ void Window::reset()
     // also reset our line series and clear our chart view
     speedSetpointSeries->clear();
     speedAchievedSeries->clear();
+    speedGoalSeries->clear();
+    speedLeftFrontWheelSeries->clear();
+    speedRightFrontWheelSeries->clear();
+    speedLeftRearWheelSeries->clear();
+    speedRightRearWheelSeries->clear();
     headingSetpointSeries->clear();
     headingAchievedSeries->clear();
+    headingGoalSeries->clear();
     commandThrottleSeries->clear();
     commandSteeringSeries->clear();
+
     speedChart->createDefaultAxes();
     headingChart->createDefaultAxes();
     commandChart->createDefaultAxes();
@@ -132,6 +139,10 @@ void Window::execute()
     double throttle, steering;
     controller_->getCommand(throttle, steering);
 
+    // get the latest wheel speeds
+    double left_front, right_front, left_rear, right_rear;
+    controller_->getWheelLinVel(left_front, right_front, left_rear, right_rear);
+
     // apply the command to the plant
     plant_->command(throttle, steering, TIMESTEP);
 
@@ -139,6 +150,10 @@ void Window::execute()
     speedSetpointSeries->append(time, speed_setpoint_);
     speedGoalSeries->append(time, target_speed);
     speedAchievedSeries->append(time, current_speed);
+    speedLeftFrontWheelSeries->append(time, left_front);
+    speedRightFrontWheelSeries->append(time, right_front);
+    speedLeftRearWheelSeries->append(time, left_rear);
+    speedRightRearWheelSeries->append(time, right_rear);
     headingSetpointSeries->append(time, heading_setpoint_);
     headingGoalSeries->append(time, target_heading);
     headingAchievedSeries->append(time, current_heading);
@@ -152,8 +167,8 @@ void Window::execute()
     commandChart->axisX()->setRange(x_min, time);
 
     // update the Y ranges
-    speed_min = std::min({speed_min, static_cast<double>(speed_setpoint_), target_speed, current_speed});
-    speed_max = std::max({speed_max, static_cast<double>(speed_setpoint_), target_speed, current_speed});
+    speed_min = std::min({speed_min, static_cast<double>(speed_setpoint_), target_speed, current_speed, left_front, right_front, left_rear, right_rear});
+    speed_max = std::max({speed_max, static_cast<double>(speed_setpoint_), target_speed, current_speed, left_front, right_front, left_rear, right_rear});
     heading_min = std::min({heading_min, static_cast<double>(heading_setpoint_), target_heading, current_heading});
     heading_max = std::max({heading_max, static_cast<double>(heading_setpoint_), target_heading, current_heading});
     command_min = std::min({command_min, throttle, steering});
@@ -174,7 +189,7 @@ void Window::execute()
 
 QGroupBox *Window::createParametersGroup()
 {
-  QGroupBox *groupBox = new QGroupBox(tr("Contoller Parameters"));
+  QGroupBox *groupBox = new QGroupBox(tr("Controller Parameters"));
 
   // controller frequency
   QLabel *controlFrequencyLabel = new QLabel(tr("Desired controller loop rate:"));
@@ -183,6 +198,7 @@ QGroupBox *Window::createParametersGroup()
   controlFrequency->setMaximum(params_->control_frequency * 10);
   controlFrequency->setValue(params_->control_frequency);
   controlFrequency->setSuffix(tr(" (hz)"));
+  controlFrequency->setSingleStep(10.0);
 
   connect(controlFrequency, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->control_frequency = new_val;});
 
@@ -191,8 +207,18 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *wheelBase = new QDoubleSpinBox();
   wheelBase->setValue(params_->wheel_base);
   wheelBase->setSuffix(tr(" (m)"));
+  wheelBase->setSingleStep(0.1);
 
   connect(wheelBase, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->wheel_base = new_val;});
+
+  // track width
+  QLabel *trackWidthLabel = new QLabel(tr("Vehicle track width:"));
+  QDoubleSpinBox *trackWidth = new QDoubleSpinBox();
+  trackWidth->setValue(params_->track_width);
+  trackWidth->setSuffix(tr(" (m)"));
+  trackWidth->setSingleStep(0.1);
+
+  connect(trackWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->track_width = new_val;});
 
   // max steering angle
   QLabel *maxSteeringAngleLabel = new QLabel(tr("Vehicle maximum steering angle:"));
@@ -201,6 +227,7 @@ QGroupBox *Window::createParametersGroup()
   maxSteeringAngle->setMaximum(M_PI);
   maxSteeringAngle->setValue(params_->max_steering_angle);
   maxSteeringAngle->setSuffix(tr(" (rad)"));
+  maxSteeringAngle->setSingleStep(0.1);
 
   connect(maxSteeringAngle, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->max_steering_angle = new_val;});
 
@@ -209,12 +236,15 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *kpHeading = new QDoubleSpinBox();
   kpHeading->setValue(params_->pid_heading->kp);
   kpHeading->setPrefix(tr("kp: "));
+  kpHeading->setSingleStep(0.1);
   QDoubleSpinBox *kiHeading = new QDoubleSpinBox();
   kiHeading->setValue(params_->pid_heading->ki);
   kiHeading->setPrefix(tr("ki: "));
+  kiHeading->setSingleStep(0.1);
   QDoubleSpinBox *kdHeading = new QDoubleSpinBox();
   kdHeading->setValue(params_->pid_heading->kd);
   kdHeading->setPrefix(tr("kd: "));
+  kdHeading->setSingleStep(0.1);
 
   connect(kpHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->kp = new_val;});
   connect(kiHeading, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_heading->ki = new_val;});
@@ -225,12 +255,15 @@ QGroupBox *Window::createParametersGroup()
   QDoubleSpinBox *kpSpeed = new QDoubleSpinBox();
   kpSpeed->setValue(params_->pid_speed->kp);
   kpSpeed->setPrefix(tr("kp: "));
+  kpSpeed->setSingleStep(0.1);
   QDoubleSpinBox *kiSpeed = new QDoubleSpinBox();
   kiSpeed->setValue(params_->pid_speed->ki);
   kiSpeed->setPrefix(tr("ki: "));
+  kiSpeed->setSingleStep(0.1);
   QDoubleSpinBox *kdSpeed = new QDoubleSpinBox();
   kdSpeed->setValue(params_->pid_speed->kd);
   kdSpeed->setPrefix(tr("kd: "));
+  kdSpeed->setSingleStep(0.1);
 
   connect(kpSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->kp = new_val;});
   connect(kiSpeed, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){params_->pid_speed->ki = new_val;});
@@ -242,6 +275,8 @@ QGroupBox *Window::createParametersGroup()
   vbox->addWidget(controlFrequency);
   vbox->addWidget(wheelBaseLabel);
   vbox->addWidget(wheelBase);
+  vbox->addWidget(trackWidthLabel);
+  vbox->addWidget(trackWidth);
   vbox->addWidget(maxSteeringAngleLabel);
   vbox->addWidget(maxSteeringAngle);
   vbox->addWidget(headingPIDLabel);
@@ -276,6 +311,7 @@ QGroupBox *Window::createSetpointsGroup()
   headingSetpoint->setMaximum(M_PI);
   headingSetpoint->setValue(heading_setpoint_);
   headingSetpoint->setSuffix(tr(" (rad)"));
+  headingSetpoint->setSingleStep(0.1);
 
   // plant initial speed
   QLabel *initialSpeedLabel = new QLabel(tr("Initial Plant speed:"));
@@ -290,6 +326,7 @@ QGroupBox *Window::createSetpointsGroup()
   initialHeading->setMaximum(M_PI);
   initialHeading->setValue(heading_setpoint_);
   initialHeading->setSuffix(tr(" (rad)"));
+  initialHeading->setSingleStep(0.1);
 
   // connect signals to slots
   connect(speedSetpoint, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double new_val){speed_setpoint_ = new_val;});
@@ -350,17 +387,31 @@ QGroupBox *Window::createSpeedPlotGroup()
   // add achieved values series
   speedAchievedSeries = new QLineSeries();
 
+  // individual wheel speed plots 
+  speedLeftFrontWheelSeries = new QLineSeries();
+  speedRightFrontWheelSeries = new QLineSeries();
+  speedLeftRearWheelSeries = new QLineSeries();
+  speedRightRearWheelSeries = new QLineSeries();
+
   // add chart instance
   speedChart = new QChart();
   speedChart->addSeries(speedSetpointSeries);
   speedChart->addSeries(speedGoalSeries);
   speedChart->addSeries(speedAchievedSeries);
+  speedChart->addSeries(speedLeftFrontWheelSeries);
+  speedChart->addSeries(speedRightFrontWheelSeries);
+  speedChart->addSeries(speedLeftRearWheelSeries);
+  speedChart->addSeries(speedRightRearWheelSeries);
   speedChart->createDefaultAxes();
   speedChart->setTitle("Vehicle Speed (m/s)");
   speedChart->legend()->setAlignment(Qt::AlignRight);
-  speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("setpoint"));
-  speedChart->legend()->markers(speedGoalSeries)[0]->setLabel(tr("goal"));
-  speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("actual"));
+  speedChart->legend()->markers(speedSetpointSeries)[0]->setLabel(tr("Desired Setpoint"));
+  speedChart->legend()->markers(speedGoalSeries)[0]->setLabel(tr("Controller Goal"));
+  speedChart->legend()->markers(speedAchievedSeries)[0]->setLabel(tr("Simulated Response"));
+  speedChart->legend()->markers(speedLeftFrontWheelSeries)[0]->setLabel(tr("Wheel Command (front left)"));
+  speedChart->legend()->markers(speedRightFrontWheelSeries)[0]->setLabel(tr("Wheel Command (front right)"));
+  speedChart->legend()->markers(speedLeftRearWheelSeries)[0]->setLabel(tr("Wheel Command (rear left)"));
+  speedChart->legend()->markers(speedRightRearWheelSeries)[0]->setLabel(tr("Wheel Command (rear right)"));
 
   // add ChartView instance (to actually display the chart)
   QChartView *chartView = new QChartView(speedChart);
@@ -391,9 +442,9 @@ QGroupBox *Window::createHeadingPlotGroup()
   headingChart->createDefaultAxes();
   headingChart->setTitle("Vehicle Heading (rad)");
   headingChart->legend()->setAlignment(Qt::AlignRight);
-  headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("setpoint"));
-  headingChart->legend()->markers(headingGoalSeries)[0]->setLabel(tr("goal"));
-  headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("actual"));
+  headingChart->legend()->markers(headingSetpointSeries)[0]->setLabel(tr("Desired Setpoint"));
+  headingChart->legend()->markers(headingGoalSeries)[0]->setLabel(tr("Controller Goal"));
+  headingChart->legend()->markers(headingAchievedSeries)[0]->setLabel(tr("Simulated Response"));
   headingChart->axisY()->setRange(-M_PI, M_PI);
 
   // add ChartView instance (to actually display the chart)
@@ -423,8 +474,8 @@ QGroupBox *Window::createCommandPlotGroup()
   commandChart->createDefaultAxes();
   commandChart->setTitle("Controller Commands");
   commandChart->legend()->setAlignment(Qt::AlignRight);
-  commandChart->legend()->markers(commandThrottleSeries)[0]->setLabel(tr("throttle"));
-  commandChart->legend()->markers(commandSteeringSeries)[0]->setLabel(tr("steer"));
+  commandChart->legend()->markers(commandThrottleSeries)[0]->setLabel(tr("Commanded Throttle"));
+  commandChart->legend()->markers(commandSteeringSeries)[0]->setLabel(tr("Commanded Steer"));
   commandChart->axisY()->setRange(-M_PI, M_PI);
 
   // add ChartView instance (to actually display the chart)

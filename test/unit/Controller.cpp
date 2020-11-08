@@ -12,7 +12,7 @@ class AckemannControllerTest : public ::testing::Test {
  protected:
   void SetUp() override {
     // construct our base classes;
-    params_ = std::make_shared<ackermann::Params>(1.25, 45.0, 1.01, 0.15);
+    params_ = std::make_shared<ackermann::Params>(0.45, 0.45, 0.785, 1.0, 1.0);
     controller_ = std::make_unique<ackermann::Controller>(params_);
   }
 
@@ -66,7 +66,7 @@ TEST_F(AckemannControllerTest, ControllerSettingAndGetting) {
     controller_->setGoal(speed, heading);
     controller_->getGoal(speed_out, heading_out);
     EXPECT_EQ(speed, speed_out);
-    EXPECT_EQ((2*M_PI + heading), heading_out);
+    EXPECT_EQ(heading, heading_out);
   }
 }
 

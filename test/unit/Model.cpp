@@ -15,7 +15,7 @@ class AckemannModelTest : public ::testing::Test {
  protected:
   void SetUp() override {
     // construct our base classes;
-    params_ = std::make_shared<ackermann::Params>(1.0, 2.0, 0.0, 0.0);
+    params_ = std::make_shared<ackermann::Params>(1.0, 2.0, 0.785, 1.0, 1.0);
     params_->velocity_max = 10.0;
     params_->velocity_min = -1.0;
     params_->acceleration_max = 100;
@@ -76,7 +76,7 @@ TEST_F(AckemannModelTest, Model_SettersAndGetters) {
     model_->setState(speed, heading);
     model_->getState(speed_out, heading_out);
     EXPECT_DOUBLE_EQ(speed, speed_out);
-    EXPECT_DOUBLE_EQ((2*M_PI + heading), heading_out);
+    EXPECT_DOUBLE_EQ(heading, heading_out);
   }
 
   // test setting and getting command
@@ -188,5 +188,81 @@ TEST_F(AckemannModelTest, Model_Command) {
     model_->getState(speed, heading);
     EXPECT_DOUBLE_EQ(speed, 0.0);
     EXPECT_DOUBLE_EQ(heading, 0.0);
+  }
+}
+
+/* @brief Test command execution. */
+TEST_F(AckemannModelTest, WheelSpeedCalc) {
+
+  // test error #1: zero speed, zero steering
+  {
+    // set goal
+    double speed_cmd = 0.0;
+    double steering_input = 0.0;
+
+    model_->setState(speed_cmd, 0.0);
+    model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
+
+    double LF,RF,LR,RR;
+    model_->getWheelLinVel(LF,RF,LR,RR);
+    EXPECT_DOUBLE_EQ(LF,speed_cmd);
+    EXPECT_DOUBLE_EQ(RF,speed_cmd);
+    EXPECT_DOUBLE_EQ(LR,speed_cmd);
+    EXPECT_DOUBLE_EQ(RR,speed_cmd);
+
+  }
+
+  // test error #2: positive speed, zero steering
+  {
+    // set goal
+    double speed_cmd = 2.0;
+    double steering_input = 0.0;
+
+    model_->setState(speed_cmd, 0.0);
+    model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
+
+    double LF,RF,LR,RR;
+    model_->getWheelLinVel(LF,RF,LR,RR);
+    EXPECT_DOUBLE_EQ(LF,speed_cmd);
+    EXPECT_DOUBLE_EQ(RF,speed_cmd);
+    EXPECT_DOUBLE_EQ(LR,speed_cmd);
+    EXPECT_DOUBLE_EQ(RR,speed_cmd);
+
+  }
+
+  // test error #3: positive speed, right turn
+  {
+    // set goal
+    double speed_cmd = 2.0;
+    double steering_input = (M_PI/4);
+
+    model_->setState(speed_cmd, 0.0);
+    model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
+
+    double LF,RF,LR,RR;
+    model_->getWheelLinVel(LF,RF,LR,RR);
+    EXPECT_NEAR(RF,2, 1E-10);
+    EXPECT_NEAR(LF,2*std::sqrt(5), 1E-10);
+    EXPECT_NEAR(LR,4, 1E-10);
+    EXPECT_NEAR(RR,0, 1E-10);
+
+  }
+
+  // test error #3: positive speed, left turn
+  {
+    // set goal
+    double speed_cmd = 2.0;
+    double steering_input = -(M_PI/4);
+
+    model_->setState(speed_cmd, 0.0);
+    model_->command(limits_->speedToThrottle(speed_cmd), steering_input, 1);
+
+    double LF,RF,LR,RR;
+    model_->getWheelLinVel(LF,RF,LR,RR);
+    EXPECT_NEAR(LF,2, 1E-10);
+    EXPECT_NEAR(RF,2*std::sqrt(5), 1E-10);
+    EXPECT_NEAR(RR,4, 1E-10);
+    EXPECT_NEAR(LR,0, 1E-10);
+
   }
 }
