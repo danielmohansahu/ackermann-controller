@@ -1,0 +1,236 @@
+\hypertarget{classackermann_1_1_model}{}\doxysection{ackermann\+::Model Class Reference}
+\label{classackermann_1_1_model}\index{ackermann::Model@{ackermann::Model}}
+
+
+This class is used to further define a vehicle with Ackermann steering.  
+
+
+
+
+{\ttfamily \#include $<$Model.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classackermann_1_1_model_ad9fa277e47f993c8089a9c388880a32c}{Model}} (const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_params}{Params}} $>$ \&params)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classackermann_1_1_model_a6dc1b7ae5c40f0950b4944a63b192550}\label{classackermann_1_1_model_a6dc1b7ae5c40f0950b4944a63b192550}} 
+void \mbox{\hyperlink{classackermann_1_1_model_a6dc1b7ae5c40f0950b4944a63b192550}{reset}} ()
+\begin{DoxyCompactList}\small\item\em Reset system state variables to defaults. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a109accf55eac34a33c9a5b2b8107e670}{set\+State}} (const double speed, const double heading)
+\begin{DoxyCompactList}\small\item\em Set the current system state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a770662c33060369f437a098c944ca262}{get\+State}} (double \&speed, double \&heading) const
+\begin{DoxyCompactList}\small\item\em Get the current state estimate; return as parameters specified. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a09d9ac604f91d339eae4b18a85db9732}{set\+Goal}} (const double speed, const double heading)
+\begin{DoxyCompactList}\small\item\em Set the target setpoint. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a37c42fe7705a2b3106b0faff813bfcad}{get\+Goal}} (double \&speed, double \&heading) const
+\begin{DoxyCompactList}\small\item\em Get the current setpoint; return as parameters specified. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a24f1fd6f59b6daa78b1f99f5f2029b56}{get\+Command}} (double \&throttle, double \&steering) const
+\begin{DoxyCompactList}\small\item\em Get the current commanded throttle and steering angle; return as parameters specified. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a3f0eaa6a1b63479e4d59689bc6e60c71}{get\+Command}} (double \&throttle, double \&steering, double \&steer\+\_\+vel) const
+\begin{DoxyCompactList}\small\item\em Get the current commanded throttle and steering angle; return as parameters specified. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a62226204f92b8c1c7cca0a11f616d7fd}{command}} (double desired\+\_\+speed, double steering, const double dt)
+\begin{DoxyCompactList}\small\item\em Simulate execution of the given throttle and steering commands. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a4b91f4da42041ac667e49116b4f1040d}{get\+Error}} (double \&speed\+\_\+error, double \&heading\+\_\+error) const
+\begin{DoxyCompactList}\small\item\em Return the current error between desired and setpoint; return as parameters specified. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_model_a571711ea578e1ccaa7bc23528a53ba95}{get\+Wheel\+Lin\+Vel}} (double \&wheel\+\_\+\+Left\+Front, double \&wheel\+\_\+\+Right\+Front, double \&wheel\+\_\+\+Left\+Rear, double \&wheel\+\_\+\+Right\+Rear) const
+\begin{DoxyCompactList}\small\item\em Return the current linear velocity at each wheel; used for calculating wheel speed with tire information. Return as parameters specified. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is used to further define a vehicle with Ackermann steering. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classackermann_1_1_model_ad9fa277e47f993c8089a9c388880a32c}\label{classackermann_1_1_model_ad9fa277e47f993c8089a9c388880a32c}} 
+\index{ackermann::Model@{ackermann::Model}!Model@{Model}}
+\index{Model@{Model}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{Model()}{Model()}}
+{\footnotesize\ttfamily ackermann\+::\+Model\+::\+Model (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_params}{Params}} $>$ \&}]{params }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Shared pointer detailing rover characteristic parameters \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classackermann_1_1_model_ad9fa277e47f993c8089a9c388880a32c_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classackermann_1_1_model_a62226204f92b8c1c7cca0a11f616d7fd}\label{classackermann_1_1_model_a62226204f92b8c1c7cca0a11f616d7fd}} 
+\index{ackermann::Model@{ackermann::Model}!command@{command}}
+\index{command@{command}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{command()}{command()}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::command (\begin{DoxyParamCaption}\item[{double}]{desired\+\_\+speed,  }\item[{double}]{steering,  }\item[{const double}]{dt }\end{DoxyParamCaption})}
+
+
+
+Simulate execution of the given throttle and steering commands. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em throttle} & The commanded throttle (\mbox{[}0,1\mbox{]}). \\
+\hline
+{\em steering} & The commanded steering angle (rad). \\
+\hline
+{\em dt} & The amount of time to simulate over (s). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a24f1fd6f59b6daa78b1f99f5f2029b56}\label{classackermann_1_1_model_a24f1fd6f59b6daa78b1f99f5f2029b56}} 
+\index{ackermann::Model@{ackermann::Model}!getCommand@{getCommand}}
+\index{getCommand@{getCommand}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{getCommand()}{getCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::get\+Command (\begin{DoxyParamCaption}\item[{double \&}]{throttle,  }\item[{double \&}]{steering }\end{DoxyParamCaption}) const}
+
+
+
+Get the current commanded throttle and steering angle; return as parameters specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em throttle} & The last commanded throttle (limited to \mbox{[}0,1\mbox{]}). \\
+\hline
+{\em steering} & The last commanded steering angle (rad). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a3f0eaa6a1b63479e4d59689bc6e60c71}\label{classackermann_1_1_model_a3f0eaa6a1b63479e4d59689bc6e60c71}} 
+\index{ackermann::Model@{ackermann::Model}!getCommand@{getCommand}}
+\index{getCommand@{getCommand}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{getCommand()}{getCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::get\+Command (\begin{DoxyParamCaption}\item[{double \&}]{throttle,  }\item[{double \&}]{steering,  }\item[{double \&}]{steer\+\_\+vel }\end{DoxyParamCaption}) const}
+
+
+
+Get the current commanded throttle and steering angle; return as parameters specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em throttle} & The last commanded throttle (limited to \mbox{[}0,1\mbox{]}). \\
+\hline
+{\em steering} & The last commanded steering angle (rad). \\
+\hline
+{\em steer\+\_\+vel} & The current steering angle velocity (rad/s). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a4b91f4da42041ac667e49116b4f1040d}\label{classackermann_1_1_model_a4b91f4da42041ac667e49116b4f1040d}} 
+\index{ackermann::Model@{ackermann::Model}!getError@{getError}}
+\index{getError@{getError}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{getError()}{getError()}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::get\+Error (\begin{DoxyParamCaption}\item[{double \&}]{speed\+\_\+error,  }\item[{double \&}]{heading\+\_\+error }\end{DoxyParamCaption}) const}
+
+
+
+Return the current error between desired and setpoint; return as parameters specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed\+\_\+error} & Current speed error (m/s). \\
+\hline
+{\em heading\+\_\+error} & Current heading error (rad). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a37c42fe7705a2b3106b0faff813bfcad}\label{classackermann_1_1_model_a37c42fe7705a2b3106b0faff813bfcad}} 
+\index{ackermann::Model@{ackermann::Model}!getGoal@{getGoal}}
+\index{getGoal@{getGoal}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{getGoal()}{getGoal()}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::get\+Goal (\begin{DoxyParamCaption}\item[{double \&}]{speed,  }\item[{double \&}]{heading }\end{DoxyParamCaption}) const}
+
+
+
+Get the current setpoint; return as parameters specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Desired system speed (m/s). \\
+\hline
+{\em heading} & Desired system heading (rad). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a770662c33060369f437a098c944ca262}\label{classackermann_1_1_model_a770662c33060369f437a098c944ca262}} 
+\index{ackermann::Model@{ackermann::Model}!getState@{getState}}
+\index{getState@{getState}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{getState()}{getState()}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::get\+State (\begin{DoxyParamCaption}\item[{double \&}]{speed,  }\item[{double \&}]{heading }\end{DoxyParamCaption}) const}
+
+
+
+Get the current state estimate; return as parameters specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Estimated system speed (m/s). \\
+\hline
+{\em heading} & Estimated system heading (rad). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a571711ea578e1ccaa7bc23528a53ba95}\label{classackermann_1_1_model_a571711ea578e1ccaa7bc23528a53ba95}} 
+\index{ackermann::Model@{ackermann::Model}!getWheelLinVel@{getWheelLinVel}}
+\index{getWheelLinVel@{getWheelLinVel}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{getWheelLinVel()}{getWheelLinVel()}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::get\+Wheel\+Lin\+Vel (\begin{DoxyParamCaption}\item[{double \&}]{wheel\+\_\+\+Left\+Front,  }\item[{double \&}]{wheel\+\_\+\+Right\+Front,  }\item[{double \&}]{wheel\+\_\+\+Left\+Rear,  }\item[{double \&}]{wheel\+\_\+\+Right\+Rear }\end{DoxyParamCaption}) const}
+
+
+
+Return the current linear velocity at each wheel; used for calculating wheel speed with tire information. Return as parameters specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wheel\+\_\+\+Left\+Front\&} & Left front wheel linear velocity \\
+\hline
+{\em wheel\+\_\+\+Right\+Front\&} & Right front wheel linear velocity \\
+\hline
+{\em wheel\+\_\+\+Left\+Rear\&} & Left rear wheel linear velocity \\
+\hline
+{\em wheel\+\_\+\+Right\+Rear\&} & Right rear wheel linear velocity \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a09d9ac604f91d339eae4b18a85db9732}\label{classackermann_1_1_model_a09d9ac604f91d339eae4b18a85db9732}} 
+\index{ackermann::Model@{ackermann::Model}!setGoal@{setGoal}}
+\index{setGoal@{setGoal}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{setGoal()}{setGoal()}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::set\+Goal (\begin{DoxyParamCaption}\item[{const double}]{speed,  }\item[{const double}]{heading }\end{DoxyParamCaption})}
+
+
+
+Set the target setpoint. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Desired system speed (m/s). \\
+\hline
+{\em heading} & Desired system heading (rad). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classackermann_1_1_model_a109accf55eac34a33c9a5b2b8107e670}\label{classackermann_1_1_model_a109accf55eac34a33c9a5b2b8107e670}} 
+\index{ackermann::Model@{ackermann::Model}!setState@{setState}}
+\index{setState@{setState}!ackermann::Model@{ackermann::Model}}
+\doxysubsubsection{\texorpdfstring{setState()}{setState()}}
+{\footnotesize\ttfamily void ackermann\+::\+Model\+::set\+State (\begin{DoxyParamCaption}\item[{const double}]{speed,  }\item[{const double}]{heading }\end{DoxyParamCaption})}
+
+
+
+Set the current system state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Actual system speed (m/s) \\
+\hline
+{\em heading} & Actual system heading (rad). \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_model_8hpp}{Model.\+hpp}}\item 
+app/Model.\+cpp\end{DoxyCompactItemize}
