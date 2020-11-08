@@ -13,7 +13,7 @@ using ackermann::Params;
 /* @brief Test limiting without any limits (should be default behavior).*/
 TEST(Limits_NoLimit, should_pass) {
   double dt = 0.01;
-  auto p = std::make_shared<Params>(0.0, 1e8, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0, 0.0, 1e8, 0.0, 0.0);
   Limits lim(p);
 
   {
@@ -64,7 +64,7 @@ TEST(Limits_NoLimit, should_pass) {
 TEST(Limits_Velocity, should_pass) {
   // instantiate a limits class with only velocity limits
   double dt = 0.01;
-  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0, 0.0);
   p->velocity_max = 1.0;
   Limits lim(p);
 
@@ -101,7 +101,7 @@ TEST(Limits_Velocity, should_pass) {
 TEST(Limits_Acceleration, should_pass) {
   // instantiate a limits class with only acceleration limits
   double dt = 0.01;
-  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0, 0.0);
   p->velocity_max = 100.0;
   p->velocity_min = 0.0;
   p->acceleration_min = -0.001;
@@ -141,7 +141,7 @@ TEST(Limits_Acceleration, should_pass) {
 TEST(Limits_Heading_Angle, should_pass) {
   // instantiate a limits class with only heading limit
   double dt = 10.0;
-  auto p = std::make_shared<Params>(0.0, 1.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0, 0.0, 1.0, 0.0, 0.0);
   Limits lim(p);
 
   {
@@ -174,7 +174,7 @@ TEST(Limits_Heading_Angle, should_pass) {
 TEST(Limits_Heading_AngularVelocity, should_pass) {
   // instantiate a limits class with only heading limit
   double dt = 0.01;
-  auto p = std::make_shared<Params>(0.0, 3.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0,  0.0, 3.0, 0.0, 0.0);
   p->angular_velocity_max = 0.1;
   p->angular_velocity_min = -0.1;
   Limits lim(p);
@@ -211,7 +211,7 @@ TEST(Limits_Heading_AngularVelocity, should_pass) {
 TEST(Limits_Heading_AngularAcceleration, should_pass) {
   // instantiate a limits class with only heading limit
   double dt = 0.01;
-  auto p = std::make_shared<Params>(0.0, 1.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0,  0.0, 1.0, 0.0, 0.0);
   p->angular_acceleration_max = 0.01;
   p->angular_acceleration_min = -0.01;
   Limits lim(p);
@@ -248,7 +248,7 @@ TEST(Limits_Heading_AngularAcceleration, should_pass) {
 
 TEST(Throttle_to_Speed_Conversion, should_pass) {
   // instantiate a limits class with only velocity limits
-  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0,  0.0, 0.0, 0.0, 0.0);
   p->velocity_max = 100.0;
   Limits lim(p);
 
@@ -274,7 +274,7 @@ TEST(Throttle_to_Speed_Conversion, should_pass) {
 
 TEST(Speed_to_Throttle_Conversion, should_pass) {
   // instantiate a limits class with only velocity limits
-  auto p = std::make_shared<Params>(0.0, 0.0, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0,  0.0, 0.0, 0.0, 0.0);
   p->velocity_max = 100.0;
   Limits lim(p);
 
@@ -299,7 +299,7 @@ TEST(Speed_to_Throttle_Conversion, should_pass) {
 }
 
 TEST(HeadingLimits, should_pass) {
-  auto p = std::make_shared<Params>(0.0, 1e8, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0,  0.0, 1e8, 0.0, 0.0);
   Limits lim(p);
   // check 1 - within bound
   {
@@ -322,7 +322,7 @@ TEST(HeadingLimits, should_pass) {
 }
 
 TEST(ShortestArcToTurn, should_pass) {
-  auto p = std::make_shared<Params>(0.0, 1e8, 0.0, 0.0);
+  auto p = std::make_shared<Params>(0.0, 0.0, 1e8, 0.0, 0.0);
   Limits lim(p);
   // check 1 - right turn
   {

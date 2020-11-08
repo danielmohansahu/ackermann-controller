@@ -80,6 +80,13 @@ void Controller::getCommand(double& throttle, double& steering) const {
   this->model_->getCommand(throttle, steering);
 }
 
+void Controller::getWheelLinVel(double& left_front,
+                                double& right_front,
+                                double& left_rear,
+                                double& right_rear) const {
+  this->model_->getWheelLinVel(left_front, right_front, left_rear, right_rear);
+}
+
 void Controller::controlLoop() {
   // loop monitoring variables
   unsigned int timing_violations = 0;
