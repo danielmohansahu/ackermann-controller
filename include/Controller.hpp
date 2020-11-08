@@ -35,6 +35,7 @@ class Controller {
  public:
   /**
   * @brief Constructor; constructs and initializes parameters of all composition classes.
+  * @param params Shared pointer detailing rover characteristic parameters
   */
   explicit Controller(const std::shared_ptr<const Params>& params);
 
@@ -72,16 +73,17 @@ class Controller {
    * system state. If this is not called the controller will continue
    * open loop.
    *
-   * @param heading: The actual vehicle heading.
-   * @param speed: The actual vehicle speed.
+   * @param heading: The actual vehicle heading (rad)
+   * @param speed: The actual vehicle speed (m/s).
    */
   void setState(const double speed, const double heading);
 
   /**
-   * @brief Get the current state (speed, heading) of the system.
+   * @brief Get the current state (speed, heading) of the system; return
+   * as parameters specified.
    *
-   * @param heading: The estimated vehicle heading.
-   * @param speed: The estimated vehicle speed.
+   * @param heading: The estimated vehicle heading (rad).
+   * @param speed: The estimated vehicle speed (m/s).
    */
   void getState(double& speed, double& heading) const;
 
@@ -92,21 +94,23 @@ class Controller {
    * is to call this method before calling 'start', although
    * concurrent execution is supported.
    *
-   * @param heading: The desired vehicle heading.
-   * @param speed: The desired vehicle speed.
+   * @param heading: The desired vehicle heading (rad).
+   * @param speed: The desired vehicle speed (m/s).
    */
   void setGoal(const double speed, const double heading);
 
   /**
-  *  @brief Get the current system setpoint (speed, heading).
+  *  @brief Get the current system setpoint (speed, heading); return as
+  * parameters specified.
    *
-   * @param heading: The current vehicle heading setpoint.
-   * @param speed: The current vehicle speed setpoint.
+   * @param heading: The current vehicle heading setpoint (rad).
+   * @param speed: The current vehicle speed setpoint (m/s).
    */
   void getGoal(double& speed, double& heading) const;
 
   /**
-  * @brief Get the current system command (speed, heading).
+  * @brief Get the current system command (speed, heading); return as
+  * parameters specified.
    *
    * This represents the main point of access for a polling
    * architecture, i.e. an external control loop would
@@ -114,17 +118,17 @@ class Controller {
    * and request command updates.
    *
    * @param throttle: The latest throttle command (limited between [0,1]).
-   * @param steering: The latest steering angle command (degrees).
+   * @param steering: The latest steering angle command (rad).
    */
   void getCommand(double& throttle, double& steering) const;
 
   /**
-  * @brief Get the current system wheel speeds.
+  * @brief Get the current system wheel speeds; return as parameters specified.
    *
-   * @param left_front: The left front wheel velocity.
-   * @param right_front: The right front wheel velocity.
-   * @param left_rear: The left rear wheel velocity.
-   * @param right_rear: The right rear wheel velocity.
+   * @param left_front: The left front wheel velocity (m/s).
+   * @param right_front: The right front wheel velocity (m/s).
+   * @param left_rear: The left rear wheel velocity (m/s).
+   * @param right_rear: The right rear wheel velocity (m/s).
    */
   void getWheelLinVel(double& left_front,
                       double& right_front,
