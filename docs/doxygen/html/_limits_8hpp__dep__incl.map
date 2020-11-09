@@ -1,8 +1,9 @@
 <map id="include/Limits.hpp" name="include/Limits.hpp">
-<area shape="rect" id="node2" href="$_limits_8cpp.html" title="app/Limits.cpp" alt="" coords="5,80,112,107"/>
-<area shape="rect" id="node3" href="$_model_8hpp.html" title="Class declaration for an Ackermann vehicle model. " alt="" coords="137,80,263,107"/>
-<area shape="rect" id="node4" href="$_controller_8hpp.html" title="Class declaration for top level ACME Ackermann Controller. " alt="" coords="126,155,274,181"/>
-<area shape="rect" id="node7" href="$plant_8h.html" title="A Fake implementation of a physical Ackermann platform. " alt="" coords="298,155,433,181"/>
-<area shape="rect" id="node5" href="$window_8h.html" title="Declaration for GUI implementation. " alt="" coords="213,229,352,256"/>
-<area shape="rect" id="node6" href="$window_8cpp.html" title="app/demo/window.cpp" alt="" coords="207,304,359,331"/>
+<area shape="rect" id="node1" title="Class declaration for Limits class." alt="" coords="200,5,341,32"/>
+<area shape="rect" id="node2" href="$_limits_8cpp.html" title=" " alt="" coords="5,80,123,107"/>
+<area shape="rect" id="node3" href="$_model_8hpp.html" title="Class declaration for an Ackermann vehicle model." alt="" coords="147,80,288,107"/>
+<area shape="rect" id="node4" href="$_controller_8hpp.html" title="Class declaration for top level ACME Ackermann Controller." alt="" coords="135,155,300,181"/>
+<area shape="rect" id="node7" href="$plant_8h.html" title="A Fake implementation of a physical Ackermann platform." alt="" coords="325,155,475,181"/>
+<area shape="rect" id="node5" href="$window_8h.html" title="Declaration for GUI implementation." alt="" coords="232,229,384,256"/>
+<area shape="rect" id="node6" href="$window_8cpp.html" title=" " alt="" coords="225,304,391,331"/>
 </map>

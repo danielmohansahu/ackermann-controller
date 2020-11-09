@@ -30,14 +30,14 @@ Model --> Controller: error_s, error_h
 
 Controller -> PID_s: Parameters
 activate PID_s
-Controller -> PID_s: getCommand(error_s)
-PID_s --> Controller: throttle_des
+Controller -> PID_s: getCommand(error_s, dt)
+PID_s --> Controller: throttle_desired
 deactivate PID_s
 
 Controller -> PID_h: Parameters
 activate PID_h
-Controller -> PID_h: getCommand(error_h)
-PID_h --> Controller: steering_des
+Controller -> PID_h: getCommand(error_h, dt)
+PID_h --> Controller: steering_desired
 deactivate PID_h
 
 Controller -> Limits: Parameters
@@ -45,7 +45,7 @@ activate Limits
 Controller -> Limits: command(throttle, steering)
 Limits -> Model: throttle, steering
 deactivate Limits
-Model --> Controller: throttle_act, steering_act
+Model --> Controller: throttle_actual, steering_actual
 deactivate Model
 
 Controller --> PlantModel: Throttle, Steering

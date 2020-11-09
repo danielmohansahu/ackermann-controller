@@ -1,4 +1,8 @@
 <map id="include/Model.hpp" name="include/Model.hpp">
-<area shape="rect" id="node4" href="$_params_8hpp.html" title="Parameters used in the Ackermann controller system. " alt="" coords="129,155,221,181"/>
-<area shape="rect" id="node6" href="$_limits_8hpp.html" title="Class declaration for Limits class. " alt="" coords="51,80,133,107"/>
+<area shape="rect" id="node1" title="Class declaration for an Ackermann vehicle model." alt="" coords="68,5,209,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,229,83,256"/>
+<area shape="rect" id="node3" title=" " alt="" coords="223,229,289,256"/>
+<area shape="rect" id="node4" href="$_params_8hpp.html" title="Parameters used in the Ackermann controller system." alt="" coords="132,155,231,181"/>
+<area shape="rect" id="node6" href="$_limits_8hpp.html" title="Class declaration for Limits class." alt="" coords="51,80,141,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="129,229,188,256"/>
 </map>

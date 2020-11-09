@@ -1,36 +1,42 @@
-\href{https://travis-ci.org/danielmohansahu/ackermann-controller}{\tt } \href{https://coveralls.io/github/danielmohansahu/ackermann-controller?branch=master}{\tt } 
-
-This is an implementation of an \href{https://en.wikipedia.org/wiki/Ackermann_steering_geometry}{\tt Ackermann Steering Geometry} controller. The user is able to input a desired heading and speed in the global reference frame which the controller will drive the robot model towards, based upon rover parameters and limitations.
+\href{https://travis-ci.org/danielmohansahu/ackermann-controller}{\texttt{ }} \href{https://coveralls.io/github/danielmohansahu/ackermann-controller?branch=master}{\texttt{ }} \hypertarget{index_autotoc_md1}{}\doxysection{$<$a href=\char`\"{}https\+://opensource.\+org/licenses/\+M\+I\+T\char`\"{}$>$$<$img src=\char`\"{}https\+://img.\+shields.\+io/badge/\+License-\/\+M\+I\+T-\/yellow.\+svg\char`\"{} alt=\char`\"{}\+License\+: M\+I\+T\char`\"{}/$>$$<$/a$>$}\label{index_autotoc_md1}
+\hypertarget{index_autotoc_md2}{}\doxysection{Overview}\label{index_autotoc_md2}
+This is an implementation of an \href{https://en.wikipedia.org/wiki/Ackermann_steering_geometry}{\texttt{ Ackermann Steering Geometry}} controller. The user is able to input a desired heading and speed in the global reference frame which the controller will drive the robot model towards, based upon rover parameters and limitations.
 
 To calculate the Ackermann steering angles for a four wheeled vehicles, a simplified model with a single front and rear wheel is assumed. The steering angle of this simulated single steering wheel is used to calculate the updated heading of the rover along with the vehicle wheel base. For an Ackermann steering system, the two actual steering wheels are perpindicular to the radius of the turning circle traced by each wheel; the difference in angles for each of these wheels can be calculated based on the track of the rover. The different turning circles and the vehicle speed are used to calculate individual wheel speeds.
 
+For more detailed information on this project please explore the generated docs. After cloning the repository open \href{docs/doxygen/html/index.html}{\texttt{ them}} in the web browser of your choice, e.\+g. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{firefox docs/doxygen/html/index.html}
+\end{DoxyCode}
+\hypertarget{index_autotoc_md3}{}\doxysection{Dependencies}\label{index_autotoc_md3}
 This project requires a C++11 enabled compiler and {\ttfamily cmake}. In addition, we use Q\+T5 for visualization of our demo.
 
 Q\+T5 (and Qt\+Charts) can be installed via the following command on Ubuntu 18.\+04\+:
 
 
-\begin{DoxyCode}
-sudo apt-get install qt5-default libqt5charts5-dev
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo apt-\/get install qt5-\/default libqt5charts5-\/dev}
 \end{DoxyCode}
-
-
+\hypertarget{index_autotoc_md4}{}\doxysection{Usage Documentation}\label{index_autotoc_md4}
+\hypertarget{index_autotoc_md5}{}\doxysubsection{Build Instructions}\label{index_autotoc_md5}
 To build the package on Ubuntu 18.\+04, run the following from a terminal.
 
 
-\begin{DoxyCode}
-git clone https://github.com/danielmohansahu/ackermann-controller
-cd ackermann-controller
-mkdir build && cd build
-cmake .. && make
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git clone https://github.com/danielmohansahu/ackermann-\/controller}
+\DoxyCodeLine{cd ackermann-\/controller}
+\DoxyCodeLine{mkdir build \&\& cd build}
+\DoxyCodeLine{cmake .. \&\& make}
 \end{DoxyCode}
- A script to launch this is included in Bash\+Scripts.
 
+
+A script to launch this is included in Bash\+Scripts.\hypertarget{index_autotoc_md6}{}\doxysubsection{Demonstration Instructions}\label{index_autotoc_md6}
 Assuming the build succeeded, you can then run the demo code.
 
 
-\begin{DoxyCode}
-# from your build directory (e.g. ackermann-controller/build/)
-./app/demo
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\# from your build directory (e.g. ackermann-\/controller/build/)}
+\DoxyCodeLine{./app/demo}
 \end{DoxyCode}
 
 
@@ -39,69 +45,65 @@ A script to launch this is included in Bash\+Scripts.
 You should see something similar to the following, which allows you to evaluate the system and play with parameters against a mock Plant.
 
 \tabulinesep=1mm
-\begin{longtabu} spread 0pt [c]{*{2}{|X[-1]}|}
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Empty }&\textbf{ Running  }\\\cline{1-2}
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Empty }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Running  }\\\cline{1-2}
 \endfirsthead
 \hline
 \endfoot
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Empty }&\textbf{ Running  }\\\cline{1-2}
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Empty }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Running  }\\\cline{1-2}
 \endhead
-$<$img src=\char`\"{}docs/media/empty\+\_\+demo.\+png\char`\"{} alt=\char`\"{}\char`\"{}Empty Demo\char`\"{}\char`\"{}/$>$ &$<$img src=\char`\"{}docs/media/running\+\_\+demo.\+png\char`\"{} alt=\char`\"{}\char`\"{}Running Demo\char`\"{}\char`\"{}/$>$ \\\cline{1-2}
+$<$img src=\char`\"{}docs/media/empty\+\_\+demo.\+png\char`\"{} alt=\char`\"{}\char`\"{}Empty Demo\char`\"{}\char`\"{}/$>$ &$<$img src=\char`\"{}docs/media/running\+\_\+demo.\+png\char`\"{} alt=\char`\"{}\char`\"{}Running Demo\char`\"{}\char`\"{}/$>$  \\\cline{1-2}
 \end{longtabu}
-
-
+\hypertarget{index_autotoc_md7}{}\doxysubsection{Testing Instructions}\label{index_autotoc_md7}
 Unit and System tests are run during Continuous integration, but you can run them manually from the command line as well\+:
 
 
-\begin{DoxyCode}
-# from your build directory (e.g. ackermann-controller/build/)
-./test/cpp-test
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\# from your build directory (e.g. ackermann-\/controller/build/)}
+\DoxyCodeLine{./test/cpp-\/test}
 \end{DoxyCode}
- A script to launch this is included in Bash\+Scripts.
+
+
+A script to launch this is included in Bash\+Scripts.
 
 To generate C\+P\+P\+Check and C\+P\+P\+Lint code analysis\+:
 
 
-\begin{DoxyCode}
-# from the BashScripts directory
-chmod +x check\_cppcheck.sh check\_cpplint.sh
-./check\_cppcheck.sh
-./check\_cpplint.sh
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\# from the BashScripts directory}
+\DoxyCodeLine{chmod +x check\_cppcheck.sh check\_cpplint.sh}
+\DoxyCodeLine{./check\_cppcheck.sh}
+\DoxyCodeLine{./check\_cpplint.sh}
 \end{DoxyCode}
-
-
+\hypertarget{index_autotoc_md8}{}\doxysection{Personnel}\label{index_autotoc_md8}
 
 \begin{DoxyItemize}
 \item Spencer Elyard, {\itshape T\+O\+DO\+: Complete personnel blurb.}
 \item Santosh Kesani, {\itshape T\+O\+DO\+: Complete personnel blurb.}
 \item Daniel Sahu, a roboticist working on his Masters at U\+MD.
-\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{index_autotoc_md9}{}\doxysection{Licensing}\label{index_autotoc_md9}
+This project uses the M\+IT License as described in \mbox{[}the license file\mbox{]}(L\+I\+C\+E\+N\+SE).\hypertarget{index_autotoc_md10}{}\doxysection{Engineering Processes and Documentation}\label{index_autotoc_md10}
+Details on the status of our Agile Iterative Process (A\+IP) \href{https://docs.google.com/spreadsheets/d/1nx85sowA3IRX-usU_M1hhwHplOLXMWdkvec2w3Roi5Q/edit?usp=sharing}{\texttt{ can be found here}}
 
-This project uses the M\+IT License as described in \mbox{[}the license file\mbox{]}(L\+I\+C\+E\+N\+SE).
-
-Details on the status of our Agile Iterative Process (A\+IP) \href{https://docs.google.com/spreadsheets/d/1nx85sowA3IRX-usU_M1hhwHplOLXMWdkvec2w3Roi5Q/edit?usp=sharing}{\tt can be found here}
-
-Sprint planning notes and reviews \href{https://docs.google.com/document/d/1MEoRXtJXdUWnkTbJmcDfJYct3i6_LEJ-TULpP2h_qYA/edit?usp=sharing}{\tt can be found here}.
-
-{\bfseries T\+O\+DO\+: Annote bugs and issues when uncovered.}
-
+Sprint planning notes and reviews \href{https://docs.google.com/document/d/1MEoRXtJXdUWnkTbJmcDfJYct3i6_LEJ-TULpP2h_qYA/edit?usp=sharing}{\texttt{ can be found here}}.\hypertarget{index_autotoc_md11}{}\doxysection{Known Bugs and Issues}\label{index_autotoc_md11}
+{\bfseries{T\+O\+DO\+: Annote bugs and issues when uncovered.}}\hypertarget{index_autotoc_md12}{}\doxysubsection{Documentation Generation instructions}\label{index_autotoc_md12}
 To generate Doxygen documentation\+:
 
 
-\begin{DoxyCode}
-# from your install directory (e.g. ackermann-controller/)
-doxygen Doxyfile
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\# from your install directory (e.g. ackermann-\/controller/)}
+\DoxyCodeLine{doxygen Doxyfile}
 \end{DoxyCode}
 
 
 To access Doxygen documentation, navigate to\+: 
-\begin{DoxyCode}
-doxygen/html/index.html
+\begin{DoxyCode}{0}
+\DoxyCodeLine{doxygen/html/index.html}
 \end{DoxyCode}
-
-
+\hypertarget{index_autotoc_md13}{}\doxysubsection{Parameters and Limitations}\label{index_autotoc_md13}
+\hypertarget{index_autotoc_md14}{}\doxysubsubsection{Rover Model}\label{index_autotoc_md14}
 The controller enforces the various limitations of the rover\+:
 
 
@@ -124,8 +126,7 @@ The controller enforces the various limitations of the rover\+:
 \item P\+ID controller parameters for speed control
 \item P\+ID controller parameters for heading control
 \end{DoxyItemize}
-\end{DoxyItemize}
-
+\end{DoxyItemize}\hypertarget{index_autotoc_md15}{}\doxysubsubsection{Controller Model}\label{index_autotoc_md15}
 The controller will accept the following inputs\+:
 
 
@@ -141,16 +142,13 @@ The controller will provide the following outputs\+:
 \item Throttle and Steering Commands, limited as appropriate by the established limitations from the rover model
 \item Current calculated speed and heading
 \item Current desired heading (global coordinate frame) and speed
-\end{DoxyItemize}
-
+\end{DoxyItemize}\hypertarget{index_autotoc_md16}{}\doxysection{Class Diagram}\label{index_autotoc_md16}
 An overview of the classes used and their dependencies is shown in the following U\+ML diagram\+:
 
-
-
+\hypertarget{index_autotoc_md17}{}\doxysection{Sequence Diagram}\label{index_autotoc_md17}
 An example sequence diagram for the full program is shown in the following U\+ML diagram\+:
 
-
-
+\hypertarget{index_autotoc_md18}{}\doxysection{Activity Diagram for Controller}\label{index_autotoc_md18}
 An example activity diagram for the controller methodology is shown in the following U\+ML diagram\+:
 
  
