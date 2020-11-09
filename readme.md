@@ -37,6 +37,10 @@ mkdir build && cd build
 cmake .. && make
 ```
 A script to launch this is included in BashScripts.
+```bash
+# from the BashScripts directory
+./buildme.sh
+```
 
 ### Demonstration Instructions
 
@@ -48,6 +52,10 @@ Assuming the build succeeded, you can then run the demo code.
 ```
 
 A script to launch this is included in BashScripts.
+```bash
+# from the BashScripts directory
+./runme.sh
+```
 
 You should see something similar to the following, which allows you to evaluate the system and play with parameters against a mock Plant.
 
@@ -64,6 +72,16 @@ Unit and System tests are run during Continuous integration, but you can run the
 ./test/cpp-test
 ```
 A script to launch this is included in BashScripts.
+```bash
+# from the BashScripts directory
+./testme.sh
+```
+
+Copies of the CPPCheck and CPPLint outputs can be found in:
+
+```bash
+/results
+```
 
 To generate CPPCheck and CPPLint code analysis:
 
@@ -75,8 +93,8 @@ chmod +x check_cppcheck.sh check_cpplint.sh
 ```
 
 ## Personnel
-* Spencer Elyard, *TODO: Complete personnel blurb.*
-* Santosh Kesani, *TODO: Complete personnel blurb.*
+* Spencer Elyard, a roboticist working on his Masters at UMD.
+* Santosh Kesani, a roboticist working on his Masters at UMD.
 * Daniel Sahu, a roboticist working on his Masters at UMD.
 
 ## Licensing
@@ -90,11 +108,19 @@ Details on the status of our Agile Iterative Process (AIP) [can be found here](h
 Sprint planning notes and reviews [can be found here](https://docs.google.com/document/d/1MEoRXtJXdUWnkTbJmcDfJYct3i6_LEJ-TULpP2h_qYA/edit?usp=sharing).
 
 ## Known Bugs and Issues
-**TODO: Annote bugs and issues when uncovered.**
+
+Major:
+* Can set various values in GUI to zero, which causes unexpected behavior including crashes. This action should be avoided.
+
+Minor:
+* Wheel linear velocity updates in the plot window lag slightly behind the vehicle speed indicated.
+* Cannot use up/down arrows in selection box to pass beyond a full circle; manually entering the heading will perform as expected.
 
 ### Documentation Generation instructions
 
-To generate Doxygen documentation:
+A browsable version of the Doxygen documentation [can be accessesd here.](https://selyard.github.io/ackermann_controller_doc/index.html)
+
+To generate Doxygen documentation locally:
 
 ```bash
 # from your install directory (e.g. ackermann-controller/)
@@ -116,9 +142,9 @@ The controller enforces the various limitations of the rover:
   * Maximum allowable steering angle (absolute value) (0.785 radians for demo)
 * Dynamic Limitations
   * Maximum (forward) and minimum (reverse) speed limitations (10 m/s and 0 m/s for demo).
-  * Maximum (forward) and minimum (reverse) acceleration limitations (+/- 5 m/s^2 for demo).
-  * Maximum (right) and minimum (left) angular velocity limitations (TBD)
-  * Maximum (right) and minimum (left) angular acecleration limitations (TBD)
+  * Maximum (forward) and minimum (reverse) acceleration limitations (+/- 50 m/s^2 for demo).
+  * Maximum (right) and minimum (left) angular velocity limitations (unlimited for demo)
+  * Maximum (right) and minimum (left) angular acceleration limitations (unlimited for demo)
 * Controller Parameters
   * Frequency (100hz for demo)
   * PID controller parameters for speed control
@@ -135,6 +161,7 @@ The controller will provide the following outputs:
 * Throttle and Steering Commands, limited as appropriate by the established limitations from the rover model
 * Current calculated speed and heading
 * Current desired heading (global coordinate frame) and speed
+* Current individual wheel linear velocities, which can be used in the future with wheel size to calculate wheel RPM
 
 ## Class Diagram
 
