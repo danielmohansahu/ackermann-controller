@@ -1,0 +1,3 @@
+<map id="ackermann::Controller::Controller" name="ackermann::Controller::Controller">
+<area shape="rect" id="node2" href="$classackermann_1_1_controller.html#a285777e5abee8b5ec7eb683410215a04" title="Stop execution of a control loop and rejoin. This also calls reset() to clear any state variables..." alt="" coords="204,5,355,47"/>
+</map>

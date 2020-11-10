@@ -5,12 +5,13 @@
 #include <gtest/gtest.h>
 #include <chrono>
 #include <iostream>
-
+#include <limits>
 #include <Controller.hpp>
 #include <Params.hpp>
 #include "fake/plant.h"
 
 #define WHEEL_BASE 1.5
+#define TRACK_WIDTH 1.5
 #define MAX_WHEEL_SEPARATION 45.0
 #define CONTROL_FREQUENCY 100.0
 
@@ -30,35 +31,39 @@ class AckermannControllerTest : public ::testing::Test {
       opts_ = std::make_unique<fake::PlantOptions>(WHEEL_BASE,
                                                    MAX_WHEEL_SEPARATION);
     if (!params_) {
-      params_ = std::make_unique<ackermann::Params>(WHEEL_BASE,
+      params_ = std::make_shared<ackermann::Params>(WHEEL_BASE, TRACK_WIDTH,
                                                     MAX_WHEEL_SEPARATION,
                                                     1.0,
                                                     1.0);
       // set some default control variables
       params_->control_frequency = CONTROL_FREQUENCY;
-      params_->ki_speed = 1.0;
-      params_->ki_heading = 1.0;
+      params_->pid_speed->ki = 1.0;
+      params_->pid_heading->ki = 1.0;
     }
 
     // construct our plant
-    plant_ = std::make_unique<fake::Plant>(*opts_);
+    plant_ = std::make_unique<fake::Plant>(*opts_, params_);
 
     // construct the controller
-    controller_ = std::make_unique<ackermann::Controller>(*params_);
+    controller_ = std::make_unique<ackermann::Controller>(params_);
+
+    // construct our limits class
+    limits_ = std::make_unique<ackermann::Limits>(params_);
   }
 
   // our base class members (we use pointers to avoid default construction)
   std::unique_ptr<fake::Plant> plant_;
   std::unique_ptr<ackermann::Controller> controller_;
+  std::unique_ptr<ackermann::Limits> limits_;
 
   // default initialize our params and options, so we can re-call SetUp
-  std::unique_ptr<ackermann::Params> params_;
+  std::shared_ptr<ackermann::Params> params_;
   std::unique_ptr<fake::PlantOptions> opts_;
 };
 
 /* @brief A convenience method for executing the given controller's
  * command against the given Plant.
- * 
+ *
  */
 bool control_loop(std::unique_ptr<fake::Plant>& p,
                   std::unique_ptr<ackermann::Controller>& c,
@@ -81,8 +86,12 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
   // initialize clock
   auto start = steady_clock::now();
 
+  // success count (makes sure we don't just get lucky)
+  unsigned int success_count = 0;
+
   // loop until we've ran out of time
-  while (duration_cast<seconds>(steady_clock::now() - start).count() < max_duration) {
+  while (duration_cast<seconds>(steady_clock::now() - start).count()
+         < max_duration) {
     // calculate latest command
     double throttle, steering;
     c->getCommand(throttle, steering);
@@ -96,8 +105,13 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
     // check whether or not we're within desired tolerance
     // (and can report success)
     if (std::abs(current_speed - desired_speed) < speed_tolerance
-        || std::abs(current_heading - desired_heading) < heading_tolerance)
-      return true;
+        || std::abs(current_heading - desired_heading) < heading_tolerance) {
+      if (++success_count >= CONTROL_FREQUENCY)
+        return true;
+    } else {
+      // reset success count
+      success_count = 0;
+    }
 
     // check if we should break (stopped running, etc.)
     if (!c->isRunning())
@@ -112,35 +126,34 @@ bool control_loop(std::unique_ptr<fake::Plant>& p,
 TEST_F(AckermannControllerTest, System_FakeSetup) {
   // try setting and getting the same state
   double speed_in = 1.3;
-  double heading_in = 54.0;
+  double heading_in = 0.95;
   plant_->setState(speed_in, heading_in);
 
   double speed_out, heading_out;
   plant_->getState(speed_out, heading_out);
-  EXPECT_EQ(speed_out, speed_in);
-  EXPECT_EQ(heading_out, heading_in);
+  EXPECT_DOUBLE_EQ(speed_out, speed_in);
+  EXPECT_DOUBLE_EQ(heading_out, heading_in);
 
   // reset Plant and try setting a zero command (should result in zero state)
   plant_->setState(0.0, 0.0);
   plant_->command(0.0, 0.0, 0.0);
   plant_->getState(speed_out, heading_out);
-  EXPECT_EQ(speed_out, 0.0);
-  EXPECT_EQ(heading_out, 0.0);
+  EXPECT_DOUBLE_EQ(speed_out, 0.0);
+  EXPECT_DOUBLE_EQ(heading_out, 0.0);
 
   // make sure a dummy command returns an appropriate state
-  // @TODO Daniel M. Sahu get the right values for this test.
   plant_->setState(0.0, 0.0);
   plant_->command(0.5, 0.45, 0.1);
   plant_->getState(speed_out, heading_out);
-  EXPECT_DOUBLE_EQ(speed_out, 0.5);
-  EXPECT_NEAR(heading_out, 0.0, 0.001);
+  EXPECT_DOUBLE_EQ(limits_->speedToThrottle(speed_out), 0.5);
+  EXPECT_NEAR(heading_out, 0.16, 0.01);
 }
 
 /* @brief Test that the system converges to a desired setpoint
  * w/ a zero noise Mock Plant.
  */
 TEST_F(AckermannControllerTest, System_Convergence1) {
-  EXPECT_TRUE(control_loop(plant_, controller_, 3.0, 45.0, 5.0));
+  EXPECT_TRUE(control_loop(plant_, controller_, 3.0, 1.2, 5.0));
 }
 
 /* @brief Test that the system converges to a desired setpoint
@@ -151,7 +164,7 @@ TEST_F(AckermannControllerTest, System_Convergence2) {
   opts_->noise_mean = 0.0;
   opts_->noise_stddev = 0.05;
   SetUp();
-  EXPECT_TRUE(control_loop(plant_, controller_, 1.01, -45.0, 5.0));
+  EXPECT_TRUE(control_loop(plant_, controller_, 1.01, -1.2, 5.0));
 }
 
 /* @brief Test that the system fails to converge to a "broken" Mock Plant. */

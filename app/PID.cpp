@@ -4,45 +4,54 @@
  * @author Spencer Elyard
  * @author Daniel M. Sahu
  * @author Santosh Kesani
- * 
+ *
  * @copyright [2020]
  */
-
+#include <iostream>
 #include <PID.hpp>
 
 namespace ackermann {
 
-PID::PID(double k_p, double k_i, double k_d)
-  : k_p_(k_p),
-    k_i_(k_i),
-    k_d_(k_d),
-    prev_error_(0.0),
-    integral_error_(0.0) {
+PID::PID(const std::shared_ptr<const PIDParams>& params,
+         double out_minLimit,
+         double out_maxLimit)
+  : params_{params},
+    prev_error_{0.0},
+    integral_error_{0.0},
+    out_minLimit_{out_minLimit},
+    out_maxLimit_{out_maxLimit} {
 }
 
-void PID::set_k_p(double kp) {this->k_p_ = kp;}
-void PID::set_k_i(double ki) {this->k_i_ = ki;}
-void PID::set_k_d(double kd) {this->k_d_ = kd;}
+double PID::get_k_p() const {return this->params_->kp;}
+double PID::get_k_i() const {return this->params_->ki;}
+double PID::get_k_d() const {return this->params_->kd;}
 
-double PID::get_k_p() const {return this->k_p_;}
-double PID::get_k_i() const {return this->k_i_;}
-double PID::get_k_d() const {return this->k_d_;}
-
-double PID::getCommand(double current, double desired, double dt) {
-  // // calculate current error
-  // double current_error = desired - current;
-  // // Integral controller portion
-  // double integral = integral_error_ + (current_error * dt);
-  // // Derivative
-  // double derivative = (current_error - prev_error_) / dt;
-  // // calculate output
-  // double output = (k_p_*current_error) + (k_i_*integral) + (k_d_*derivative);
-  // // save error as previous prev_error_
-  // prev_error_ = current_error;
-  // // save integral as integral error;
-  // integral_error_ = integral;
+double PID::getCommand(double current_error, double dt) {
+  // Integral controller portion
+  integral_error_ += (current_error * dt);
+  // Derivative
+  double derivative = (current_error - prev_error_) / dt;
+  // calculate output
+  double output = (params_->kp*current_error)
+                  + (params_->ki*integral_error_)
+                  + (params_->kd*derivative);
+  // PID windup
+  if (output > out_maxLimit_) {
+    integral_error_ -= output - out_maxLimit_;
+    output = out_maxLimit_;
+  } else if (output < out_minLimit_) {
+      integral_error_ += out_minLimit_ - output;
+      output = out_minLimit_;
+  }
+  // save error as previous prev_error_
+  prev_error_ = current_error;
   // return output;
-  return 0.0;
+  return output;
 }
 
-} // namespace ackermann
+void PID::reset_PID() {
+    this->prev_error_ = 0.0;
+    this->integral_error_ = 0.0;
+}
+
+}  // namespace ackermann

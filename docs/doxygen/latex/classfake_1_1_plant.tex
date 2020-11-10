@@ -1,0 +1,122 @@
+\hypertarget{classfake_1_1_plant}{}\doxysection{fake\+::Plant Class Reference}
+\label{classfake_1_1_plant}\index{fake::Plant@{fake::Plant}}
+
+
+A Fake \mbox{\hyperlink{classfake_1_1_plant}{Plant}} for use in testing our Controller.  
+
+
+
+
+{\ttfamily \#include $<$plant.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfake_1_1_plant_a346cd2379207256138a0996960461d16}{Plant}} (const \mbox{\hyperlink{structfake_1_1_plant_options}{Plant\+Options}} \&opts, const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_params}{ackermann\+::\+Params}} $>$ \&params)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classfake_1_1_plant_ac63a7c00709fdffe2318ed429e1f351c}\label{classfake_1_1_plant_ac63a7c00709fdffe2318ed429e1f351c}} 
+void \mbox{\hyperlink{classfake_1_1_plant_ac63a7c00709fdffe2318ed429e1f351c}{reset}} ()
+\begin{DoxyCompactList}\small\item\em Reset all state variables to their defaults. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classfake_1_1_plant_aa6f602aaabebcc84a03c2ae7a4878c05}{set\+State}} (const double speed, const double heading)
+\begin{DoxyCompactList}\small\item\em Set the current system state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classfake_1_1_plant_a65ac487259b9dc0e30f6495f5f5c0453}{get\+State}} (double \&speed, double \&heading) const
+\begin{DoxyCompactList}\small\item\em Get the current system state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classfake_1_1_plant_a51e4596f215bec72d55bc4b4a568b8b0}{command}} (const double throttle, const double steering, const double dt)
+\begin{DoxyCompactList}\small\item\em Simulate an actual command to the vehicle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A Fake \mbox{\hyperlink{classfake_1_1_plant}{Plant}} for use in testing our Controller. 
+
+This class just maintains some simple state information and applies a small amount of noise (if desired). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classfake_1_1_plant_a346cd2379207256138a0996960461d16}\label{classfake_1_1_plant_a346cd2379207256138a0996960461d16}} 
+\index{fake::Plant@{fake::Plant}!Plant@{Plant}}
+\index{Plant@{Plant}!fake::Plant@{fake::Plant}}
+\doxysubsubsection{\texorpdfstring{Plant()}{Plant()}}
+{\footnotesize\ttfamily fake\+::\+Plant\+::\+Plant (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structfake_1_1_plant_options}{Plant\+Options}} \&}]{opts,  }\item[{const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_params}{ackermann\+::\+Params}} $>$ \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em opts} & \mbox{\hyperlink{classfake_1_1_plant}{Plant}} specifications (wheel base, max steering) \\
+\hline
+{\em params} & Shared pointer; model parameters. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{classfake_1_1_plant_a346cd2379207256138a0996960461d16_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classfake_1_1_plant_a51e4596f215bec72d55bc4b4a568b8b0}\label{classfake_1_1_plant_a51e4596f215bec72d55bc4b4a568b8b0}} 
+\index{fake::Plant@{fake::Plant}!command@{command}}
+\index{command@{command}!fake::Plant@{fake::Plant}}
+\doxysubsubsection{\texorpdfstring{command()}{command()}}
+{\footnotesize\ttfamily void fake\+::\+Plant\+::command (\begin{DoxyParamCaption}\item[{const double}]{throttle,  }\item[{const double}]{steering,  }\item[{const double}]{dt }\end{DoxyParamCaption})}
+
+
+
+Simulate an actual command to the vehicle. 
+
+This is a very simple approximation of the plant; the throttle command is assumed to translate instantly into the new speed, and the new heading is calculated by integrating the effect of the new steering angle over the timestep.
+
+
+\begin{DoxyParams}{Parameters}
+{\em throttle} & The throttle command to apply. \\
+\hline
+{\em steering} & The steering command to apply. \\
+\hline
+{\em dt} & The time duration of the command. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classfake_1_1_plant_a65ac487259b9dc0e30f6495f5f5c0453}\label{classfake_1_1_plant_a65ac487259b9dc0e30f6495f5f5c0453}} 
+\index{fake::Plant@{fake::Plant}!getState@{getState}}
+\index{getState@{getState}!fake::Plant@{fake::Plant}}
+\doxysubsubsection{\texorpdfstring{getState()}{getState()}}
+{\footnotesize\ttfamily void fake\+::\+Plant\+::get\+State (\begin{DoxyParamCaption}\item[{double \&}]{speed,  }\item[{double \&}]{heading }\end{DoxyParamCaption}) const}
+
+
+
+Get the current system state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & The current system speed. \\
+\hline
+{\em heading} & The current system heading. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classfake_1_1_plant_aa6f602aaabebcc84a03c2ae7a4878c05}\label{classfake_1_1_plant_aa6f602aaabebcc84a03c2ae7a4878c05}} 
+\index{fake::Plant@{fake::Plant}!setState@{setState}}
+\index{setState@{setState}!fake::Plant@{fake::Plant}}
+\doxysubsubsection{\texorpdfstring{setState()}{setState()}}
+{\footnotesize\ttfamily void fake\+::\+Plant\+::set\+State (\begin{DoxyParamCaption}\item[{const double}]{speed,  }\item[{const double}]{heading }\end{DoxyParamCaption})}
+
+
+
+Set the current system state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & The new system speed. \\
+\hline
+{\em heading} & The new system heading. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/fake/\mbox{\hyperlink{plant_8h}{plant.\+h}}\item 
+app/fake/plant.\+cpp\end{DoxyCompactItemize}

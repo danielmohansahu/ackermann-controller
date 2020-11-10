@@ -1,0 +1,57 @@
+@startuml
+
+actor Interface
+participant Controller
+participant PID_s
+participant PID_h
+participant Limits
+participant Model
+
+activate Interface
+|||
+Interface -> Controller: start()
+activate Controller
+Interface -> Controller: Parameters
+Interface -> Controller: InitialConditions
+Interface -> Controller: GoalConditions
+Controller -> Controller: Repeat at frequency
+Interface -> Controller: reset()
+Interface -> Controller: execute()
+
+Controller -> Model: Parameters
+activate Model
+
+Controller -> Model: setState(s, h)
+
+Controller -> Model: setGoal(s, h)
+Controller -> Model: getError()
+Model --> Controller: error_s, error_h
+
+Controller -> PID_s: Parameters
+activate PID_s
+Controller -> PID_s: getCommand(error_s)
+PID_s --> Controller: throttle_des
+deactivate PID_s
+
+Controller -> PID_h: Parameters
+activate PID_h
+Controller -> PID_h: getCommand(error_h)
+PID_h --> Controller: steering_des
+deactivate PID_h
+
+Controller -> Limits: Parameters
+activate Limits
+Controller -> Limits: command(throttle, steering)
+Limits -> Model: throttle, steering
+deactivate Limits
+Model --> Controller: throttle_act, steering_act
+deactivate Model
+
+Controller --> Interface: Speed, Heading
+Controller --> Interface: Throttle, Steering
+Controller --> Interface: Wheel Velocities
+
+Controller -> Controller: Sleep to keep frequency
+Interface -> Controller: stop()
+deactivate Controller
+@enduml

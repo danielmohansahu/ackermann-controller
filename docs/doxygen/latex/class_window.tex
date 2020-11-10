@@ -1,0 +1,82 @@
+\hypertarget{class_window}{}\doxysection{Window Class Reference}
+\label{class_window}\index{Window@{Window}}
+
+
+G\+UI implementation for user interface.  
+
+
+
+
+{\ttfamily \#include $<$window.\+h$>$}
+
+
+
+Inheritance diagram for Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{class_window__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{class_window__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_window_afc02c9963511f615afb1c4ae92b53376}\label{class_window_afc02c9963511f615afb1c4ae92b53376}} 
+void \mbox{\hyperlink{class_window_afc02c9963511f615afb1c4ae92b53376}{start}} ()
+\begin{DoxyCompactList}\small\item\em Begin simulation run with current parameters. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_window_a42353e5fb0b5670e6175709706670450}\label{class_window_a42353e5fb0b5670e6175709706670450}} 
+void \mbox{\hyperlink{class_window_a42353e5fb0b5670e6175709706670450}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop current simulation run. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_window_a00a00d153d98b446ec8b5b5ca870081d}\label{class_window_a00a00d153d98b446ec8b5b5ca870081d}} 
+void \mbox{\hyperlink{class_window_a00a00d153d98b446ec8b5b5ca870081d}{reset}} ()
+\begin{DoxyCompactList}\small\item\em Reset simulation to initial conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_window_a8c86e48ef3180201cc97cb928abd66ca}\label{class_window_a8c86e48ef3180201cc97cb928abd66ca}} 
+{\bfseries Window} (Q\+Widget $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{class_window_adc0f6bc57df787f2ca22efb12ad2e6f9}{Window}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structackermann_1_1_params}{ackermann\+::\+Params}} $>$ \&params, const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classackermann_1_1_controller}{ackermann\+::\+Controller}} $>$ \&controller, const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classfake_1_1_plant}{fake\+::\+Plant}} $>$ \&plant)
+\begin{DoxyCompactList}\small\item\em Create G\+UI interface with pre-\/programmed conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+G\+UI implementation for user interface. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_window_adc0f6bc57df787f2ca22efb12ad2e6f9}\label{class_window_adc0f6bc57df787f2ca22efb12ad2e6f9}} 
+\index{Window@{Window}!Window@{Window}}
+\index{Window@{Window}!Window@{Window}}
+\doxysubsubsection{\texorpdfstring{Window()}{Window()}}
+{\footnotesize\ttfamily Window\+::\+Window (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structackermann_1_1_params}{ackermann\+::\+Params}} $>$ \&}]{params,  }\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classackermann_1_1_controller}{ackermann\+::\+Controller}} $>$ \&}]{controller,  }\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classfake_1_1_plant}{fake\+::\+Plant}} $>$ \&}]{plant }\end{DoxyParamCaption})}
+
+
+
+Create G\+UI interface with pre-\/programmed conditions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Shared pointer to rover characteristic parameters \\
+\hline
+{\em controller} & Shared pointer to controller object \\
+\hline
+{\em plant} & Shared pointer to plant object (to simulate commands) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+app/demo/\mbox{\hyperlink{window_8h}{window.\+h}}\item 
+app/demo/\mbox{\hyperlink{window_8cpp}{window.\+cpp}}\end{DoxyCompactItemize}
