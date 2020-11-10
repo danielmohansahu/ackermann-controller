@@ -111,6 +111,7 @@ Sprint planning notes and reviews [can be found here](https://docs.google.com/do
 
 Major:
 * Can set various values in GUI to zero, which causes unexpected behavior including crashes. This action should be avoided.
+* (Potential) PID Derivative gain can cause unexpected oscillatory behavior; need more testing to see if this is functioning correctly or indicates an error in implementation.
 
 Minor:
 * Wheel linear velocity updates in the plot window lag slightly behind the vehicle speed indicated.
