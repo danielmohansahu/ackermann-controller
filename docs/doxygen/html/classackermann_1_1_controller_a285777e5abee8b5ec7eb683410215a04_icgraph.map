@@ -1,4 +1,4 @@
 <map id="ackermann::Controller::stop" name="ackermann::Controller::stop">
-<area shape="rect" id="node2" href="$classackermann_1_1_controller.html#a4bf9f0657a103e0144ef14f9b8a7c96e" title="Constructor; constructs and initializes parameters of all composition classes. " alt="" coords="204,5,355,47"/>
-<area shape="rect" id="node3" href="$classackermann_1_1_controller.html#a65fb63861770f823cd30713833383aa6" title="Begin execution of a control loop. " alt="" coords="204,71,355,112"/>
+<area shape="rect" id="node1" title="Stop execution of a control loop and rejoin. This also calls reset() to clear any state variables." alt="" coords="220,5,387,47"/>
+<area shape="rect" id="node2" href="$classackermann_1_1_controller.html#a65fb63861770f823cd30713833383aa6" title="Begin execution of a control loop." alt="" coords="5,5,172,47"/>
 </map>

@@ -1,3 +1,7 @@
 <map id="include/PID.hpp" name="include/PID.hpp">
-<area shape="rect" id="node4" href="$_params_8hpp.html" title="Parameters used in the Ackermann controller system. " alt="" coords="81,80,173,107"/>
+<area shape="rect" id="node1" title="Class declaration for a PID controller." alt="" coords="79,5,201,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,155,83,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="197,155,256,181"/>
+<area shape="rect" id="node4" href="$_params_8hpp.html" title="Parameters used in the Ackermann controller system." alt="" coords="91,80,189,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="107,155,173,181"/>
 </map>

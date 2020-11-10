@@ -1,3 +1,4 @@
 <map id="ackermann::Limits::speedToThrottle" name="ackermann::Limits::speedToThrottle">
-<area shape="rect" id="node2" href="$classackermann_1_1_limits.html#a1fcf66ef8f8161d38e3d77c1e5acfb92" title="Apply known limits to the given controller command. " alt="" coords="191,5,328,47"/>
+<area shape="rect" id="node1" title="Use Parameters structure to convert speed to throttle as a function of maximum allowable speed." alt="" coords="204,5,355,47"/>
+<area shape="rect" id="node2" href="$classackermann_1_1_limits.html#a1fcf66ef8f8161d38e3d77c1e5acfb92" title="Apply known limits to the given controller command." alt="" coords="5,5,156,47"/>
 </map>

@@ -1,40 +1,40 @@
-\hypertarget{classackermann_1_1_p_i_d}{}\section{ackermann\+:\+:P\+ID Class Reference}
-\label{classackermann_1_1_p_i_d}\index{ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}}
+\hypertarget{classackermann_1_1_p_i_d}{}\doxysection{ackermann\+::P\+ID Class Reference}
+\label{classackermann_1_1_p_i_d}\index{ackermann::PID@{ackermann::PID}}
 
 
-This class implements a \hyperlink{classackermann_1_1_p_i_d}{P\+ID} controller with max/min clamping of output values to prevent integral windup.  
+This class implements a \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}} controller with max/min clamping of output values to prevent integral windup.  
 
 
 
 
 {\ttfamily \#include $<$P\+I\+D.\+hpp$>$}
 
-\subsection*{Public Member Functions}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classackermann_1_1_p_i_d_a98e96878fcc3373f22d783b78c7cf0d9}{P\+ID} (const std\+::shared\+\_\+ptr$<$ const \hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params} $>$ \&params, double out\+\_\+min\+Limit=std\+::numeric\+\_\+limits$<$ double $>$\+::lowest(), double out\+\_\+max\+Limit=std\+::numeric\+\_\+limits$<$ double $>$\+::max())
+\mbox{\hyperlink{classackermann_1_1_p_i_d_a98e96878fcc3373f22d783b78c7cf0d9}{P\+ID}} (const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params}} $>$ \&params, double out\+\_\+min\+Limit=std\+::numeric\+\_\+limits$<$ double $>$\+::lowest(), double out\+\_\+max\+Limit=std\+::numeric\+\_\+limits$<$ double $>$\+::max())
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-double \hyperlink{classackermann_1_1_p_i_d_a3257bf60c93eb2a3b18b48a40a480b2d}{get\+\_\+k\+\_\+p} () const
+double \mbox{\hyperlink{classackermann_1_1_p_i_d_a3257bf60c93eb2a3b18b48a40a480b2d}{get\+\_\+k\+\_\+p}} () const
 \begin{DoxyCompactList}\small\item\em Get the kP Proportional Gain. \end{DoxyCompactList}\item 
-double \hyperlink{classackermann_1_1_p_i_d_a9845f8af09db7e901d319c53e4e43268}{get\+\_\+k\+\_\+i} () const
+double \mbox{\hyperlink{classackermann_1_1_p_i_d_a9845f8af09db7e901d319c53e4e43268}{get\+\_\+k\+\_\+i}} () const
 \begin{DoxyCompactList}\small\item\em Get the kI Integral Gain. \end{DoxyCompactList}\item 
-double \hyperlink{classackermann_1_1_p_i_d_aaf565af4f72abcf148b8abe8880df6c3}{get\+\_\+k\+\_\+d} () const
+double \mbox{\hyperlink{classackermann_1_1_p_i_d_aaf565af4f72abcf148b8abe8880df6c3}{get\+\_\+k\+\_\+d}} () const
 \begin{DoxyCompactList}\small\item\em Get the kD Derivative Gain. \end{DoxyCompactList}\item 
-double \hyperlink{classackermann_1_1_p_i_d_a6286415d935d49dceba543deb4356b42}{get\+Command} (double current\+\_\+error, double dt)
-\begin{DoxyCompactList}\small\item\em Perform \hyperlink{classackermann_1_1_p_i_d}{P\+ID} Calculation. \end{DoxyCompactList}\item 
-void \hyperlink{classackermann_1_1_p_i_d_a1f2e47eb9958ec5d1887bf7c5f82175a}{reset\+\_\+\+P\+ID} ()
-\begin{DoxyCompactList}\small\item\em Reset the \hyperlink{classackermann_1_1_p_i_d}{P\+ID}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+double \mbox{\hyperlink{classackermann_1_1_p_i_d_a6286415d935d49dceba543deb4356b42}{get\+Command}} (double current\+\_\+error, double dt)
+\begin{DoxyCompactList}\small\item\em Perform \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}} Calculation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classackermann_1_1_p_i_d_a1f2e47eb9958ec5d1887bf7c5f82175a}{reset\+\_\+\+P\+ID}} ()
+\begin{DoxyCompactList}\small\item\em Reset the \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsection{Detailed Description}
-This class implements a \hyperlink{classackermann_1_1_p_i_d}{P\+ID} controller with max/min clamping of output values to prevent integral windup. 
+\doxysubsection{Detailed Description}
+This class implements a \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}} controller with max/min clamping of output values to prevent integral windup. 
 
-\subsection{Constructor \& Destructor Documentation}
+\doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classackermann_1_1_p_i_d_a98e96878fcc3373f22d783b78c7cf0d9}\label{classackermann_1_1_p_i_d_a98e96878fcc3373f22d783b78c7cf0d9}} 
-\index{ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}!P\+ID@{P\+ID}}
-\index{P\+ID@{P\+ID}!ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}}
-\subsubsection{\texorpdfstring{P\+I\+D()}{PID()}}
-{\footnotesize\ttfamily ackermann\+::\+P\+I\+D\+::\+P\+ID (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ const \hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params} $>$ \&}]{params,  }\item[{double}]{out\+\_\+min\+Limit = {\ttfamily std\+:\+:numeric\+\_\+limits$<$double$>$\+:\+:lowest()},  }\item[{double}]{out\+\_\+max\+Limit = {\ttfamily std\+:\+:numeric\+\_\+limits$<$double$>$\+:\+:max()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+\index{ackermann::PID@{ackermann::PID}!PID@{PID}}
+\index{PID@{PID}!ackermann::PID@{ackermann::PID}}
+\doxysubsubsection{\texorpdfstring{PID()}{PID()}}
+{\footnotesize\ttfamily ackermann\+::\+P\+I\+D\+::\+P\+ID (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params}} $>$ \&}]{params,  }\item[{double}]{out\+\_\+min\+Limit = {\ttfamily std\+:\+:numeric\+\_\+limits$<$double$>$\+:\+:lowest()},  }\item[{double}]{out\+\_\+max\+Limit = {\ttfamily std\+:\+:numeric\+\_\+limits$<$double$>$\+:\+:max()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
 
 
 
@@ -42,20 +42,20 @@ Constructor.
 
 
 \begin{DoxyParams}{Parameters}
-{\em params} & Shared \hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params} pointer detailing \hyperlink{classackermann_1_1_p_i_d}{P\+ID} parameters (kP, kI, kD) \\
+{\em params} & Shared \mbox{\hyperlink{structackermann_1_1_p_i_d_params}{P\+I\+D\+Params}} pointer detailing \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}} parameters (kP, kI, kD) \\
 \hline
-{\em out\+\_\+min\+Limit} & Optional, clamp minimum value of \hyperlink{classackermann_1_1_p_i_d}{P\+ID} controller output \\
+{\em out\+\_\+min\+Limit} & Optional, clamp minimum value of \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}} controller output \\
 \hline
-{\em out\+\_\+max\+Limit} & Optional, clamp maximum value of \hyperlink{classackermann_1_1_p_i_d}{P\+ID} controller output \\
+{\em out\+\_\+max\+Limit} & Optional, clamp maximum value of \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}} controller output \\
 \hline
 \end{DoxyParams}
 
 
-\subsection{Member Function Documentation}
+\doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classackermann_1_1_p_i_d_aaf565af4f72abcf148b8abe8880df6c3}\label{classackermann_1_1_p_i_d_aaf565af4f72abcf148b8abe8880df6c3}} 
-\index{ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}!get\+\_\+k\+\_\+d@{get\+\_\+k\+\_\+d}}
-\index{get\+\_\+k\+\_\+d@{get\+\_\+k\+\_\+d}!ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}}
-\subsubsection{\texorpdfstring{get\+\_\+k\+\_\+d()}{get\_k\_d()}}
+\index{ackermann::PID@{ackermann::PID}!get\_k\_d@{get\_k\_d}}
+\index{get\_k\_d@{get\_k\_d}!ackermann::PID@{ackermann::PID}}
+\doxysubsubsection{\texorpdfstring{get\_k\_d()}{get\_k\_d()}}
 {\footnotesize\ttfamily double ackermann\+::\+P\+I\+D\+::get\+\_\+k\+\_\+d (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
@@ -71,9 +71,9 @@ Get the kD Derivative Gain.
 Derivative Gain 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classackermann_1_1_p_i_d_a9845f8af09db7e901d319c53e4e43268}\label{classackermann_1_1_p_i_d_a9845f8af09db7e901d319c53e4e43268}} 
-\index{ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}!get\+\_\+k\+\_\+i@{get\+\_\+k\+\_\+i}}
-\index{get\+\_\+k\+\_\+i@{get\+\_\+k\+\_\+i}!ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}}
-\subsubsection{\texorpdfstring{get\+\_\+k\+\_\+i()}{get\_k\_i()}}
+\index{ackermann::PID@{ackermann::PID}!get\_k\_i@{get\_k\_i}}
+\index{get\_k\_i@{get\_k\_i}!ackermann::PID@{ackermann::PID}}
+\doxysubsubsection{\texorpdfstring{get\_k\_i()}{get\_k\_i()}}
 {\footnotesize\ttfamily double ackermann\+::\+P\+I\+D\+::get\+\_\+k\+\_\+i (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
@@ -89,9 +89,9 @@ Get the kI Integral Gain.
 Proportional Gain 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classackermann_1_1_p_i_d_a3257bf60c93eb2a3b18b48a40a480b2d}\label{classackermann_1_1_p_i_d_a3257bf60c93eb2a3b18b48a40a480b2d}} 
-\index{ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}!get\+\_\+k\+\_\+p@{get\+\_\+k\+\_\+p}}
-\index{get\+\_\+k\+\_\+p@{get\+\_\+k\+\_\+p}!ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}}
-\subsubsection{\texorpdfstring{get\+\_\+k\+\_\+p()}{get\_k\_p()}}
+\index{ackermann::PID@{ackermann::PID}!get\_k\_p@{get\_k\_p}}
+\index{get\_k\_p@{get\_k\_p}!ackermann::PID@{ackermann::PID}}
+\doxysubsubsection{\texorpdfstring{get\_k\_p()}{get\_k\_p()}}
 {\footnotesize\ttfamily double ackermann\+::\+P\+I\+D\+::get\+\_\+k\+\_\+p (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
@@ -107,14 +107,14 @@ Get the kP Proportional Gain.
 Proportional Gain 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classackermann_1_1_p_i_d_a6286415d935d49dceba543deb4356b42}\label{classackermann_1_1_p_i_d_a6286415d935d49dceba543deb4356b42}} 
-\index{ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}!get\+Command@{get\+Command}}
-\index{get\+Command@{get\+Command}!ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}}
-\subsubsection{\texorpdfstring{get\+Command()}{getCommand()}}
+\index{ackermann::PID@{ackermann::PID}!getCommand@{getCommand}}
+\index{getCommand@{getCommand}!ackermann::PID@{ackermann::PID}}
+\doxysubsubsection{\texorpdfstring{getCommand()}{getCommand()}}
 {\footnotesize\ttfamily double ackermann\+::\+P\+I\+D\+::get\+Command (\begin{DoxyParamCaption}\item[{double}]{current\+\_\+error,  }\item[{double}]{dt }\end{DoxyParamCaption})}
 
 
 
-Perform \hyperlink{classackermann_1_1_p_i_d}{P\+ID} Calculation. 
+Perform \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}} Calculation. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -127,14 +127,14 @@ Perform \hyperlink{classackermann_1_1_p_i_d}{P\+ID} Calculation.
 Output 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classackermann_1_1_p_i_d_a1f2e47eb9958ec5d1887bf7c5f82175a}\label{classackermann_1_1_p_i_d_a1f2e47eb9958ec5d1887bf7c5f82175a}} 
-\index{ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}!reset\+\_\+\+P\+ID@{reset\+\_\+\+P\+ID}}
-\index{reset\+\_\+\+P\+ID@{reset\+\_\+\+P\+ID}!ackermann\+::\+P\+ID@{ackermann\+::\+P\+ID}}
-\subsubsection{\texorpdfstring{reset\+\_\+\+P\+I\+D()}{reset\_PID()}}
+\index{ackermann::PID@{ackermann::PID}!reset\_PID@{reset\_PID}}
+\index{reset\_PID@{reset\_PID}!ackermann::PID@{ackermann::PID}}
+\doxysubsubsection{\texorpdfstring{reset\_PID()}{reset\_PID()}}
 {\footnotesize\ttfamily void ackermann\+::\+P\+I\+D\+::reset\+\_\+\+P\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
-Reset the \hyperlink{classackermann_1_1_p_i_d}{P\+ID}. 
+Reset the \mbox{\hyperlink{classackermann_1_1_p_i_d}{P\+ID}}. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -148,5 +148,5 @@ None
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-include/\hyperlink{_p_i_d_8hpp}{P\+I\+D.\+hpp}\item 
+include/\mbox{\hyperlink{_p_i_d_8hpp}{P\+I\+D.\+hpp}}\item 
 app/P\+I\+D.\+cpp\end{DoxyCompactItemize}

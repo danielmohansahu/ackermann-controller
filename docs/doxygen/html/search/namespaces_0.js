@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ackermann',['ackermann',['../namespaceackermann.html',1,'']]]
+  ['ackermann_72',['ackermann',['../namespaceackermann.html',1,'']]]
 ];
